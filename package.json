@@ -1,5 +1,5 @@
 {
-  "name": "learn-starter",
+  "name": "tryshape",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -10,6 +10,10 @@
   "dependencies": {
     "next": "^10.0.0",
     "react": "17.0.1",
-    "react-dom": "17.0.1"
+    "react-dom": "17.0.1",
+    "styled-components": "^5.3.0"
+  },
+  "devDependencies": {
+    "babel-plugin-styled-components": "^1.12.0"
   }
 }
