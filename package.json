@@ -8,6 +8,8 @@
     "start": "next start"
   },
   "dependencies": {
+    "downloadjs": "^1.4.7",
+    "html-to-image": "^1.6.2",
     "next": "^10.0.0",
     "react": "17.0.1",
     "react-clip-path": "^0.0.6",

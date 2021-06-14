@@ -10,6 +10,12 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 // Switch
 import Switch from "react-switch";
 
+// html-to-image
+import { toPng } from 'html-to-image';
+
+// downloadjs
+import download from 'downloadjs';
+
 // Shape Listing Styled-Componentns
 import {
     ShapeCards,
@@ -48,6 +54,16 @@ const ShapeList = ({ data }) => {
   const getShapeFileName = (name) => {
     return name.split(" ").join("-");
   };
+
+  const saveAsPng = (event, id, name) => {
+    console.log('Save as Png');
+
+    toPng(document.getElementById(id)).then(function (dataUrl) {
+      console.log(dataUrl);
+      download(dataUrl, `${name}.png`);
+      toast.success(`${name}.png has been exported sucessfully!`);
+    });
+  }
 
   async function performCopy(event, formula) {
     event.preventDefault();
