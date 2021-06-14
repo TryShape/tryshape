@@ -1,13 +1,23 @@
 import React, { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
+
+// harperDb fetch call
 import { harperFetch } from "../../utils/HarperFetch";
 
-import { shapes } from "../../data/shapes";
+// Dummy Shape Data
+// import { shapes } from "../../data/shapes";
 
+// Toast
 import toast from "react-hot-toast";
 
+// Clip-Path
 const Shape = dynamic(import("react-clip-path"), { ssr: false });
+
+// Switch
 import Switch from "react-switch";
+
+// loader
+import Loader from "react-loader-spinner";
 
 import {
   ShapeCards,
@@ -32,10 +42,10 @@ const App = (props) => {
     setLoading(true);
 
     // fetching the shape data
-    /*const shapes = await harperFetch({
+    const shapes = await harperFetch({
       operation: "sql",
       sql: "SELECT * FROM tryshape.shapes",
-    });*/
+    });
 
     console.log(shapes);
     let modifiedShapes = shapes.map((shape, index) => {
@@ -82,7 +92,13 @@ const App = (props) => {
   return (
     <>
       {loading ? (
-        <h1>Loading...</h1>
+        <Loader
+          style={{margin: '20% auto auto 42%'}}
+          type="Circles"
+          color="#eb3d86"
+          height={300}
+          width={300}
+        />
       ) : (
         <ShapePallete>
           <ShapeCards>
