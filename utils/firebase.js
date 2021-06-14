@@ -1,15 +1,14 @@
 import firebase from "firebase";
 
 // firebase config
-// TODO: move to env
 const firebaseConfig = {
-    apiKey: "AIzaSyDeGOAUFx93nPa71uiMkUXgWeZfBXIAQY4",
-    authDomain: "tryshape-app.firebaseapp.com",
-    projectId: "tryshape-app",
-    storageBucket: "tryshape-app.appspot.com",
-    messagingSenderId: "309904349527",
-    appId: "1:309904349527:web:76cfdc9e028c0e7ae0c612",
-    measurementId: "G-R82N2SGZJL"
+    apiKey: process.env.NEXT_PUBLIC_FIREBASE_AUTHORIZATION,
+    authDomain: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.NEXT_PUBLIC_FIREBASE_MESSAGING_SERNDER_ID,
+    appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
+    measurementId: process.env.NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID
 };
 
 if (!firebase.apps.length) {
