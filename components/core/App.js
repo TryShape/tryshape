@@ -5,7 +5,7 @@ import dynamic from "next/dynamic";
 import { harperFetch } from "../../utils/HarperFetch";
 
 // Dummy Shape Data
-// import { shapes } from "../../data/shapes";
+import { shapes } from "../../data/shapes";
 
 // loader
 import Loader from "react-loader-spinner";
@@ -22,10 +22,10 @@ const App = (props) => {
     setLoading(true);
 
     // fetching the shape data
-    const shapes = await harperFetch({
+    /*const shapes = await harperFetch({
       operation: "sql",
       sql: "SELECT * FROM tryshape.shapes",
-    });
+    });*/
     console.log(shapes);
     let modifiedShapes = shapes.map((shape, index) => {
       shape.showAdvanced = false;

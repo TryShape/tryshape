@@ -1,9 +1,10 @@
 import React from "react";
-import { App } from "../components";
+import { App, Landing } from "../components";
 
 const index = (props) => {
   return (
     <main>
+      <Landing {...props} /> 
       <App {...props} />
     </main>
   );
