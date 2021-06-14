@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
-import dynamic from 'next/dynamic';
+import dynamic from "next/dynamic";
 import { harperFetch } from "../../utils/HarperFetch";
 
 import { shapes } from "../../data/shapes";
 
-const Shape = dynamic(import('react-clip-path'), { ssr: false })
+import toast from "react-hot-toast";
+
+const Shape = dynamic(import("react-clip-path"), { ssr: false });
 import Switch from "react-switch";
 
 import {
@@ -13,8 +15,9 @@ import {
   ShapeName,
   ShapePallete,
   ShapeDetailsItems,
+  ShapeCardSwitch,
   ShapeActions,
-  ShapeHeader,
+  ShapeCardHeader,
   CopyIcon,
   DownloadIcon,
   LikeIcon,
@@ -47,20 +50,19 @@ const App = (props) => {
 
   const handleSwicth = (shapeName) => {
     console.log(shapeName);
-    
 
     let modifiedShapes = data.map((shape, index) => {
       if (shape.name === shapeName) {
         return {
           ...shape,
-          showAdvanced: !shape.showAdvanced
-        }
+          showAdvanced: !shape.showAdvanced,
+        };
       }
       return shape;
     });
     console.log(modifiedShapes);
     setData(...[modifiedShapes]);
-  }
+  };
 
   const getShapeFileName = (name) => {
     return name.split(" ").join("-");
@@ -70,6 +72,7 @@ const App = (props) => {
     event.preventDefault();
     try {
       await navigator.clipboard.writeText(formula);
+      toast.success("Successfully Copied!");
       console.log("The clip-path formula copied to clipboard");
     } catch (err) {
       console.error("Failed to copy: ", err);
@@ -77,71 +80,78 @@ const App = (props) => {
   }
 
   return (
-    <ShapePallete>
-      <h2>Available Shapes({shapes.length})</h2>
-      <ShapeCards>
-        {data.map((shape, index) => (
-          <React.Fragment key={index}>
-            <ShapeCard>
-              <ShapeHeader>
-                <ShapeName>{shape.name}</ShapeName>
-                <ShapeActions>
-                  <span title="Like">
-                    <LikeIcon size={24} />
-                  </span>{" "}
-                  <span title="Download">
-                    <DownloadIcon
-                      size={24} 
-                      onClick={(event) =>
-                        saveAsPng(
-                          event,
-                          `${getShapeFileName(shape.name)}-id`,
-                          getShapeFileName(shape.name)
-                        )
-                      }
-                    />
-                  </span>
-                </ShapeActions>
-              </ShapeHeader>
-              <Shape
-                width="300px"
-                height="300px"
-                name={shape.name}
-                id={`${getShapeFileName(shape.name)}-id`}
-                backgroundColor="#eb3d86"
-                showShadow={shape.showAdvanced}
-              />
+    <>
+      {loading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <ShapePallete>
+          <ShapeCards>
+            {data.map((shape, index) => (
+              <React.Fragment key={index}>
+                <ShapeCard>
+                  <ShapeCardHeader>
+                    <ShapeName>{shape.name}</ShapeName>
+                    <ShapeActions>
+                      <span title="Like">
+                        <LikeIcon size={24} />
+                      </span>{" "}
+                      <span title="Download">
+                        <DownloadIcon
+                          size={24}
+                          onClick={(event) =>
+                            saveAsPng(
+                              event,
+                              `${getShapeFileName(shape.name)}-id`,
+                              getShapeFileName(shape.name)
+                            )
+                          }
+                        />
+                      </span>
+                    </ShapeActions>
+                  </ShapeCardHeader>
+                  <Shape
+                    width="300px"
+                    height="300px"
+                    name={shape.name}
+                    id={`${getShapeFileName(shape.name)}-id`}
+                    backgroundColor="#eb3d86"
+                    showShadow={shape.showAdvanced}
+                  />
 
-              <label htmlFor={`${getShapeFileName(shape.name)}-form`}>
-                <span>Show Advanced</span>{' '}
-                <Switch
-                  onChange={() => handleSwicth(shape.name)}
-                  checked={shape.showAdvanced}
-                  id={`${getShapeFileName(shape.name)}-form`}
-                />
-              </label>
+                  <ShapeCardSwitch>
+                    <label htmlFor={`${getShapeFileName(shape.name)}-form`}>
+                      <span>Show Clip-Path Info</span>{" "}
+                      <Switch
+                        onChange={() => handleSwicth(shape.name)}
+                        checked={shape.showAdvanced}
+                        id={`${getShapeFileName(shape.name)}-form`}
+                      />
+                    </label>
+                  </ShapeCardSwitch>
 
-              {shape.showAdvanced && (
-                <ShapeDetailsItems>
-                  <span>
-                    <b>Clip-Path:</b>{" "}
-                    <code>
-                      <b>{shape.formula}</b>
-                    </code>
-                  </span>{" "}
-                  <span title="Copy">
-                    <CopyIcon
-                      size={24}
-                      onClick={(event) => performCopy(event, shape.formula)}
-                    />
-                  </span>
-                </ShapeDetailsItems>
-              )}
-            </ShapeCard>
-          </React.Fragment>
-        ))}
-      </ShapeCards>
-    </ShapePallete>
+                  {shape.showAdvanced && (
+                    <ShapeDetailsItems>
+                      <span>
+                        <b>Clip-Path:</b>{" "}
+                        <code>
+                          <b>{shape.formula}</b>
+                        </code>
+                      </span>{" "}
+                      <span title="Copy">
+                        <CopyIcon
+                          size={24}
+                          onClick={(event) => performCopy(event, shape.formula)}
+                        />
+                      </span>
+                    </ShapeDetailsItems>
+                  )}
+                </ShapeCard>
+              </React.Fragment>
+            ))}
+          </ShapeCards>
+        </ShapePallete>
+      )}
+    </>
   );
 };
 

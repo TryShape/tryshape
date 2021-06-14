@@ -3,9 +3,9 @@ import { App } from "../components";
 
 const index = (props) => {
   return (
-    <div>
+    <main>
       <App {...props} />
-    </div>
+    </main>
   );
 };
 

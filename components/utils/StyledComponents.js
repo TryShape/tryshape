@@ -9,7 +9,8 @@ const ShapeCards = styled.div`
 `;
 
 const ShapeCard = styled.div`
-  height: 100%;
+  width: 400px;
+  min-height: 456px;
   border: 1px solid #ececec;
   border-radius: 4px;
   padding: 5px;
@@ -45,9 +46,13 @@ const ShapePallete = styled.div`
   margin-top: 5px;
 `;
 
-const ShapeHeader = styled.div`
+const ShapeCardHeader = styled.div`
   padding: 5px;
   margin: 5px;
+`;
+
+const ShapeCardSwitch = styled.div`
+  margin: 5px auto auto 9px;
 `;
 
 const CopyIcon = styled(FiCopy)`
@@ -77,10 +82,11 @@ export {
   ShapeName, 
   Playground, 
   ShapeDetails, 
-  ShapeDetailsItems, 
+  ShapeDetailsItems,
+  ShapeCardSwitch, 
   ShapePallete,
   CopyIcon,
   DownloadIcon,
   LikeIcon,
   ShapeActions,
-  ShapeHeader };
+  ShapeCardHeader };
