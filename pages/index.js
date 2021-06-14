@@ -1,11 +1,12 @@
-import styled from 'styled-components';
+import React from "react";
+import { App } from "../components";
 
-export default () => (
-  <div>
-    <Title>My First Next.js Page</Title>
-  </div>
-);
+const index = (props) => {
+  return (
+    <main>
+      <App {...props} />
+    </main>
+  );
+};
 
-const Title = styled.h1`
-  color: #3700ff;
-`;
+export default index;
