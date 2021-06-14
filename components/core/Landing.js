@@ -1,7 +1,15 @@
 import React from 'react';
 
+import Button from 'react-bootstrap/Button';
+
 // Header
 import { Header } from '..'
+
+// icon
+import { BsLightning } from "react-icons/bs";
+
+// link
+import Link from "next/link";
 
 const Landing = ({ setOpen, user, setUser }) => {
     
@@ -9,8 +17,18 @@ const Landing = ({ setOpen, user, setUser }) => {
         <div>
             <Header setOpen={setOpen} user={user} setUser={setUser} />
             <div>
-                <h1>Try Shape</h1>
+                <h1>Landing</h1>
             </div>
+            <Link href="/app">
+              <a>
+                <Button>
+                  <div>
+                    Try Now!
+                    <BsLightning />
+                  </div>
+                </Button>
+              </a>
+            </Link>
         </div>
     )
 };

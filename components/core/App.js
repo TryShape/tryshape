@@ -11,7 +11,7 @@ import { shapes } from "../../data/shapes";
 import Loader from "react-loader-spinner";
 
 // ShapeListing
-import { ShapeList } from '..';
+import { ShapeList, Header } from '..';
 
 const App = (props) => {
   const [data, setData] = useState([]);
@@ -42,6 +42,7 @@ const App = (props) => {
 
   return (
     <>
+      <Header {...props} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}
