@@ -11,9 +11,12 @@ import Modal from "react-bootstrap/Modal";
 
 // sign In providers
 import { githubProvider, googleProvider } from "../../utils/Auth/auth-methods";
+
+// auth
 import socialMediaAuth from "../../utils/Auth/auth";
 
 const SignInModal = ({ open, setOpen }) => {
+  
   const handleOnClick = async (provider) => {
     const res = await socialMediaAuth(provider);
     await setOpen(false);
