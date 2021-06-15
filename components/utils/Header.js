@@ -16,7 +16,7 @@ import { FaShapes } from "react-icons/fa";
 import Button from "react-bootstrap/Button";
 
 const Header = ({ setOpen, user, setUser }) => {
-  console.log(user);
+  // console.log(user);
   // sign out function
   const signOut = () => {
     auth()
