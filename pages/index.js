@@ -1,10 +1,16 @@
 import React from "react";
-import { App } from "../components";
+import { App, Landing } from "../components";
 
 const index = (props) => {
+  const { user } = props;
+  console.log(user);
   return (
     <main>
-      <App {...props} />
+      { 
+        user.length === 0 ? 
+          (<Landing {...props} />) : 
+          (<App {...props} />) 
+      }
     </main>
   );
 };

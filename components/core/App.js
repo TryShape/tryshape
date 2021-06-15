@@ -5,13 +5,13 @@ import dynamic from "next/dynamic";
 import { harperFetch } from "../../utils/HarperFetch";
 
 // Dummy Shape Data
-// import { shapes } from "../../data/shapes";
+import { shapes } from "../../data/shapes";
 
 // loader
 import Loader from "react-loader-spinner";
 
 // ShapeListing
-import { ShapeList } from '..';
+import { ShapeList, Header } from '..';
 
 const App = (props) => {
   const [data, setData] = useState([]);
@@ -22,10 +22,10 @@ const App = (props) => {
     setLoading(true);
 
     // fetching the shape data
-    const shapes = await harperFetch({
+    /*const shapes = await harperFetch({
       operation: "sql",
       sql: "SELECT * FROM tryshape.shapes",
-    });
+    });*/
     console.log(shapes);
     let modifiedShapes = shapes.map((shape, index) => {
       shape.showAdvanced = false;
@@ -42,6 +42,7 @@ const App = (props) => {
 
   return (
     <>
+      <Header {...props} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}
