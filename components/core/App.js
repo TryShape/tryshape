@@ -64,7 +64,7 @@ const App = (props) => {
           width={300}
         />
       ) : (
-        <ShapeList data={ data } />
+        <ShapeList {...props} data={ data } />
       )}
     </>
   );

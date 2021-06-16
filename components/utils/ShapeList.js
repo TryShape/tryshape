@@ -15,14 +15,15 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 // Switch
 import Switch from "react-switch";
 
-// html-to-image
-import { toPng } from 'html-to-image';
-
-// downloadjs
-import download from 'downloadjs';
-
 // icons
 import { FiCopy, FiDownload, FiHeart, FiLock } from 'react-icons/fi';
+import { BiExport } from "react-icons/bi";
+
+// Export Shape
+import { ExportShape } from '..';
+
+// misc unitless
+import { getShapeFileName, getShapeId } from '../../utils/misc';
 
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
@@ -86,7 +87,7 @@ const CopyIcon = styled(FiCopy)`
   }
 `;
 
-const DownloadIcon = styled(FiDownload)`
+const ExportIcon = styled(BiExport)`
   cursor: pointer;
   &:hover {
     color: #f71b76;
@@ -100,9 +101,11 @@ const LikeIcon = styled(FiHeart)`
   }
 `;
 
-const ShapeList = ({ data }) => {
+const ShapeList = ({ setOpen, user, data }) => {
 
   const [shapes, setShapes] = useState(data);
+  const [showExportModal, setShowExportModal] = useState(false);
+  const [shapeToExport, setShapeToExport] = useState();
 
   const handleSwicth = (shapeName) => {
     
@@ -118,20 +121,6 @@ const ShapeList = ({ data }) => {
     setShapes(...[modifiedShapes]);
   };
 
-  const getShapeFileName = (name) => {
-    return name.split(" ").join("-");
-  };
-
-  const saveAsPng = (event, id, name) => {
-    console.log('Save as Png');
-
-    toPng(document.getElementById(id)).then(function (dataUrl) {
-      console.log(dataUrl);
-      download(dataUrl, `${name}.png`);
-      toast.success(`${name}.png has been exported sucessfully!`);
-    });
-  }
-
   async function performCopy(event, formula) {
     event.preventDefault();
     try {
@@ -143,9 +132,22 @@ const ShapeList = ({ data }) => {
     }
   }
 
+  const performExport = shape => {
+    if (user.length === 0) {
+      setOpen(true);
+    } else {
+      setShapeToExport(shape);
+      setShowExportModal(true);
+    }
+  }
+
   return (
     <ShapePallete>
       <ShapeCards>
+        <ExportShape 
+          show={ showExportModal } 
+          setShow={ setShowExportModal }
+          shape = { shapeToExport } />
         {shapes.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
@@ -156,16 +158,10 @@ const ShapeList = ({ data }) => {
                   <span title="Like">
                     <LikeIcon size={24} />
                   </span>{" "}
-                  <span title="Download">
-                    <DownloadIcon
+                  <span title="Export">
+                    <ExportIcon
                       size={24}
-                      onClick={(event) =>
-                        saveAsPng(
-                          event,
-                          `${getShapeFileName(shape.name)}-id`,
-                          getShapeFileName(shape.name)
-                        )
-                      }
+                      onClick={() => performExport(shape)}
                     />
                   </span>
                 </ShapeActions>
@@ -174,7 +170,7 @@ const ShapeList = ({ data }) => {
                 width="300px"
                 height="300px"
                 name={shape.name}
-                id={`${getShapeFileName(shape.name)}-id`}
+                id={getShapeId(shape.name)}
                 backgroundColor="#eb3d86"
                 showShadow={shape.showAdvanced}
               />
