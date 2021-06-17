@@ -144,10 +144,12 @@ const ShapeList = ({ setOpen, user, data }) => {
   return (
     <ShapePallete>
       <ShapeCards>
-        <ExportShape 
+        
+        { shapeToExport && <ExportShape 
           show={ showExportModal } 
           setShow={ setShowExportModal }
-          shape = { shapeToExport } />
+          shape = { shapeToExport } /> }
+
         {shapes.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>

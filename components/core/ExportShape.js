@@ -27,24 +27,56 @@ import { getShapeId } from "../../utils/misc";
 // Radios
 import { Radios } from "..";
 
+// Component
 const ExportShape = ({ show, setShow, shape }) => {
   console.log({ shape });
-  const [exportType, setExportType] = useState();
+
+  // state object to hold the export data
+  const [exportData, setExportData] = useState();
+  const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    setExportType('png');
+    setExportData({
+      'name': shape.name,
+      'type': 'png',
+      'width': '300',
+      'height': '300',
+      'backgroundColor': shape.backgroundColor
+    });
+    setLoaded(true);
   }, [show])
 
-  const handleTypeChange = (event) => {
-    const { value } = event.target;
+  // Handles the input changes and update
+  // the state object
+  const handleChange = (evt) => {
+    evt.preventDefault();
 
-    console.log(`selected export type ${value}`);
-    setExportType(value);
+    const name = evt.target.name;
+    let value =
+        evt.target.type === "number" 
+            ? evt.target.valueAsNumber 
+            : evt.target.value;
+
+    if (value < 0) {
+        return;
+    }
+
+    if (Number.isNaN(value)) {
+        value = "";
+    }
+
+    setExportData({
+      ...exportData,
+      [name]: value
+    });
+    
+    console.log({exportData});
   };
 
+  // Export method
   const doExport = (id, name) => {
-    console.log(`Save as ${exportType}`);
-    switch (exportType) {
+    console.log(`Save as ${exportData.type}`);
+    switch (exportData.type) {
       case "png":
         exportAsPNG(id, name);
         break;
@@ -86,7 +118,7 @@ const ExportShape = ({ show, setShow, shape }) => {
   };
   return (
     <>
-      {shape && (
+      {loaded && (
         <Modal
           size="lg"
           aria-labelledby="contained-modal-title-vcenter"
@@ -95,37 +127,81 @@ const ExportShape = ({ show, setShow, shape }) => {
           centered
         >
           <Modal.Header closeButton>
-            <Modal.Title>Export {shape.name} </Modal.Title>
+            <Modal.Title>Export {exportData.name} </Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <div>
               <Shape
-                name={shape.name}
+                name={exportData.name}
                 formula={shape.formula}
-                width="300px"
-                height="300px"
-                backgroundColor={shape.backgroundColor}
-                id={getShapeId(shape.name, true)}
+                width={`${exportData.width}px`}
+                height={`${exportData.height}px`}
+                backgroundColor={exportData.backgroundColor}
+                id={getShapeId(exportData.name, true)}
               />
             </div>
-            <div>
-              <Radios
-                groupName="export-type"
-                heading="Export as:"
-                options={[
-                  { value: "png", displayValue: "png" },
-                  { value: "jpeg", displayValue: "jpeg" },
-                  { value: "svg", displayValue: "svg" },
-                ]}
-                selectedOption={exportType}
-                onValueChange={handleTypeChange}
-              />
-            </div>
+            <form>
+              <div>
+                <label htmlFor="export-name">Name</label>
+                <input 
+                  type="text" 
+                  name="name" 
+                  id="export-name" 
+                  value={exportData.name} 
+                  onChange={handleChange} />
+              </div>
+
+              <div>
+                <label htmlFor="export-color">Color</label>
+                <input 
+                  type="color" 
+                  name="backgroundColor" 
+                  id="export-color" 
+                  value={exportData.backgroundColor} 
+                  onChange={handleChange} />
+              </div>
+
+              <div>
+                <label htmlFor="export-width">Set a width(in px)</label>
+                <input 
+                  type="range" 
+                  min="100" 
+                  max="700" 
+                  value={exportData.width} 
+                  id="export-width"
+                  name="width"
+                  onChange={handleChange} />
+
+                <label htmlFor="export-height">Set a height(in px)</label>
+                <input 
+                  type="range" 
+                  min="100" 
+                  max="700" 
+                  value={exportData.height} 
+                  id="export-height"
+                  name="height"
+                  onChange={handleChange} />
+              </div>
+
+              <div>
+                <Radios
+                  groupName="type"
+                  heading="Export as:"
+                  options={[
+                    { value: "png", displayValue: "png" },
+                    { value: "jpeg", displayValue: "jpeg" },
+                    { value: "svg", displayValue: "svg" },
+                  ]}
+                  selectedOption={exportData.type}
+                  onValueChange={handleChange}
+                />
+              </div>
+            </form>
           </Modal.Body>
 
           <Modal.Footer>
             <Button
-              onClick={() => doExport(getShapeId(shape.name, true), shape.name)}
+              onClick={() => doExport(getShapeId(exportData.name, true), exportData.name)}
             >
               Export
             </Button>
