@@ -171,7 +171,7 @@ const ShapeList = ({ setOpen, user, data }) => {
                 height="300px"
                 name={shape.name}
                 id={getShapeId(shape.name)}
-                backgroundColor="#eb3d86"
+                backgroundColor= {shape.backgroundColor || "#eb3d86"}
                 showShadow={shape.showAdvanced}
               />
 
