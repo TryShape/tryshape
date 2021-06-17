@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "bootstrap": "4.6.0",
+    "date-fns": "^2.22.1",
     "downloadjs": "^1.4.7",
     "firebase": "^8.6.7",
     "html-to-image": "^1.6.2",

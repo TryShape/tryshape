@@ -28,13 +28,22 @@ const App = (props) => {
       // User is not logged In
       shapes = await harperFetch({
         operation: "sql",
-        sql: "SELECT * from tryshape.shapes as s where s.private = false",
+        sql: `SELECT * 
+          FROM tryshape.shapes s 
+          INNER JOIN tryshape.users u 
+          ON s.createdBy=u.email 
+          WHERE s.private=false`,
       });
     } else {
       // User is logged in. Let's fetch the private shape and pther public shapes.
       shapes = await harperFetch({
         operation: "sql",
-        sql: `SELECT * from tryshape.shapes WHERE createdBy = '${user.email}' OR private = false`,
+        sql: `SELECT *
+          FROM tryshape.shapes s
+          INNER JOIN tryshape.users u 
+          ON s.createdBy=u.email 
+          WHERE s.private=false 
+          OR createdBy = '${user.email}'`,
       });
     }
 
