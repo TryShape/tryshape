@@ -15,7 +15,6 @@ const Landing = ({ setOpen, user, setUser }) => {
     
     return(
         <div>
-            <Header setOpen={setOpen} user={user} setUser={setUser} />
             <div>
                 <h1>Landing</h1>
             </div>
