@@ -25,6 +25,9 @@ import { ExportShape } from '..';
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
 
+// date-fns
+import { formatRelative } from "date-fns";
+
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
     display: flex;
@@ -178,7 +181,11 @@ const ShapeList = ({ setOpen, user, data }) => {
               />
 
               <div>
-                <span>Created By {shape.createdBy} at {shape['__createdtime__']}</span>
+                <span>
+                  Created By 
+                  <img src={shape.photoURL} alt={shape.name1} height='30px' width='30px' />
+                  {shape.name1} at {formatRelative(shape['__createdtime__'], new Date())}
+                </span>
               </div>
 
               <ShapeCardSwitch>
