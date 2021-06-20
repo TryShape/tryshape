@@ -6,6 +6,9 @@ import styled from "styled-components";
 // dynamic from Next.js
 import dynamic from "next/dynamic";
 
+// harperDb fetch call
+import { harperFetch } from "../../utils/HarperFetch";
+
 // Toast
 import toast from "react-hot-toast";
 
@@ -144,6 +147,69 @@ const ShapeList = ({ setOpen, user, data }) => {
     }
   }
 
+  const performLike = async (event, shapeId) => {
+    if (user.length === 0) {
+      showOpen(true);
+    } else {
+      // Initialize likes
+      let likes = 0;
+
+      // Check if already an entry for this user's like
+      // for the shape present.
+      const isPresent = await harperFetch({
+        operation: "sql",
+        sql: `SELECT * 
+            FROM tryshape.likes 
+            WHERE shape_id='${shapeId}' AND email='${user.email}'`,
+      });
+      // Get the latest likes count from db
+      const returnValue = await harperFetch({
+        operation: "sql",
+        sql: `SELECT s.likes 
+          FROM tryshape.shapes s 
+          WHERE s.shape_id='${shapeId}'`,
+      });
+          
+      if (isPresent.length === 0) {
+        // If not present, add for like
+        const insertLike = await harperFetch({
+          operation: "sql",
+          sql: `INSERT into tryshape.likes(shape_id, email) 
+              values('${shapeId}', '${user.email}')`,
+        });
+
+        if (insertLike) {
+          // Update the count by 1
+          likes = returnValue[0].likes + 1;
+
+          // Update the like state
+        }
+      } else {
+        // If present, delete to remove like
+        const deleteLike = await harperFetch({
+          operation: "sql",
+          sql: `DELETE from tryshape.likes 
+              WHERE shape_id='${shapeId}' AND email='${user.email}'`,
+        });
+        if (deleteLike) {
+          // update the like count decrease by 1
+          likes = returnValue[0].likes - 1;
+
+          // update the likes state
+        }
+      }
+
+      // Update the shape data with the updated count
+      const updated = await harperFetch({
+        operation: "sql",
+        sql: `UPDATE tryshape.shapes SET likes = ${likes} WHERE shape_id='${shapeId}'`
+      });
+
+      // Update the shape data in the shapes array
+      
+    }
+  };
+
   return (
     <ShapePallete>
       <ShapeCards>
@@ -161,7 +227,10 @@ const ShapeList = ({ setOpen, user, data }) => {
                 {shape.private && <FiLock />}
                 <ShapeActions>
                   <span title="Like">
-                    <LikeIcon size={24} />
+                    <LikeIcon 
+                      size={24} 
+                      onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>
+                    {shape.likes}
                   </span>{" "}
                   <span title="Export">
                     <ExportIcon
