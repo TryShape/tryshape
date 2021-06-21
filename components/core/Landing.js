@@ -12,10 +12,13 @@ import { Header } from '..'
 import { AiOutlineGateway, AiOutlineFileImage, AiFillGithub, AiOutlineInstagram, AiOutlineTwitter, AiOutlineLink } from "react-icons/ai";
 import { FiInstagram, FiTwitter, FiLink, FiPenTool, FiSearch, FiMousePointer, FiGithub } from "react-icons/fi";
 
+// Images
+// import bannerBackgroundImage from '../../public/vercel.svg';
 
 // link
 import Link from "next/link";
 
+// Styled Component
 import styled from "styled-components";
 
 // LandingBanner
@@ -26,6 +29,10 @@ const LandingBanner = styled.section`
     align-items: center;
     min-height: 100vh;   
     background-color: var(--color-brand);
+    // background-image: url(${props => props.backgroundImage});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 
 const BannerHeader = styled.div`
@@ -179,7 +186,7 @@ const SectionTitle = styled.div`
 
 const SectionFileTypes = styled.section`
     padding: 6rem 0;
-    background-color: rgba(var(--color-brand-rgb), 0.03);
+    background-color: var(--color-neutral-20);
 `;
 
 const SectionContact = styled.section`
@@ -190,6 +197,16 @@ const SectionContact = styled.section`
 const SectionContactCredits = styled.p`
     margin: 1rem 0;
     color: var(--color-neutral-80);
+
+    a {
+      color: var(--color-brand);
+      text-decoration: underline;
+
+      &:hover,
+      &:focus {
+        color: var(--color-brand-secondary);
+      }
+    }
 `;
 
 const SocialLinks = styled.div`
@@ -213,10 +230,10 @@ const SocialLinks = styled.div`
 
       &:hover,
       &:focus {
-        background-color: rgba(var(--color-brand-rgb), 6%);
+        background-color: var(--color-brand);
 
         svg {
-          fill: var(--color-neutral-10);
+          stroke: var(--color-neutral-10);
         }
       }
     }
@@ -276,7 +293,7 @@ const FeatureIconCardItem = styled.div`
     background: var(--color-neutral-10);
     border-radius: 1rem;
     padding: 3.2rem 2.8rem;
-        box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
+    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
 
 
     .card-icon {
@@ -325,9 +342,9 @@ const Landing = ({ setOpen, user, setUser }) => {
                 <BannerHeader>
                   <Logo><AiOutlineGateway /><div>TryShape</div></Logo>
                   <Navigation>
-                    <a href="#keyfeatures">Key Features</a>
-                    <a href="#filesupport">File Support</a>
-                    <a href="#contact">Contact</a>
+                    <a data-scroll href="#keyfeatures">Key Features</a>
+                    <a data-scroll href="#filesupport">File Support</a>
+                    <a data-scroll href="#contact">Contact</a>
                   </Navigation>
                   <ActionBar>
                     <Link href="/app">

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 
+// Bootstrap
+import Container from 'react-bootstrap/Container'
+
 // Styled Component
 import styled from "styled-components";
 
@@ -34,20 +37,25 @@ import { formatRelative } from "date-fns";
 
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+    padding: 4rem 0 2rem 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    grid-gap: 2rem;
+    // display: flex;
+    // flex-wrap: wrap;
+    // justify-content: center;
+    // align-items: center;
+    
 `;
 
 const ShapeCard = styled.div`
-  width: 400px;
-  min-height: 456px;
-  border: 1px solid #ececec;
-  border-radius: 4px;
-  padding: 5px;
-  margin: 5px;
-  background-color: #ebebeb;
+  padding: 1rem 1.6rem;
+  border-radius: 0.6rem;
+  background-color: var(--color-neutral-10);
+
+  &:hover {
+    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
+  }
 `;
 
 const ShapeActions = styled.div`
@@ -74,8 +82,8 @@ const ShapeDetailsItems = styled.li`
   word-wrap: break-word;
 `;
 
-const ShapePallete = styled.div`
-  margin-top: 5px;
+const ShapeCardsContainer = styled.div`
+  background-color: var(--color-neutral-20);
 `;
 
 const ShapeCardHeader = styled.div`
@@ -242,8 +250,9 @@ const ShapeList = ({ setOpen, user, data }) => {
   };
 
   return (
-    <ShapePallete>
-      <ShapeCards>
+    <ShapeCardsContainer>
+      <Container>
+       <ShapeCards>
         
         { shapeToExport && <ExportShape 
           show={ showExportModal } 
@@ -327,7 +336,8 @@ const ShapeList = ({ setOpen, user, data }) => {
           </React.Fragment>
         ))}
       </ShapeCards>
-    </ShapePallete>
+      </Container>
+    </ShapeCardsContainer>
   );
 };
 
