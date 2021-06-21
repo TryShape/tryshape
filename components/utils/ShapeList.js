@@ -283,6 +283,7 @@ const ShapeList = ({ setOpen, user, data }) => {
                 height="300px"
                 name={shape.name}
                 id={getShapeId(shape.name)}
+                formula={shape.formula}
                 backgroundColor= {shape.backgroundColor || "#eb3d86"}
                 showShadow={shape.showAdvanced}
               />
