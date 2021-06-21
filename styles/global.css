@@ -12,16 +12,17 @@
   /* Neutral */
   --color-neutral-10: #ffffff;
   --color-neutral-20: #f6f6f9;
-  --color-neutral-30: #f6f7fa;
-  --color-neutral-40: #ffffff;
-  --color-neutral-50: #ffffff;
-  --color-neutral-60: #ffffff;
-  --color-neutral-70: #ffffff;
+  --color-neutral-30: #E0E0E6;
+  --color-neutral-40: #B0AFB6;
+  --color-neutral-50: #8D8C95;
+  --color-neutral-60: #6A6973;
+  --color-neutral-70: #474552;
   --color-neutral-80: #242230;
   --color-neutral-90: #040222;
   --color-neutral-100: #000000;
 
   --color-neutral-10-rgb: 255, 255, 255;
+  --color-neutral-100-rgb: 0, 0, 0;
   
   /* Font Weight */
   --fw-light: 300;
@@ -126,4 +127,8 @@ code {
     background-color: var(--color-primary-accent);
     font-weight: var(--fw-bold);
     color: var(--color-neutral-90);
+}
+
+.btn-outline-light {
+    padding: 0.8rem 1.4rem;
 }

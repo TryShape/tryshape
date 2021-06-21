@@ -12,10 +12,12 @@ import toast from "react-hot-toast";
 // icon
 import { FaShapes } from "react-icons/fa";
 
-// Button
+// Bootstrap
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup'
 import FormControl from 'react-bootstrap/FormControl'
+
+import { FiSearch } from "react-icons/fi";
 
 // Styled Component
 import styled from "styled-components";
@@ -58,8 +60,23 @@ const AppHeader = styled.div`
 `;
 
 const NavbarSearchInput = styled(InputGroup)`
-    width: 60%;
+    width: 60% !important;
+    border-radius: 0.4rem;
+    background-color: rgba(var(--color-neutral-100-rgb), 0.3);
 `;
+
+const NavbarSearchInputText = styled(InputGroup.Text)`
+    background-color: transparent !important;
+    border: 0 !important;
+`;
+
+const NavbarSearchInputControl = styled(FormControl)`
+  background-color: transparent !important;
+  border: 0 !important;
+  color: var(--color-neutral-10) !important;
+`;
+
+InputGroup
 
 const Header = ({ setOpen, user, setUser }) => {
   // console.log(user);
@@ -88,10 +105,10 @@ const Header = ({ setOpen, user, setUser }) => {
         </a>
       </Link>
       <NavbarSearchInput>
-        <InputGroup.Text id="basic-addon1">@</InputGroup.Text>
-        <FormControl
-          placeholder="Username"
-          aria-label="Username"
+        <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' /></NavbarSearchInputText>
+        <NavbarSearchInputControl
+          placeholder="Search a shape"
+          aria-label="Search a shape"
           aria-describedby="basic-addon1"
         />
       </NavbarSearchInput>

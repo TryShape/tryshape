@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 // Bootstrap
 import Container from 'react-bootstrap/Container'
+import Button from "react-bootstrap/Button";
 
 // Styled Component
 import styled from "styled-components";
@@ -37,7 +38,7 @@ import { formatRelative } from "date-fns";
 
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
-    padding: 4rem 0 2rem 0;
+    padding: 5rem 0 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(240px, 1fr));
     grid-gap: 2rem;
@@ -49,22 +50,99 @@ const ShapeCards = styled.div`
 `;
 
 const ShapeCard = styled.div`
-  padding: 1rem 1.6rem;
   border-radius: 0.6rem;
   background-color: var(--color-neutral-10);
+  overflow: hidden;
 
   &:hover {
-    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
+    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 26%);
+
+    .shape-actions {
+      opacity: 1;
+    }
   }
 `;
 
-const ShapeActions = styled.div`
-  float: right;
+const ShapeActionsContainer = styled.div`
+  padding: 2rem;
+  display: flex;
+  grid-gap: 1rem;
+  justify-content: center;
 `;
 
-const ShapeName = styled.span`
-  font-weight: bold;
-  font-size: 20px;
+const ShapeActions = styled.div`
+  opacity: 0;
+  background: rgba(var(--color-neutral-100-rgb), 0.5);
+  transition: all .3s ease-in-out;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+`;
+
+const ShapeName = styled.h4`
+  margin: 0 0 0.8rem 0;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-rg);
+  color: var(--color-neutral-100);
+`;
+
+const ShapeNameHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ShapeLikes = styled.div`
+  display: flex;
+  align-items: center;
+  height: 1.6rem;
+
+  svg {
+    margin-right: 0.3rem;
+  }
+`;
+
+const ShapeLikesCount = styled.div`
+  font-size: var(--fs-sm);
+  color: var(--color-neutral-60);
+`;
+
+const ShapeCredits = styled.div`
+  display: flex;
+  align-items: center;
+  border-top: solid 1px var(--color-neutral-20);
+  padding-top: 1rem;
+`;
+
+const ShapeCreditsOwner = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: var(--fs-md);
+`;
+
+const ShapeCreditsDate = styled.small`
+  margin-top: 0.3rem;
+  font-size: var(--fs-sm);
+  color: var(--color-neutral-50);
+  line-height: 1;
+`;
+
+const ShapeCreditsOwnerName = styled.div`
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-neutral-60);
+  line-height: 1;
+`;
+
+const ShapeCreditsThumb = styled.img`
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  margin-right: 0.4rem;
 `;
 
 const Playground = styled.div`
@@ -86,43 +164,35 @@ const ShapeCardsContainer = styled.div`
   background-color: var(--color-neutral-20);
 `;
 
+const ShapeCardBody = styled.div`
+  position: relative;
+  padding: 1rem 1.6rem;
+`;
+
 const ShapeCardHeader = styled.div`
-  padding: 5px;
-  margin: 5px;
+  margin: 0;
+  padding: 0 1.8rem 1.6rem 1.8rem;
 `;
 
 const ShapeCardSwitch = styled.div`
+  display: none;
   margin: 5px auto auto 9px;
 `;
 
 const CopyIcon = styled(FiCopy)`
   cursor: pointer;
-  &:hover {
-    color: #f71b76;
-  }
 `;
 
 const ExportIcon = styled(BiExport)`
   cursor: pointer;
-  &:hover {
-    color: #f71b76;
-  }
 `;
 
 const LikeIcon = styled(BsHeart)`
   cursor: pointer;
-  color: red;
-  &:hover {
-    color: #f71b6f;
-  }
 `;
 
 const LikeFilledIcon = styled(BsFillHeartFill)`
   cursor: pointer;
-  color: red;
-  &:hover {
-    color: #f71b6f;
-  }
 `;
 
 const ShapeList = ({ setOpen, user, data }) => {
@@ -253,7 +323,6 @@ const ShapeList = ({ setOpen, user, data }) => {
     <ShapeCardsContainer>
       <Container>
        <ShapeCards>
-        
         { shapeToExport && <ExportShape 
           show={ showExportModal } 
           setShow={ setShowExportModal }
@@ -262,49 +331,53 @@ const ShapeList = ({ setOpen, user, data }) => {
         {shapes.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
-              <ShapeCardHeader>
-                <ShapeName>{shape.name}</ShapeName>
-                {shape.private && <FiLock />}
-                <ShapeActions>
+              <ShapeCardBody>
+                <ShapeNameHeader>
+                  <ShapeName>{shape.name}{shape.private && <FiLock />}</ShapeName>
+                  <ShapeLikes><LikeFilledIcon size='16px' color='var(--color-neutral-40)'/><ShapeLikesCount>{shape.likes}</ShapeLikesCount></ShapeLikes>
+                </ShapeNameHeader>
+                <Shape
+                  width="240px"
+                  height="240px"
+                  name={shape.name}
+                  id={getShapeId(shape.name)}
+                  formula={shape.formula}
+                  backgroundColor= {shape.backgroundColor || "#eb3d86"}
+                  showShadow={shape.showAdvanced}
+                />
+                <ShapeActions className="shape-actions">
+                  <ShapeActionsContainer>
                   <span title="Like">
                     {
                       shape.liked ? 
-                        (<LikeFilledIcon 
+                        (<Button variant="outline-light"><LikeFilledIcon 
                           size={24} 
-                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>) 
+                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/></Button>) 
                         :
-                        (<LikeIcon 
+                        (<Button variant="outline-light"><LikeIcon 
                           size={24} 
-                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>)
+                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/></Button>)
                     }
-                    {shape.likes}
+                    
                   </span>{" "}
-                  <span title="Export">
+                  <Button title="Export" variant="outline-light">
                     <ExportIcon
                       size={24}
                       onClick={() => performExport(shape)}
                     />
-                  </span>
+                  </Button>
+                  </ShapeActionsContainer>
                 </ShapeActions>
+              </ShapeCardBody>
+              <ShapeCardHeader>
+                <ShapeCredits>
+                  <ShapeCreditsThumb src={shape.photoURL} alt={shape.name1} />
+                  <ShapeCreditsOwner>
+                    <ShapeCreditsOwnerName>{shape.name1}</ShapeCreditsOwnerName>
+                    <ShapeCreditsDate>at {formatRelative(shape['__createdtime__'], new Date())}</ShapeCreditsDate>
+                  </ShapeCreditsOwner>
+                </ShapeCredits>
               </ShapeCardHeader>
-              <Shape
-                width="300px"
-                height="300px"
-                name={shape.name}
-                id={getShapeId(shape.name)}
-                formula={shape.formula}
-                backgroundColor= {shape.backgroundColor || "#eb3d86"}
-                showShadow={shape.showAdvanced}
-              />
-
-              <div>
-                <span>
-                  Created By 
-                  <img src={shape.photoURL} alt={shape.name1} height='30px' width='30px' />
-                  {shape.name1} at {formatRelative(shape['__createdtime__'], new Date())}
-                </span>
-              </div>
-
               <ShapeCardSwitch>
                 <label htmlFor={`${getShapeFileName(shape.name)}-form`}>
                   <span>Show Clip-Path Info</span>{" "}
