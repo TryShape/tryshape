@@ -19,8 +19,9 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 import Switch from "react-switch";
 
 // icons
-import { FiCopy, FiDownload, FiHeart, FiLock } from 'react-icons/fi';
+import { FiCopy, FiDownload, FiLock } from 'react-icons/fi';
 import { BiExport } from "react-icons/bi";
+import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 
 // Export Shape
 import { ExportShape } from '..';
@@ -100,8 +101,17 @@ const ExportIcon = styled(BiExport)`
   }
 `;
 
-const LikeIcon = styled(FiHeart)`
+const LikeIcon = styled(BsHeart)`
   cursor: pointer;
+  color: red;
+  &:hover {
+    color: #f71b6f;
+  }
+`;
+
+const LikeFilledIcon = styled(BsFillHeartFill)`
+  cursor: pointer;
+  color: red;
   &:hover {
     color: #f71b6f;
   }
@@ -127,6 +137,9 @@ const ShapeList = ({ setOpen, user, data }) => {
     setShapes(...[modifiedShapes]);
   };
 
+  /**
+   * Copy the clip-path value to clipboard
+   */
   async function performCopy(event, formula) {
     event.preventDefault();
     try {
@@ -138,20 +151,32 @@ const ShapeList = ({ setOpen, user, data }) => {
     }
   }
 
+  /**
+   * Method to execute when user clicks on the export shape
+   */
   const performExport = shape => {
+    // Check if user logged-in
     if (user.length === 0) {
+      // Show the login modal if user is not authenticated
       setOpen(true);
     } else {
+      // Set the shape details to export
       setShapeToExport(shape);
+      // Show the export modal
       setShowExportModal(true);
     }
   }
 
+  /**
+   * Method to execute when user clicks on the likes
+   */
   const performLike = async (event, shapeId) => {
+    // Check if user logged-in
     if (user.length === 0) {
-      showOpen(true);
+      // Show the login modal if user is not authenticated
+      setOpen(true);
     } else {
-      // Initialize likes
+      // Good to go. Initialize likes
       let likes = 0;
 
       // Check if already an entry for this user's like
@@ -181,8 +206,6 @@ const ShapeList = ({ setOpen, user, data }) => {
         if (insertLike) {
           // Update the count by 1
           likes = returnValue[0].likes + 1;
-
-          // Update the like state
         }
       } else {
         // If present, delete to remove like
@@ -194,8 +217,6 @@ const ShapeList = ({ setOpen, user, data }) => {
         if (deleteLike) {
           // update the like count decrease by 1
           likes = returnValue[0].likes - 1;
-
-          // update the likes state
         }
       }
 
@@ -206,7 +227,17 @@ const ShapeList = ({ setOpen, user, data }) => {
       });
 
       // Update the shape data in the shapes array
-      
+      let modifiedShapes = shapes.map((shape, index) => {
+        if (shape['shape_id'] === shapeId) {
+          return {
+            ...shape,
+            liked: !shape.liked,
+            likes: likes
+          };
+        }
+        return shape;
+      });
+      setShapes(...[modifiedShapes]);
     }
   };
 
@@ -227,9 +258,16 @@ const ShapeList = ({ setOpen, user, data }) => {
                 {shape.private && <FiLock />}
                 <ShapeActions>
                   <span title="Like">
-                    <LikeIcon 
-                      size={24} 
-                      onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>
+                    {
+                      shape.liked ? 
+                        (<LikeFilledIcon 
+                          size={24} 
+                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>) 
+                        :
+                        (<LikeIcon 
+                          size={24} 
+                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/>)
+                    }
                     {shape.likes}
                   </span>{" "}
                   <span title="Export">
