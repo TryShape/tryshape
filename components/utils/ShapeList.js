@@ -347,24 +347,26 @@ const ShapeList = ({ setOpen, user, data }) => {
                 />
                 <ShapeActions className="shape-actions">
                   <ShapeActionsContainer>
-                  <span title="Like">
+                  <span 
+                    title="Like"
+                    onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
                       shape.liked ? 
-                        (<Button variant="outline-light"><LikeFilledIcon 
-                          size={24} 
-                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/></Button>) 
+                        (<Button variant="outline-light">
+                          <LikeFilledIcon size={24} />
+                          </Button>
+                        ) 
                         :
-                        (<Button variant="outline-light"><LikeIcon 
-                          size={24} 
-                          onClick={(event, shapeId) => performLike(event, shape['shape_id'])}/></Button>)
+                        (<Button variant="outline-light">
+                            <LikeIcon size={24} />
+                          </Button>
+                        )
                     }
                     
                   </span>{" "}
-                  <Button title="Export" variant="outline-light">
+                  <Button title="Export" variant="outline-light" onClick={() => performExport(shape)}>
                     <ExportIcon
-                      size={24}
-                      onClick={() => performExport(shape)}
-                    />
+                      size={24} />
                   </Button>
                   </ShapeActionsContainer>
                 </ShapeActions>
