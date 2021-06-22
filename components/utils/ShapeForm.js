@@ -11,13 +11,17 @@ const ColorPicker = styled.input`
 
 const ShapeForm = (props) => {
     return (
-        <Form id="previewForm">
+        <Form noValidate validated={props.validated} onSubmit={props.handleSubmit} id="previewForm">
             <Form.Group>
                 <Form.Label>Shape Name:</Form.Label>
                 <Form.Control 
                     type="text" 
                     name="name" 
+                    value={props.shapeInformation.name} 
+                    onChange={props.handleChange} 
+                    required
                 />
+                <Form.Control.Feedback type="invalid">Name required!</Form.Control.Feedback>
             </Form.Group>
 
             <Form.Group>
@@ -26,6 +30,8 @@ const ShapeForm = (props) => {
                     as="textarea" 
                     name="notes" 
                     rows={3}
+                    value={props.shapeInformation.notes} 
+                    onChange={props.handleChange} 
                 />
             </Form.Group>
 
@@ -34,6 +40,8 @@ const ShapeForm = (props) => {
                 <ColorPicker 
                     type="color" 
                     name="backgroundColor"
+                    value={props.shapeInformation.backgroundColor}
+                    onChange={props.handleChange}
                 />
             </Form.Group>
 
@@ -41,7 +49,9 @@ const ShapeForm = (props) => {
                 <Form.Label>Type of Clip Path:</Form.Label>
                 <Form.Control 
                     as="select" 
-                    name="clipPathType"
+                    name="clipPathType" 
+                    value={props.shapeInformation.clipPathType} 
+                    onChange={props.handleChange}
                 >
                     <option value="polygon">Polygon</option>
                     <option value="circle">Circle</option>
@@ -53,8 +63,12 @@ const ShapeForm = (props) => {
                 <Form.Label>Clip-Path:</Form.Label>
                 <Form.Control 
                     type="text" 
-                    name="formula"
+                    name="formula" 
+                    value={props.shapeInformation.formula} 
+                    onChange={props.handleChange} 
+                    required
                 />
+                <Form.Control.Feedback type="invalid">Formula required!</Form.Control.Feedback>
             </Form.Group>
         </Form>
     );
