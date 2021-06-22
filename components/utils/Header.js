@@ -55,6 +55,16 @@ const Header = ({ setOpen, user, setUser }) => {
             {user.displayName ? user.displayName : "User"}
           </div>
 
+          <Link href="/new">
+            <a>
+              <Button>
+                <div>
+                  Create Shape
+                </div>
+              </Button>
+            </a>
+          </Link>
+
           <Button onClick={signOut}>
             <div>Sign Out</div>
           </Button>
