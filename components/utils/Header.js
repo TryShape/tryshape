@@ -15,10 +15,12 @@ import ImgLogo from '../../public/images/img-logo.svg'
 
 // Bootstrap
 import Button from "react-bootstrap/Button";
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
+import DropdownButton from 'react-bootstrap/DropdownButton';
+import Dropdown from 'react-bootstrap/Dropdown'
 
-import { FiSearch } from "react-icons/fi";
+import { FiSearch, FiPlus } from "react-icons/fi";
 
 // Styled Component
 import styled from "styled-components";
@@ -30,6 +32,7 @@ const AppHeader = styled.div`
     right: 0;
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     width: 100%;
     padding: 0.6rem 0.8rem;
     background-color: var(--color-brand);
@@ -48,9 +51,15 @@ const Logo = styled.h1`
    cursor: pointer;
 `;
 
+const NavbarSearchInputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  max-width: 560px;
+  width: 60% !important;
+`;
+
 const NavbarSearchInput = styled(InputGroup)`
     position: relative;
-    width: 60% !important;
     border-radius: 0.4rem;
     background-color: rgba(var(--color-neutral-100-rgb), 0.3);
 
@@ -81,7 +90,7 @@ const NavbarSearchInputControl = styled(FormControl)`
 `;
 
 const CloseIcon = styled(FiX)`
-  margin: 0.36rem;
+  margin: 0.37rem;
 `;
 
 const UserThumb = styled.div`
@@ -100,6 +109,10 @@ const UserThumbName = styled.div`
   font-size: var(--fs-sm);
   color: var(--color-neutral-10);
   line-height: 1;
+  max-width: 64px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
 const LogoutButton = styled(Button)`
@@ -108,7 +121,10 @@ const LogoutButton = styled(Button)`
 
 const LoginBar = styled.div`
   display: flex;
+  align-items: center;
 `;
+
+
 
 const Header = ({ setOpen, user, setUser }) => {
   // console.log(user);
@@ -133,18 +149,29 @@ const Header = ({ setOpen, user, setUser }) => {
           <div className="sr-only">TryShape</div>
         </Logo>
       </Link>
-      <NavbarSearchInput>
-        <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
-        <NavbarSearchInputControl
-          placeholder="Search a shape"
-          aria-label="Search a shape"
-          aria-describedby="basic-addon1"
-        />
-        <CloseIcon color='#ffffff' size='24px' />
-      </NavbarSearchInput>
+      <NavbarSearchInputContainer>
+        <NavbarSearchInput>
+          <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
+          <NavbarSearchInputControl
+            placeholder="Search a shape"
+            aria-label="Search a shape"
+            aria-describedby="basic-addon1"
+          />
+          <CloseIcon color='#ffffff' size='24px' />
+        </NavbarSearchInput>
+        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title="View by Popularity" className="border-0">
+          <Dropdown.Item href="#/action-1">Likes</Dropdown.Item>
+          <Dropdown.Item href="#/action-2" active>Popularity</Dropdown.Item>
+          <Dropdown.Item href="#/action-3">Newly Added</Dropdown.Item>
+        </DropdownButton>
+      </NavbarSearchInputContainer>
       {(user.email || user.displayName) ? (
         <>
-          <LoginBar>
+          <LoginBar>   
+            <Button variant="primary" size="sm" className="mr-3">
+              <FiPlus />
+              Add Shape
+            </Button>     
             <UserThumb>
               <img
                 src={
@@ -156,8 +183,7 @@ const Header = ({ setOpen, user, setUser }) => {
               />
               <UserThumbName>{user.displayName ? user.displayName : "User"}</UserThumbName>
             </UserThumb>
-
-            <LogoutButton onClick={signOut} variant="link" className="btn-icon">
+            <LogoutButton onClick={signOut} variant="link" className="btn-icon p-0 ml-2">
               <FiPower color='var(--color-neutral-10' size="18px"/>
               <div className="sr-only">Sign Out</div>
             </LogoutButton>

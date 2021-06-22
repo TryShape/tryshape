@@ -8,6 +8,9 @@
 
   /* Primary Colors */
   --color-primary-accent: #18ffff;
+  --color-primary-pink: #f50057;
+  --color-primary-pink-light: #ff5983;
+  --color-primary-pink-dark: #c2185b;
 
   /* Neutral */
   --color-neutral-10: #ffffff;
@@ -129,6 +132,25 @@ code {
     color: var(--color-neutral-90);
 }
 
+.btn-danger {
+  padding: 0.8rem 1.4rem;
+  border: solid 1px var(--color-primary-pink);
+  background-color: var(--color-primary-pink);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-10);
+}
+
+.btn-danger:hover,
+.btn-danger:focus {
+  border-color: var(--color-primary-pink);
+  background-color: var(--color-primary-pink);
+}
+
+.btn-danger:active {
+  border-color: var(--color-primary-pink-dark) !important;
+  background-color: var(--color-primary-pink-dark) !important;
+}
+
 /* Button Outline Secondary */
 .btn-outline-secondary {
   border: solid 1px var(--color-neutral-10);
@@ -147,6 +169,11 @@ code {
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   background-color: rgba(var(--color-neutral-10-rgb), 100%) !important;
   color: var(--color-brand) !important;
+}
+
+.show>.btn-outline-secondary.dropdown-toggle {
+  background-color: rgba(var(--color-neutral-10-rgb), 10%) !important;
+  color: var(--color-neutral-10) !important;
 }
 
 /* Button Outline Secondary */
@@ -172,9 +199,13 @@ code {
   color: var(--color-brand) !important;
 }
 
-/* Small Button */
+/* Button Sizes */
+.btn {
+  padding: 0.8rem 1.4rem;
+}
+
 .btn-sm {
-  padding: 0.3rem 1rem;
+  padding: 0.5rem 1rem;
   font-size: var(--fs-sm);
 }
 
@@ -189,10 +220,6 @@ code {
 }
 
 
-.btn-outline-light {
-    padding: 0.8rem 1.4rem;
-}
-
 /* Modal Title */
 .modal-title {
   margin-left: 0.6rem;
@@ -204,4 +231,32 @@ code {
 
 .btn-icon svg {
   margin-right: 0;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  border-color: transparent;
+  padding: 0;
+  box-shadow: 3px 10px 18px 0 rgb(111 118 138 / 26%);
+}
+
+.dropdown-menu .dropdown-item {
+  padding: 0.6rem 1.1rem;
+  font-family: Inter, -apple-system, Roboto, Helvetica Neue, sans-serif;
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-neutral-90);
+}
+
+.dropdown-menu .dropdown-item.active {
+  background-color: rgba(var(--color-brand-rgb), 0.08);
+  color: var(--color-brand);
+}
+
+.dropdown-toggle::after {
+  margin-left: .8em;
+}
+
+.border-0 .dropdown-toggle {
+  border-color: transparent;
 }
