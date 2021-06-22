@@ -1,5 +1,7 @@
 :root {
   --color-brand: #5d21d2;
+  --color-brand-light: #9553ff;
+  --color-brand-dark: #491aa8;
   --color-brand-rgb: 93, 33, 210;
   --color-brand-secondary: #af21d2;
   --color-brand-secondary-rgb: 175, 33, 210;
@@ -132,6 +134,46 @@ code {
     color: var(--color-neutral-90);
 }
 
+.btn-secondary {
+  padding: 0.8rem 1.4rem;
+  border: solid 1px var(--color-brand);
+  background-color: var(--color-brand);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-10);
+}
+
+.btn-secondary:hover,
+.btn-secondary:focus {
+  border-color: var(--color-brand-light);
+  background-color: var(--color-brand-light);
+}
+
+.btn-secondary:active {
+  border-color: var(--color-brand-dark) !important;
+  background-color: var(--color-brand-dark) !important;
+}
+
+.btn-outline-info {
+  padding: 0.8rem 1.4rem;
+  border: solid 1px var(--color-brand);
+  background-color: var(--color-neutral-10);
+  font-weight: var(--fw-bold);
+  color: var(--color-brand);
+}
+
+.btn-outline-info:hover,
+.btn-outline-info:focus {
+  border-color: var(--color-brand);
+  background-color: rgba(var(--color-brand-rgb), 0.1) !important;
+  color: var(--color-brand);
+}
+
+.btn-outline-info:active {
+  border-color: var(--color-brand-dark) !important;
+  background-color: rgba(var(--color-brand-rgb), 0.16) !important;
+  color: var(--color-brand) !important;
+}
+
 .btn-danger {
   padding: 0.8rem 1.4rem;
   border: solid 1px var(--color-primary-pink);
@@ -201,7 +243,7 @@ code {
 
 /* Button Sizes */
 .btn {
-  padding: 0.8rem 1.4rem;
+  padding: 0.64rem 1.4rem;
 }
 
 .btn-sm {
@@ -259,4 +301,20 @@ code {
 
 .border-0 .dropdown-toggle {
   border-color: transparent;
+}
+
+/* Color Input */
+.form-group {
+  margin-bottom: 1.4rem !important;
+}
+.form-label {
+  font-size: var(--fs-rg);
+  font-weight: var(--fw-semibold);
+  color: var(--color-neutral-90);
+  margin-bottom: 0.26rem;
+}
+.form-control-color {
+  width: 5rem;
+  height: 3rem;
+  padding: 0.1rem 0.2rem;
 }
