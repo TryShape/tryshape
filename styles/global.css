@@ -10,6 +10,7 @@
 
   /* Primary Colors */
   --color-primary-accent: #18ffff;
+  --color-primary-accent-rgb: 24, 255, 255;
   --color-primary-accent-light: #52ffff;
   --color-primary-accent-dark: #00ebeb;
   --color-primary-pink: #f50057;
