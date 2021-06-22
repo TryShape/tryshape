@@ -352,7 +352,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <ActionBar>
                     <Link href="/app">
                         <Button className="navbar-action--primary">
-                            <FiPenTool />Try Now
+                            <FiSearch />Browse Now
                         </Button>
                     </Link>
                   </ActionBar>
@@ -361,10 +361,14 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <Container>
                     <Row>
                       <Col>
-                        <h2 className="banner-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</h2>
-                        <p className="banner-desc">Donec sodales lorem magna, ac venenatis elit euismod sit amet. Quisque dapibus sem sit amet mi rutrum egestas. Interdum et malesuada fames ac ante ipsum primis in faucibus. </p>
+                        <h2 className="banner-title">Create, Export, Share, and Use any Shapes of your choice.</h2>
+                        <p className="banner-desc">
+                          TryShape is an opensource platform to create shapes of your choice using a simple, 
+                          easy-to-use interface. You can create banners, circles, polygonal shapes, export them as
+                          SVG, PNG, and even CSS.
+                        </p>
                         <BannerBodyActions>
-                          <Link href="/app"><Button className="banner-action--primary"><FiSearch />Browse Now</Button></Link>
+                          <Link href="/app"><Button className="banner-action--primary"><FiPenTool/>Try Now</Button></Link>
                           <Link href="/app"><Button className="banner-action--secondary"><FiGithub />GitHub</Button></Link>
                         </BannerBodyActions>
                       </Col>

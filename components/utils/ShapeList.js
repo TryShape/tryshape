@@ -352,12 +352,14 @@ const ShapeList = ({ setOpen, user, data }) => {
                     onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
                       shape.liked ? 
-                        (<Button variant="outline-light">
-                          <LikeFilledIcon size={24} />
+                        (
+                          <Button variant="outline-light">
+                            <LikeFilledIcon size={24} />
                           </Button>
                         ) 
                         :
-                        (<Button variant="outline-light">
+                        (
+                          <Button variant="outline-light">
                             <LikeIcon size={24} />
                           </Button>
                         )
