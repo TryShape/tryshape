@@ -2,6 +2,7 @@ import React from "react";
 
 // icons
 import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FcGoogle } from "react-icons/fc";
 
 // Button
 import Button from "react-bootstrap/Button";
@@ -23,7 +24,7 @@ const SignInModal = ({ open, setOpen }) => {
   };
   return (
     <Modal
-      size="lg"
+      size="md"
       aria-labelledby="contained-modal-title-vcenter"
       show={ open }
       onHide={() => setOpen(false)}
@@ -35,14 +36,13 @@ const SignInModal = ({ open, setOpen }) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div className="flex">
-          <Button onClick={() => handleOnClick(googleProvider)}>
-            Sign In with Google <FaGoogle />
+        <div className="d-flex flex-column align-items-center">
+          <Button variant="outline-dark" size="lg" onClick={() => handleOnClick(googleProvider)} className='mt-5 mb-2'>
+            <FcGoogle size='24px'/> Sign In with Google
           </Button>
 
-          <Button onClick={() => handleOnClick(githubProvider)}>
-            Sign In with Github
-            <FaGithub />
+          <Button variant="outline-dark" size="lg" onClick={() => handleOnClick(githubProvider)} className='mt-2 mb-5'>
+            <FaGithub size='24px' /> Sign In with Github
           </Button>
         </div>
       </Modal.Body>
