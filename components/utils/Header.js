@@ -79,7 +79,8 @@ const NavbarSearchInputControl = styled(FormControl)`
 InputGroup
 
 const Header = ({ setOpen, user, setUser }) => {
-  // console.log(user);
+  
+  const [searchterm, setSearchterm] = useState('');
   // sign out function
   const signOut = () => {
     auth()
@@ -94,8 +95,16 @@ const Header = ({ setOpen, user, setUser }) => {
       });
   };
 
+  const handleSearchTerm = event => {
+    if (event.key === 'Enter') {
+      search();
+    } else {
+      setSearchterm(event.target.value);
+    }
+  }
+
   const search = event => {
-    
+    console.log('Performing Search using', searchterm);
   }
 
   return (
@@ -109,11 +118,15 @@ const Header = ({ setOpen, user, setUser }) => {
         </a>
       </Link>
       <NavbarSearchInput>
-        <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' /></NavbarSearchInputText>
+        <NavbarSearchInputText 
+          id="basic-addon1">
+          <FiSearch color='white' />
+        </NavbarSearchInputText>
         <NavbarSearchInputControl
           placeholder="Search a shape"
           aria-label="Search a shape"
           aria-describedby="basic-addon1"
+          onChange={handleSearchTerm}
         />
       </NavbarSearchInput>
       {(user.email || user.displayName) ? (
