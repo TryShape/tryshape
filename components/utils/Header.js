@@ -94,6 +94,10 @@ const Header = ({ setOpen, user, setUser }) => {
       });
   };
 
+  const search = event => {
+    
+  }
+
   return (
     <AppHeader>
       <Link href="/">
