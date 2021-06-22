@@ -9,7 +9,8 @@ import Col from 'react-bootstrap/Col'
 import { Header } from '..'
 
 // Images
-import BannerBg from '../../public/images/bg-banner.png'
+import BannerBg from '../../public/images/bg-banner.png';
+import ImgLogo from '../../public/images/img-logo.svg';
 
 // icon
 import { AiOutlineGateway, AiOutlineFileImage, AiFillGithub, AiOutlineInstagram, AiOutlineTwitter, AiOutlineLink } from "react-icons/ai";
@@ -54,6 +55,7 @@ const BannerHeader = styled.div`
     padding: 0.48rem 1.4rem;
     border: solid 1px var(--color-primary-accent);
     background-color: var(--color-primary-accent);
+    font-size: var(--fs-rg);
     font-weight: var(--fw-bold);
     color: var(--color-neutral-90);
 
@@ -145,15 +147,11 @@ const BannerBodyActions = styled.div`
 `;
 
 const Logo = styled.h1`
-    display: flex;
-    grid-gap: 0.6rem;
-    align-items: flex-start;
-   font-size: 1.4rem;
-   color: var(--color-neutral-10);
-   font-weight: var(--fw-semibold);
+   width: 152px;
+   height: 32px;
+   background-image: url(${ImgLogo});
    margin: 0;
    line-height: 1;
-   padding: 0.6rem 0.8rem;
 `;
 
 const Navigation = styled.div`
@@ -343,7 +341,7 @@ const Landing = ({ setOpen, user, setUser }) => {
         <div>
             <LandingBanner>
                 <BannerHeader>
-                  <Logo><AiOutlineGateway /><div>TryShape</div></Logo>
+                  <Logo><div className="sr-only">TryShape</div></Logo>
                   <Navigation>
                     <a data-scroll href="#keyfeatures">Key Features</a>
                     <a data-scroll href="#filesupport">File Support</a>

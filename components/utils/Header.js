@@ -10,7 +10,8 @@ import { auth } from "../../utils/firebase";
 import toast from "react-hot-toast";
 
 // icon
-import { FaShapes } from "react-icons/fa";
+import { FiPower, FiX } from "react-icons/fi";
+import ImgLogo from '../../public/images/img-logo.svg'
 
 // Bootstrap
 import Button from "react-bootstrap/Button";
@@ -32,51 +33,82 @@ const AppHeader = styled.div`
     width: 100%;
     padding: 0.6rem 0.8rem;
     background-color: var(--color-brand);
+`;
 
-    .navbar-action--primary {
-      padding: 0.3rem 1rem;
-      border: solid 1px var(--color-primary-accent);
-      background-color: var(--color-primary-accent);
-      font-size: var(--fs-sm);
-      font-weight: var(--fw-bold);
-      color: var(--color-neutral-90);
-  
-      svg {
-        margin: -2px 0.6rem 0 0;
-      }
-  
-      &:hover,
-      &:focus {
-        border: solid 1px var(--color-neutral-10);
-        background-color: var(--color-neutral-10);
-        color: var(--color-brand);
-      }
-  
-      &:active {
-        background-color: rgba(var(--color-neutral-10-rgb), 90%) !important;
-        color: var(--color-brand) !important;
-      }
-    }
+const Logo = styled.h1`
+   width: 140px;
+   height: 32px;
+   background-image: url(${ImgLogo});
+   background-repeat: no-repeat;
+   background-size: contain;
+   background-position: center;
+   padding: 0;
+   margin: 2px 0 0 -8px;
+   line-height: 1;
+   cursor: pointer;
 `;
 
 const NavbarSearchInput = styled(InputGroup)`
+    position: relative;
     width: 60% !important;
     border-radius: 0.4rem;
     background-color: rgba(var(--color-neutral-100-rgb), 0.3);
+
+    &:focus-within {
+      box-shadow: 0 0 0 0.1rem rgba(var(--color-neutral-10-rgb), 40%);
+      background-color: rgba(var(--color-neutral-100-rgb), 0.4);
+    }
 `;
 
 const NavbarSearchInputText = styled(InputGroup.Text)`
+    position: absolute;
+    top: 3px;
+    left: 0;
     background-color: transparent !important;
     border: 0 !important;
 `;
 
 const NavbarSearchInputControl = styled(FormControl)`
-  background-color: transparent !important;
+  border-radius: 0.4rem !important;
   border: 0 !important;
+  background-color: transparent !important;
   color: var(--color-neutral-10) !important;
+  padding-left: 2.4rem !important;
+  font-size: var(--fs-rg) !important;
+  ::placeholder {
+    color: rgba(var(--color-neutral-10-rgb), 0.6) !important;
+  }
 `;
 
-InputGroup
+const CloseIcon = styled(FiX)`
+  margin: 0.36rem;
+`;
+
+const UserThumb = styled.div`
+  display: flex;
+  grid-gap: 0.4rem;
+  align-items: center;
+
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+  }
+`;
+
+const UserThumbName = styled.div`
+  font-size: var(--fs-sm);
+  color: var(--color-neutral-10);
+  line-height: 1;
+`;
+
+const LogoutButton = styled(Button)`
+  color: var(--color-neutral-10);
+`;
+
+const LoginBar = styled.div`
+  display: flex;
+`;
 
 const Header = ({ setOpen, user, setUser }) => {
   // console.log(user);
@@ -97,41 +129,42 @@ const Header = ({ setOpen, user, setUser }) => {
   return (
     <AppHeader>
       <Link href="/">
-        <a>
-          TryShape
-          <span>
-            <FaShapes />
-          </span>
-        </a>
+        <Logo>       
+          <div className="sr-only">TryShape</div>
+        </Logo>
       </Link>
       <NavbarSearchInput>
-        <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' /></NavbarSearchInputText>
+        <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
         <NavbarSearchInputControl
           placeholder="Search a shape"
           aria-label="Search a shape"
           aria-describedby="basic-addon1"
         />
+        <CloseIcon color='#ffffff' size='24px' />
       </NavbarSearchInput>
       {(user.email || user.displayName) ? (
         <>
-          <div>
-            <img
-              src={
-                user.photoURL
-                  ? user.photoURL
-                  : `https://unavatar.vercel.app/${user.email}`
-              }
-              alt="profile"
-            />
-            {user.displayName ? user.displayName : "User"}
-          </div>
+          <LoginBar>
+            <UserThumb>
+              <img
+                src={
+                  user.photoURL
+                    ? user.photoURL
+                    : `https://unavatar.vercel.app/${user.email}`
+                }
+                alt="profile"
+              />
+              <UserThumbName>{user.displayName ? user.displayName : "User"}</UserThumbName>
+            </UserThumb>
 
-          <Button onClick={signOut}>
-            <div>Sign Out</div>
-          </Button>
+            <LogoutButton onClick={signOut} variant="link" className="btn-icon">
+              <FiPower color='var(--color-neutral-10' size="18px"/>
+              <div className="sr-only">Sign Out</div>
+            </LogoutButton>
+          </LoginBar>
         </>
       ) : (
-        <Button onClick={() => setOpen(true)} className="navbar-action--primary">
+        <Button variant="outline-secondary" size="sm" onClick={() => setOpen(true)}>
           <div>Sign In</div>
         </Button>
       )}

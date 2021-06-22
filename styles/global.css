@@ -129,6 +129,79 @@ code {
     color: var(--color-neutral-90);
 }
 
+/* Button Outline Secondary */
+.btn-outline-secondary {
+  border: solid 1px var(--color-neutral-10);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-10);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  border: solid 1px var(--color-neutral-10);
+  background-color: rgba(var(--color-neutral-10-rgb), 15%);
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+.btn-outline-secondary:active {
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  background-color: rgba(var(--color-neutral-10-rgb), 100%) !important;
+  color: var(--color-brand) !important;
+}
+
+/* Button Outline Secondary */
+.btn-outline-dark {
+  padding: 0.48rem 1.4rem;
+  border: solid 1px var(--color-neutral-70);
+  font-size: var(--fs-rg);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-70);
+}
+
+.btn-outline-dark:hover,
+.btn-outline-dark:focus {
+  border: solid 1px var(--color-neutral-70);
+  background-color: rgba(var(--color-neutral-100-rgb), 5%);
+  color: var(--color-neutral-70);
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+}
+
+.btn-outline-dark:active {
+  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  background-color: rgba(var(--color-neutral-100-rgb), 100%) !important;
+  color: var(--color-brand) !important;
+}
+
+/* Small Button */
+.btn-sm {
+  padding: 0.3rem 1rem;
+  font-size: var(--fs-sm);
+}
+
+.btn-lg {
+  padding: 0.8rem 1.4rem;
+  font-size: var(--fs-rg);
+}
+
+
+.btn svg {
+  margin: -2px 0.6rem 0 0;
+}
+
+
 .btn-outline-light {
     padding: 0.8rem 1.4rem;
+}
+
+/* Modal Title */
+.modal-title {
+  margin-left: 0.6rem;
+  font-family: Inter, -apple-system, Roboto, Helvetica Neue, sans-serif;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-90);
+}
+
+.btn-icon svg {
+  margin-right: 0;
 }
