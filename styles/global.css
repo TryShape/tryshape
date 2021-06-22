@@ -1,11 +1,60 @@
+:root {
+  --color-brand: #5d21d2;
+  --color-brand-rgb: 93, 33, 210;
+  --color-brand-secondary: #af21d2;
+  --color-brand-secondary-rgb: 175, 33, 210;
+  --color-brand-teritiary: #2445ff;
+  --color-brand-teritiary-rgb: 36, 69, 255;
+
+  /* Primary Colors */
+  --color-primary-accent: #18ffff;
+
+  /* Neutral */
+  --color-neutral-10: #ffffff;
+  --color-neutral-20: #f6f6f9;
+  --color-neutral-30: #E0E0E6;
+  --color-neutral-40: #B0AFB6;
+  --color-neutral-50: #8D8C95;
+  --color-neutral-60: #6A6973;
+  --color-neutral-70: #474552;
+  --color-neutral-80: #242230;
+  --color-neutral-90: #040222;
+  --color-neutral-100: #000000;
+
+  --color-neutral-10-rgb: 255, 255, 255;
+  --color-neutral-100-rgb: 0, 0, 0;
+  
+  /* Font Weight */
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+
+  /* Font Sizes */
+  --fs-xs: 0.6rem;
+  --fs-sm: 0.8rem;
+  --fs-rg: 0.96rem;
+  --fs-md: 1.4rem;
+  --fs-lg: 2rem;
+  --fs-xl: 3rem;
+  --fs-xxl: 0.8rem;
+  --fs-xxxl: 0.8rem;
+}
+
+/* Typography */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
 html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
-    Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: Inter, -apple-system, Roboto, Helvetica Neue, sans-serif;
   line-height: 1.6;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+body * {
+  font-family: Inter, -apple-system, Roboto, Helvetica Neue, sans-serif;
 }
 
 * {
@@ -36,4 +85,50 @@ code {
     font-size: 87.5%;
     color: #e83e8c;
     word-wrap: break-word;
+}
+
+.section-title {
+  position: relative;
+  margin-bottom: 1.6rem;
+  border-radius: 0.6rem;
+  padding: 0.8rem 1.6rem;
+  font-size: var(--fs-md);
+  font-weight: var(--fw-bold);
+  color: var(--color-brand);
+}
+
+.section-title:after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  transform: translateX(-50%);
+  width: 4rem;
+  height: 4px;
+  background-color: var(--color-primary-accent);
+}
+
+.p-lead {
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-90);
+}
+
+.p-desc {
+  font-size: var(--fs-rg);
+  font-weight: var(--fw-rg);
+  color: var(--color-neutral-80);
+}
+
+/* Buttons */
+.btn-primary {
+    padding: 0.8rem 1.4rem;
+    border: solid 1px var(--color-primary-accent);
+    background-color: var(--color-primary-accent);
+    font-weight: var(--fw-bold);
+    color: var(--color-neutral-90);
+}
+
+.btn-outline-light {
+    padding: 0.8rem 1.4rem;
 }

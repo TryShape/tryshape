@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 
 // styles
-import '../styles/global.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import '../styles/global.css';
 
 // toaster
 import { Toaster } from "react-hot-toast";
