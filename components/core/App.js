@@ -18,6 +18,7 @@ const App = (props) => {
   const [loading, setLoading] = useState(true); // shapes loading
 
   const [searchTerm, setSearchTerm] = useState(""); // search
+  const [sort, setSort] = useState("popularity"); // sort
   
   const { user } = props;
 
@@ -92,7 +93,9 @@ const App = (props) => {
     <>
       <Header {...props} 
         searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}/>
+        setSearchTerm={setSearchTerm}
+        sort={sort}
+        setSort={setSort} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}
@@ -102,7 +105,7 @@ const App = (props) => {
           width={300}
         />
       ) : (
-        <ShapeList {...props} data={ data } searchTerm={searchTerm} />
+        <ShapeList {...props} data={ data } searchTerm={searchTerm} sort={sort} />
       )}
     </>
   );

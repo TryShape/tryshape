@@ -191,7 +191,14 @@ const LikeFilledIcon = styled(BsFillHeartFill)`
   cursor: pointer;
 `;
 
-const ShapeList = ({ setOpen, user, data, searchTerm }) => {
+const ShapeList = (
+  { 
+    setOpen, 
+    user, 
+    data, 
+    searchTerm, 
+    sort 
+  }) => {
 
   const filterShape = (shapes, searchTerm) => {
     if (!searchTerm) {
@@ -209,8 +216,14 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
   const [shapeToExport, setShapeToExport] = useState();
 
   useEffect(() =>{
-    setFilteredShape(filterShape(shapes, searchTerm));
-  }, [searchTerm, shapes]);
+    const copy = [...shapes];
+    if(sort === 'recent') {
+      copy.sort((a, b) => b.__createdtime__ - a.__createdtime__);
+    } else if(sort === 'popularity') {
+      copy.sort((a, b) => b.likes - a.likes);
+    }
+    setFilteredShape(filterShape(copy, searchTerm));
+  }, [searchTerm, shapes, sort]); 
 
   const handleSwicth = (shapeName) => {
     
@@ -359,19 +372,18 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
                 />
                 <ShapeActions className="shape-actions">
                   <ShapeActionsContainer>
-                  <span 
-                    title="Like"
+                  <span
                     onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
                       shape.liked ? 
                         (
-                          <Button variant="danger" className="btn-icon">
+                          <Button title="Remove Like" variant="danger" className="btn-icon">
                             <LikeFilledIcon size={24} />
                           </Button>
                         ) 
                         :
                         (
-                          <Button variant="outline-light" className="btn-icon">
+                          <Button title="Add Like" variant="outline-light" className="btn-icon">
                             <LikeIcon size={24} />
                           </Button>
                         )
