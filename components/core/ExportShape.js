@@ -36,9 +36,6 @@ import download from "downloadjs";
 // misc utilities
 import { getShapeId } from "../../utils/misc";
 
-// Radios
-import { Radios } from "..";
-
 // Component
 const ExportShape = ({ show, setShow, shape }) => {
   console.log({ shape });

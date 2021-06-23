@@ -3,6 +3,7 @@ export { default as App } from "./core/App";
 export { default as Landing } from "./core/Landing";
 export { default as SignInModal } from "./core/SignInModal";
 export { default as ExportShape } from "./core/ExportShape";
+export {default as CopyShapeSource} from "./core/CopyShapeSource";
 
 // utils
 export { default as Header } from "./utils/Header";
