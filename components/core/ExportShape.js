@@ -85,6 +85,13 @@ const ExportShape = ({ show, setShow, shape }) => {
     console.log({exportData});
   };
 
+  const setExportType = value => {
+    setExportData({
+      ...exportData,
+      'type': value
+    });
+  }
+
   // Export method
   const doExport = (id, name) => {
     console.log(`Save as ${exportData.type}`);
@@ -146,7 +153,7 @@ const ExportShape = ({ show, setShow, shape }) => {
               <Row>
                 <Col>
                   <Form>
-                    <Form.Group className="mb-3" controlId="export-name">
+                    <Form.Group className="mb-3" id="export-name">
                       <Form.Label>Name</Form.Label>
                       <Form.Control type="text" name="name" value={exportData.name} onChange={handleChange}/>
                     </Form.Group>
@@ -162,8 +169,8 @@ const ExportShape = ({ show, setShow, shape }) => {
                       />
                     </Form.Group>
                     <Row>
-                      <Form.Group as={Col} controlId="export-width">
-                        <Form.Label>Set a width(in px)</Form.Label>
+                      <Form.Group as={Col} id="export-width">
+                        <Form.Label>Set a width({exportData.width}px)</Form.Label>
                         <Form.Control
                           type="range" 
                           min="100" 
@@ -173,8 +180,8 @@ const ExportShape = ({ show, setShow, shape }) => {
                           name="width"
                           onChange={handleChange}/>
                       </Form.Group>
-                      <Form.Group as={Col} controlId="export-height">
-                        <Form.Label>Set a height(in px)</Form.Label>
+                      <Form.Group as={Col} id="export-height">
+                        <Form.Label>Set a height({exportData.height}px)</Form.Label>
                         <Form.Control
                           type="range" 
                           min="100" 
@@ -186,78 +193,24 @@ const ExportShape = ({ show, setShow, shape }) => {
                       </Form.Group>
                     </Row>
                     
-                    {/* <div>
-                      <label htmlFor="export-name">Name</label>
-                      <input 
-                        type="text" 
-                        name="name" 
-                        id="export-name" 
-                        value={exportData.name} 
-                        onChange={handleChange} />
-                    </div> */}
-
-                    {/* <div>
-                      <label htmlFor="export-color">Color</label>
-                      <input 
-                        type="color" 
-                        name="backgroundColor" 
-                        id="export-color" 
-                        value={exportData.backgroundColor} 
-                        onChange={handleChange} />
-                    </div> */}
-
-                    {/* <div>
-                      <label htmlFor="export-width">Set a width(in px)</label>
-                      <input 
-                        type="range" 
-                        min="100" 
-                        max="700" 
-                        value={exportData.width} 
-                        id="export-width"
-                        name="width"
-                        onChange={handleChange} />
-
-                      <label htmlFor="export-height">Set a height(in px)</label>
-                      <input 
-                        type="range" 
-                        min="100" 
-                        max="700" 
-                        value={exportData.height} 
-                        id="export-height"
-                        name="height"
-                        onChange={handleChange} />
-                    </div> */}
-
                     <div>
-                    <Form.Group>
-                      <Form.Label>File Format</Form.Label>
-                      <div>
-                        <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-dark" size="sm" defaultValue={'png'}>
-                          <ToggleButton id="tbg-radio-1" value={'png'} variant="outline-dark">
-                              PNG
-                          </ToggleButton>
-                          <ToggleButton id="tbg-radio-2" value={'jpeg'} variant="outline-dark">
-                              JPEG
-                          </ToggleButton>
-                          <ToggleButton id="tbg-radio-3" value={'svg'} variant="outline-dark">
-                              SVG
-                          </ToggleButton>
-                        </ToggleButtonGroup>
-                      </div>
-                    </Form.Group>
-                      <Radios
-                        groupName="type"
-                        heading="Export as:"
-                        options={[
-                          { value: "png", displayValue: "PNG" },
-                          { value: "jpeg", displayValue: "JPEG" },
-                          { value: "svg", displayValue: "SVG" },
-                        ]}
-                        selectedOption={exportData.type}
-                        onValueChange={handleChange}
-                      />
-                    </div>
-                    
+                      <Form.Group>
+                        <Form.Label>Export As</Form.Label>
+                        <div>
+                          <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-dark" size="sm" defaultValue={exportData.type}>
+                            <ToggleButton id="tbg-radio-1" value={'png'} variant="outline-dark" onClick={() => setExportType('png')}>
+                                PNG
+                            </ToggleButton>
+                            <ToggleButton id="tbg-radio-2" value={'jpeg'} variant="outline-dark" onClick={() => setExportType('jpeg')}>
+                                JPEG
+                            </ToggleButton>
+                            <ToggleButton id="tbg-radio-3" value={'svg'} variant="outline-dark" onClick={() => setExportType('svg')}>
+                                SVG
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        </div>
+                      </Form.Group>
+                    </div> 
                   </Form>
                 </Col>
                 <Col>
@@ -277,7 +230,7 @@ const ExportShape = ({ show, setShow, shape }) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="outline-info">
+            <Button variant="outline-info" onClick={() => setShow(false)}>
               Cancel
             </Button>
             <Button variant="secondary"
