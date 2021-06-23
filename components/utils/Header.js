@@ -175,6 +175,12 @@ const Header = ({
         <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title={`Sort by ${sort}`} className="border-0">
           <Dropdown.Item 
             href="#" 
+            active={sort==='oldest'} 
+            onClick={() =>setSort('oldest')}>
+            Oldest
+          </Dropdown.Item>
+          <Dropdown.Item 
+            href="#" 
             active={sort==='popularity'} 
             onClick={() =>setSort('popularity')}>
             Popularity

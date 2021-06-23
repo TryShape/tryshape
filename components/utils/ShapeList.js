@@ -221,6 +221,8 @@ const ShapeList = (
       copy.sort((a, b) => b.__createdtime__ - a.__createdtime__);
     } else if(sort === 'popularity') {
       copy.sort((a, b) => b.likes - a.likes);
+    } else if(sort === 'oldest') {
+      copy.sort((a, b) => a.__createdtime__ - b.__createdtime__);
     }
     setFilteredShape(filterShape(copy, searchTerm));
   }, [searchTerm, shapes, sort]); 
