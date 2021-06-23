@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Bootstrap
 import Container from 'react-bootstrap/Container'
@@ -191,11 +191,26 @@ const LikeFilledIcon = styled(BsFillHeartFill)`
   cursor: pointer;
 `;
 
-const ShapeList = ({ setOpen, user, data }) => {
+const ShapeList = ({ setOpen, user, data, searchTerm }) => {
+
+  const filterShape = (shapes, searchTerm) => {
+    if (!searchTerm) {
+      return shapes;
+    }
+    return shapes.filter((shape) => {
+      const shapeName = shape.name.toLowerCase();
+      return shapeName.includes(searchTerm.toLowerCase());
+    })
+  }
 
   const [shapes, setShapes] = useState(data);
+  const [filteredShape, setFilteredShape] = useState(shapes);
   const [showExportModal, setShowExportModal] = useState(false);
   const [shapeToExport, setShapeToExport] = useState();
+
+  useEffect(() =>{
+    setFilteredShape(filterShape(shapes, searchTerm));
+  }, [searchTerm, shapes]);
 
   const handleSwicth = (shapeName) => {
     
@@ -312,6 +327,7 @@ const ShapeList = ({ setOpen, user, data }) => {
         return shape;
       });
       setShapes(...[modifiedShapes]);
+      //setData(...[modifiedShapes]);
     }
   };
 
@@ -324,7 +340,7 @@ const ShapeList = ({ setOpen, user, data }) => {
           setShow={ setShowExportModal }
           shape = { shapeToExport } /> }
 
-        {shapes.map((shape, index) => (
+        {filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
               <ShapeCardBody>

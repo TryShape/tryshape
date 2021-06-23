@@ -126,8 +126,15 @@ const LoginBar = styled.div`
 
 
 
-const Header = ({ setOpen, user, setUser }) => {
-  // console.log(user);
+const Header = ({ 
+  setOpen, 
+  user, 
+  setUser, 
+  searchTerm,
+  setSearchTerm
+}) => {
+  
+  const [searchterm, setSearchterm] = useState('');
   // sign out function
   const signOut = () => {
     auth()
@@ -149,6 +156,7 @@ const Header = ({ setOpen, user, setUser }) => {
           <div className="sr-only">TryShape</div>
         </Logo>
       </Link>
+
       <NavbarSearchInputContainer>
         <NavbarSearchInput>
           <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
@@ -156,6 +164,8 @@ const Header = ({ setOpen, user, setUser }) => {
             placeholder="Search a shape"
             aria-label="Search a shape"
             aria-describedby="basic-addon1"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <CloseIcon color='#ffffff' size='24px' />
         </NavbarSearchInput>
@@ -165,6 +175,7 @@ const Header = ({ setOpen, user, setUser }) => {
           <Dropdown.Item href="#/action-3">Newly Added</Dropdown.Item>
         </DropdownButton>
       </NavbarSearchInputContainer>
+      
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
