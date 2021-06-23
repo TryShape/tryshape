@@ -28,7 +28,7 @@ import { BiExport } from "react-icons/bi";
 import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 
 // Export Shape
-import { ExportShape, CopyShapeSource } from '..';
+import { ExportShape, CopyShapeSource, NoShapeFound } from '..';
 
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
@@ -347,6 +347,8 @@ const ShapeList = (
     }
   };
 
+  
+
   return (
     <ShapeCardsContainer>
       <Container>
@@ -362,7 +364,8 @@ const ShapeList = (
           shape= { shapeToSourceCopy } />
         }
 
-        {filteredShape.map((shape, index) => (
+        {
+          filteredShape.length === 0 ? <NoShapeFound /> : filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
               <ShapeCardBody>
