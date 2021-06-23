@@ -28,7 +28,7 @@ import { BiExport } from "react-icons/bi";
 import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 
 // Export Shape
-import { ExportShape } from '..';
+import { ExportShape, CopyShapeSource } from '..';
 
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
@@ -191,7 +191,14 @@ const LikeFilledIcon = styled(BsFillHeartFill)`
   cursor: pointer;
 `;
 
-const ShapeList = ({ setOpen, user, data, searchTerm }) => {
+const ShapeList = (
+  { 
+    setOpen, 
+    user, 
+    data, 
+    searchTerm, 
+    sort 
+  }) => {
 
   const filterShape = (shapes, searchTerm) => {
     if (!searchTerm) {
@@ -202,15 +209,30 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
       return shapeName.includes(searchTerm.toLowerCase());
     })
   }
-
+  // All shapes
   const [shapes, setShapes] = useState(data);
+  // filtered shapes as state
   const [filteredShape, setFilteredShape] = useState(shapes);
+
+  // All about export shape states
   const [showExportModal, setShowExportModal] = useState(false);
   const [shapeToExport, setShapeToExport] = useState();
 
+  // All about copy source states
+  const [showCopySourceModal, setCopySourceModal] = useState(false);
+  const [shapeToSourceCopy, setShapeToSourceCopy] = useState();
+
   useEffect(() =>{
-    setFilteredShape(filterShape(shapes, searchTerm));
-  }, [searchTerm, shapes]);
+    const copy = [...shapes];
+    if(sort === 'recent') {
+      copy.sort((a, b) => b.__createdtime__ - a.__createdtime__);
+    } else if(sort === 'popularity') {
+      copy.sort((a, b) => b.likes - a.likes);
+    } else if(sort === 'oldest') {
+      copy.sort((a, b) => a.__createdtime__ - b.__createdtime__);
+    }
+    setFilteredShape(filterShape(copy, searchTerm));
+  }, [searchTerm, shapes, sort]); 
 
   const handleSwicth = (shapeName) => {
     
@@ -227,17 +249,11 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
   };
 
   /**
-   * Copy the clip-path value to clipboard
+   * Method to execute when use clicks on the copy source
    */
-  async function performCopy(event, formula) {
-    event.preventDefault();
-    try {
-      await navigator.clipboard.writeText(formula);
-      toast.success("Successfully Copied!");
-      console.log("The clip-path formula copied to clipboard");
-    } catch (err) {
-      console.error("Failed to copy: ", err);
-    }
+  async function performCopySource(shape) {
+    setShapeToSourceCopy(shape);
+    setCopySourceModal(true);
   }
 
   /**
@@ -340,6 +356,12 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
           setShow={ setShowExportModal }
           shape = { shapeToExport } /> }
 
+        { shapeToSourceCopy && <CopyShapeSource
+          show= {showCopySourceModal}
+          setShow={ setShapeToSourceCopy }
+          shape= { shapeToSourceCopy } />
+        }
+
         {filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
@@ -359,27 +381,30 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
                 />
                 <ShapeActions className="shape-actions">
                   <ShapeActionsContainer>
-                  <span 
-                    title="Like"
+                  <span
                     onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
                       shape.liked ? 
                         (
-                          <Button variant="danger" className="btn-icon">
+                          <Button title="Remove Like" variant="danger" className="btn-icon">
                             <LikeFilledIcon size={24} />
                           </Button>
                         ) 
                         :
                         (
-                          <Button variant="outline-light" className="btn-icon">
+                          <Button title="Add Like" variant="outline-light" className="btn-icon">
                             <LikeIcon size={24} />
                           </Button>
                         )
                     }
                     
                   </span>{" "}
-                  <Button title="Export" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon">
+                  <Button title="Export Shape" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon">
                     <ExportIcon
+                      size={24} />
+                  </Button>
+                  <Button title="Copy Source" variant="outline-light" onClick={() => performCopySource(shape)} className="btn-icon">
+                    <CopyIcon
                       size={24} />
                   </Button>
                   </ShapeActionsContainer>
@@ -394,33 +419,6 @@ const ShapeList = ({ setOpen, user, data, searchTerm }) => {
                   </ShapeCreditsOwner>
                 </ShapeCredits>
               </ShapeCardHeader>
-              <ShapeCardSwitch>
-                <label htmlFor={`${getShapeFileName(shape.name)}-form`}>
-                  <span>Show Clip-Path Info</span>{" "}
-                  <Switch 
-                    onChange={() => handleSwicth(shape.name)}
-                    checked={shape.showAdvanced}
-                    id={`${getShapeFileName(shape.name)}-form`}
-                  />
-                </label>
-              </ShapeCardSwitch>
-
-              {shape.showAdvanced && (
-                <ShapeDetailsItems>
-                  <span>
-                    <b>Clip-Path:</b>{" "}
-                    <code>
-                      <b>{shape.formula}</b>
-                    </code>
-                  </span>{" "}
-                  <span title="Copy">
-                    <CopyIcon
-                      size={24}
-                      onClick={(event) => performCopy(event, shape.formula)}
-                    />
-                  </span>
-                </ShapeDetailsItems>
-              )}
             </ShapeCard>
           </React.Fragment>
         ))}
