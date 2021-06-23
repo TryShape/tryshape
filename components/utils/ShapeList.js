@@ -41,18 +41,14 @@ const ShapeCards = styled.div`
     padding: 5rem 0 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(240px, 1fr));
-    grid-gap: 2rem;
-    // display: flex;
-    // flex-wrap: wrap;
-    // justify-content: center;
-    // align-items: center;
-    
+    grid-gap: 2rem;   
 `;
 
 const ShapeCard = styled.div`
   border-radius: 0.6rem;
   background-color: var(--color-neutral-10);
   overflow: hidden;
+  box-shadow: 3px 10px 18px 0 rgb(111 118 138 / 6%);
 
   &:hover {
     box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 26%);
@@ -353,20 +349,20 @@ const ShapeList = ({ setOpen, user, data }) => {
                     {
                       shape.liked ? 
                         (
-                          <Button variant="outline-light">
+                          <Button variant="danger" className="btn-icon">
                             <LikeFilledIcon size={24} />
                           </Button>
                         ) 
                         :
                         (
-                          <Button variant="outline-light">
+                          <Button variant="outline-light" className="btn-icon">
                             <LikeIcon size={24} />
                           </Button>
                         )
                     }
                     
                   </span>{" "}
-                  <Button title="Export" variant="outline-light" onClick={() => performExport(shape)}>
+                  <Button title="Export" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon">
                     <ExportIcon
                       size={24} />
                   </Button>
