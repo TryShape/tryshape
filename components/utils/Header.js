@@ -126,7 +126,13 @@ const LoginBar = styled.div`
 
 
 
-const Header = ({ setOpen, user, setUser }) => {
+const Header = ({ 
+  setOpen, 
+  user, 
+  setUser, 
+  searchTerm,
+  setSearchTerm
+}) => {
   
   const [searchterm, setSearchterm] = useState('');
   // sign out function
@@ -143,18 +149,6 @@ const Header = ({ setOpen, user, setUser }) => {
       });
   };
 
-  const handleSearchTerm = event => {
-    if (event.key === 'Enter') {
-      search();
-    } else {
-      setSearchterm(event.target.value);
-    }
-  }
-
-  const search = event => {
-    console.log('Performing Search using', searchterm);
-  }
-
   return (
     <AppHeader>
       <Link href="/">
@@ -170,6 +164,8 @@ const Header = ({ setOpen, user, setUser }) => {
             placeholder="Search a shape"
             aria-label="Search a shape"
             aria-describedby="basic-addon1"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
           <CloseIcon color='#ffffff' size='24px' />
         </NavbarSearchInput>
