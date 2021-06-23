@@ -33,7 +33,10 @@ export default function App({ Component, pageProps }) {
     }
   });
 
+  console.log('pageProps', pageProps);
+
   return (
+    
     <>
       <Toaster position="top-right" reverseOrder={false} />
       <Component {...pageProps} {...props} />
