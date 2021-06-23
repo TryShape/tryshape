@@ -170,7 +170,7 @@ const Header = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <CloseIcon title="Clear Search Query" color='#ffffff' size='24px' onClick={() => setSearchTerm('')}/>
+          {searchTerm && <CloseIcon title="Clear Search Query" color='#ffffff' size='24px' onClick={() => setSearchTerm('')}/>}
         </NavbarSearchInput>
         <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title={`Sort by ${sort}`} className="border-0">
           <Dropdown.Item 
