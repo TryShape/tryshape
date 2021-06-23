@@ -91,6 +91,7 @@ const NavbarSearchInputControl = styled(FormControl)`
 
 const CloseIcon = styled(FiX)`
   margin: 0.37rem;
+  cursor: pointer;
 `;
 
 const UserThumb = styled.div`
@@ -131,7 +132,9 @@ const Header = ({
   user, 
   setUser, 
   searchTerm,
-  setSearchTerm
+  setSearchTerm,
+  sort,
+  setSort
 }) => {
   
   const [searchterm, setSearchterm] = useState('');
@@ -167,12 +170,27 @@ const Header = ({
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <CloseIcon color='#ffffff' size='24px' />
+          <CloseIcon title="Clear Search Query" color='#ffffff' size='24px' onClick={() => setSearchTerm('')}/>
         </NavbarSearchInput>
-        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title="View by Popularity" className="border-0">
-          <Dropdown.Item href="#/action-1">Likes</Dropdown.Item>
-          <Dropdown.Item href="#/action-2" active>Popularity</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Newly Added</Dropdown.Item>
+        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title={`Sort by ${sort}`} className="border-0">
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='oldest'} 
+            onClick={() =>setSort('oldest')}>
+            Oldest
+          </Dropdown.Item>
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='popularity'} 
+            onClick={() =>setSort('popularity')}>
+            Popularity
+          </Dropdown.Item>
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='recent'} 
+            onClick={() =>setSort('recent')}>
+            Recent
+          </Dropdown.Item>
         </DropdownButton>
       </NavbarSearchInputContainer>
       
