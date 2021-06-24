@@ -137,7 +137,9 @@ const Header = ({
   searchTerm,
   setSearchTerm,
   sort,
-  setSort
+  setSort,
+  shapeAction,
+  setShapeAction
 }) => {
   
   const [searchterm, setSearchterm] = useState('');
@@ -233,7 +235,12 @@ const Header = ({
           <div>Sign In</div>
         </Button>
       )}
-      <CreateShape show={showCreateShape} handleClose={closeModal} user={user} />
+      <CreateShape 
+        show={showCreateShape} 
+        handleClose={closeModal} 
+        user={user}
+        shapeAction={shapeAction} 
+        setShapeAction={setShapeAction} />
     </AppHeader>
   );
 };

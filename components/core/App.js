@@ -18,14 +18,18 @@ const App = (props) => {
   const [loading, setLoading] = useState(true); // shapes loading
 
   const [searchTerm, setSearchTerm] = useState(""); // search
-  const [sort, setSort] = useState("popularity"); // sort
+  const [sort, setSort] = useState("recent"); // sort
+
+  const [shapeAction, setShapeAction] = useState({
+    'action': '',
+    'payload': {}
+  });
   
   const { user } = props;
 
   useEffect(async () => {
     setData([]);
     setLoading(true);
-
     let shapes = [];
 
     if(user.length === 0) {
@@ -84,10 +88,11 @@ const App = (props) => {
     });
 
     console.log(shapes);
-
+    console.log({shapeAction});
     await setData(shapes);
+    console.log(shapes);
     setLoading(false);
-  }, [user]);
+  }, [user, shapeAction]);
 
   return (
     <>
@@ -95,7 +100,9 @@ const App = (props) => {
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sort={sort}
-        setSort={setSort} />
+        setSort={setSort}
+        shapeAction={shapeAction} 
+        setShapeAction={setShapeAction} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}

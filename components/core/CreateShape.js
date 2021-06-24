@@ -22,7 +22,7 @@ const CreateShape = (props) => {
         "edges": 4, 
         "notes": "", 
         "clipPathType": "polygon",
-        "showShadow": false, 
+        "showShadow": true, 
         "backgroundColor": "#d61284", 
         "verticeCoordinates" : [
             {
@@ -258,6 +258,26 @@ const CreateShape = (props) => {
         }
         props.handleClose();
         toast.success(`Shape ${shapeInformation.name} created successfully.`);
+        props.setShapeAction({
+            ...props.shapeAction, 
+            "action": "add",
+            "payload": {
+                "backgroundColor": shapeInformation.backgroundColor,
+                "createdAt": null,
+                "createdBy": props.user.email,
+                "edges": shapeInformation.edges,
+                "email": null,
+                "email1": props.user.email,
+                "formula": shapeInformation.formula,
+                "likes": 0,
+                "name": shapeInformation.name,
+                "name1": props.user.displayName,
+                "notes": shapeInformation.notes,
+                "photoURL": props.user.photoURL,
+                "private": shapeInformation.private,
+                "type": shapeInformation.clipPathType
+            } 
+        });
     }
 
     return(
