@@ -1,5 +1,9 @@
 import React from "react";
+
+// Styled Component
 import styled from "styled-components";
+
+// Bootstrap
 import Form from "react-bootstrap/Form";
 
 const ColorPicker = styled.input`

@@ -26,6 +26,7 @@ const DraggableVertice = (props) => {
     let x = parseFloat(props.x) * 280.0 / 100.0;
     let y = parseFloat(props.y) * 280.0 / 100.0; 
 
+    // Handles when to show the close button
     const show = props.focusNumber === props.number;
     const target = useRef(null);
 

@@ -70,21 +70,14 @@ const CreateShape = (props) => {
             return;
         }
         
-        if (name === 'private') {
-            setShapeInformation({
-                ...shapeInformation, 
-                "private": !shapeInformation.private, 
-                
-            });
-            return;
-        }
-        
+        // If formula value is changed, alter formula value and verticeCoordinates value depending on clipPathType
         if (name === "formula") {
+
             const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" && value !== "" ? value.split(",").length: 0;
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
             if (value === "") {
-                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber); 
+                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber);
             } else if (value.includes("polygon")) {
                 handleFormulaChange(value, edgeVerticeNumber, "polygon");
             } else if (value.includes("circle")) {
@@ -95,9 +88,11 @@ const CreateShape = (props) => {
                 handleFormulaChange(value, edgeVerticeNumber);
             }
             return;
+
         }
         
-        if (name === "clipPathType") { // If Clip-Path Type is changed, change the value of the clipPathType
+        // If Clip-Path Type is changed, change the value of the clipPathType
+        if (name === "clipPathType") {
 
             if (value === "polygon") {
                 setShapeInformation({
@@ -138,7 +133,8 @@ const CreateShape = (props) => {
             return;
         }
         
-        if (name === "mousemove") { // If DraggableVertice is moved, adjust verticeCoordinates and formula
+        // If DraggableVertice is moved, adjust verticeCoordinates and formula
+        if (name === "mousemove") {
             
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -151,7 +147,8 @@ const CreateShape = (props) => {
             return;
         }
         
-        if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") { // If background of preview is clicked, add a verticeCoordinate value at its location and adjust formula
+        // If background of preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
+        if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") {
 
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -165,8 +162,9 @@ const CreateShape = (props) => {
             });
             return;
         }
-        
-        if (event.target.id.includes("deleteButton") && number !== undefined) { // If delete button is pressed, remove the corresponding verticeCoordinate and adjust formula
+
+        // If delete button is pressed and passes a number that corresponds to the vertice, remove the corresponding verticeCoordinate and adjust formula
+        if (event.target.id.includes("deleteButton") && number !== undefined) {
 
             let newVerticeCoordinates = []; 
 
@@ -188,12 +186,16 @@ const CreateShape = (props) => {
             return;
         }
         
+        // Handles all other ShapeForm and ShapePreview Changes
         setShapeInformation({
             ...shapeInformation, 
             [name]: value,
         });
-      }
+    }
 
+    // Called when there is a change in the textbox for formula in the form
+    // Adjusts verticeCoordinates, vertices, and edges accordingly
+    // Ensures that the parentheses remain
     function handleFormulaChange(formula, edgeVerticeNumber, clipPathType) {
         let newVerticeCoordinates = [];
 
@@ -221,7 +223,7 @@ const CreateShape = (props) => {
         });
     }
 
-
+    // Returns an array that has a new verticeCoordinate
     function addNewVerticeCoordinates(x ,y, number) {
         const xPercentage = Math.round((x / 280.0) * 100.0);
         const yPercentage = Math.round((y / 280.0) * 100.0);
@@ -235,6 +237,7 @@ const CreateShape = (props) => {
         return newVerticeCoordinates;
     }
 
+    // Returns a generated formula string from a verticeCoordinate array
     function generateNewFormula(newVerticeCoordinates) {
         let newFormula = shapeInformation.clipPathType + "(";
 
@@ -248,6 +251,7 @@ const CreateShape = (props) => {
         return newFormula;
     }
 
+    // Form Validation
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = async(event) => {
