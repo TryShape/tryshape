@@ -85,6 +85,8 @@ const ShapePreview = (props) => {
                         name="showShadow"
                         id="modal-custom-switch"
                         label="Show Outside of the Clipped Area"
+                        checked={props.shapeInformation.showShadow}
+                        onChange={(e) => props.handleChange(e)}
                     />
                 </Form>
 

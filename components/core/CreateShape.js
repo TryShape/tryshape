@@ -38,20 +38,20 @@ const CreateShape = (props) => {
         ]
     });
 
-    const handleFormChange = (event) => {
-        const name = event.target.name || event.type; 
-        const value = event.target.value === "checkbox" ? event.target.checked : event.target.value; 
+    function handleChange(event, data, number) {
+        const name = event.target.name || event.type;
+        const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
-        console.log(event);
+        console.log(event, data);
 
         if (name === "name") {
             setShapeInformation({
-                ...shapeInformation, 
-                "name": value, 
-                "type": value.toLowerCase(),
+            ...shapeInformation, 
+            "name": value, 
+            "type": value.toLowerCase(),
             });
         } else if (name === "formula") {
-            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length : 0; 
+            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length: 0;
 
             if (value === "") {
                 handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber)
@@ -64,65 +64,55 @@ const CreateShape = (props) => {
             } else {
                 handleFormulaChange(value, edgeVerticeNumber);
             }
-        } else if (name === "clipPathType") {
-            handleClipPathChange(value);
-        } else {
-            setShapeInformation({
-                ...shapeInformation,
-                [name]: value,
-            });
-        }
-    }
-    
-    function handlePreviewChange(event, data, number) {
-        const name = event.target.name || event.type;
-
-        console.log(event, data);
-
-        if (name === "mousemove") {
+        } else if (name === "mousemove") {
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
 
             setShapeInformation({
-            ...shapeInformation, 
-            "verticeCoordinates": newVerticeCoordinates, 
-            "formula": newFormula, 
+                ...shapeInformation, 
+                "verticeCoordinates": newVerticeCoordinates, 
+                "formula": newFormula, 
             });
         } else if (name === "click" && event.target.id === "shapeShadow") {
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
 
             setShapeInformation({
-            ...shapeInformation, 
-            "vertices": shapeInformation.vertices + 1, 
-            "edges": shapeInformation.edges + 1, 
-            "verticeCoordinates": newVerticeCoordinates, 
-            "formula": newFormula,
+                ...shapeInformation, 
+                "vertices": shapeInformation.vertices + 1, 
+                "edges": shapeInformation.edges + 1, 
+                "verticeCoordinates": newVerticeCoordinates, 
+                "formula": newFormula,
             });
         } else if ((event.target.id.includes("deleteButton") || event.target.localName === "line") && number !== undefined) {
-
-            console.log("worked");
 
             let newVerticeCoordinates = []; 
 
             for (let i = 0; i < shapeInformation.verticeCoordinates.length; i++) {
-            if (i !== number) {
-                newVerticeCoordinates.push(shapeInformation.verticeCoordinates[i]);
-            }
+                if (i !== number) {
+                    newVerticeCoordinates.push(shapeInformation.verticeCoordinates[i]);
+                }
             }
 
             const newFormula = generateNewFormula(newVerticeCoordinates);
 
             setShapeInformation({
-            ...shapeInformation, 
-            "vertices": shapeInformation.vertices - 1, 
-            "edges": shapeInformation.edges - 1, 
-            "verticeCoordinates": newVerticeCoordinates, 
-            "formula": newFormula,
+                ...shapeInformation, 
+                "vertices": shapeInformation.vertices - 1, 
+                "edges": shapeInformation.edges - 1, 
+                "verticeCoordinates": newVerticeCoordinates, 
+                "formula": newFormula,
             }); 
 
+        } else if (name === "clipPathType") {
+            handleClipPathChange(value);
+        } else {
+            setShapeInformation({
+                ...shapeInformation, 
+                [name]: value,
+            });
         }
-    }
+      }
 
     function addNewVerticeCoordinates(x ,y, number) {
         const xPercentage = Math.round((x / 280.0) * 100.0);
@@ -232,7 +222,7 @@ const CreateShape = (props) => {
             <Modal
                 show={props.show}
                 centered
-                size="xl"
+                size="lg"
                 onHide={props.handleClose}
                 backdrop="static"
             >
@@ -245,7 +235,7 @@ const CreateShape = (props) => {
                             <Col>
                                 <ShapeForm 
                                     shapeInformation={shapeInformation} 
-                                    handleChange={handleFormChange} 
+                                    handleChange={handleChange} 
                                     handleSubmit={handleSubmit} 
                                     validated={validated} 
                                 />
@@ -253,7 +243,7 @@ const CreateShape = (props) => {
                             <Col>
                                 <ShapePreview 
                                     shapeInformation={shapeInformation} 
-                                    handleChange={handlePreviewChange} 
+                                    handleChange={handleChange} 
                                 />
                             </Col>
                         </Row>
