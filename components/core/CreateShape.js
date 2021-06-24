@@ -18,6 +18,7 @@ import { harperFetch } from "../../utils/HarperFetch";
 
 const CreateShape = (props) => {
 
+    // Store the default state as a variable so resetting form is easier
     const initialState = {
         "name": "Tilted Square", 
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
@@ -66,13 +67,19 @@ const CreateShape = (props) => {
             ...shapeInformation, 
             "name": value, 
             });
-        } else if (name === 'private') {
+            return;
+        }
+        
+        if (name === 'private') {
             setShapeInformation({
                 ...shapeInformation, 
                 "private": !shapeInformation.private, 
                 
             });
-        } else if (name === "formula") {
+            return;
+        }
+        
+        if (name === "formula") {
             const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" && value !== "" ? value.split(",").length: 0;
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
@@ -87,8 +94,10 @@ const CreateShape = (props) => {
             } else {
                 handleFormulaChange(value, edgeVerticeNumber);
             }
-
-        } else if (name === "clipPathType") { // If Clip-Path Type is changed, change the value of the clipPathType
+            return;
+        }
+        
+        if (name === "clipPathType") { // If Clip-Path Type is changed, change the value of the clipPathType
 
             if (value === "polygon") {
                 setShapeInformation({
@@ -125,9 +134,11 @@ const CreateShape = (props) => {
                 "vertices": value === "polygon" ? 4 : 0, 
                 "notes": "", 
                 }
-            })
-
-        } else if (name === "mousemove") { // If DraggableVertice is moved, adjust verticeCoordinates and formula
+            });
+            return;
+        }
+        
+        if (name === "mousemove") { // If DraggableVertice is moved, adjust verticeCoordinates and formula
             
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -137,8 +148,10 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula, 
             });
-
-        } else if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") { // If background of preview is clicked, add a verticeCoordinate value at its location and adjust formula
+            return;
+        }
+        
+        if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") { // If background of preview is clicked, add a verticeCoordinate value at its location and adjust formula
 
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -150,8 +163,10 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula,
             });
-
-        } else if (event.target.id.includes("deleteButton") && number !== undefined) { // If delete button is pressed, remove the corresponding verticeCoordinate and adjust formula
+            return;
+        }
+        
+        if (event.target.id.includes("deleteButton") && number !== undefined) { // If delete button is pressed, remove the corresponding verticeCoordinate and adjust formula
 
             let newVerticeCoordinates = []; 
 
@@ -170,15 +185,13 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula,
             }); 
-
-        } else { // Handles all other changes
-
-            setShapeInformation({
-                ...shapeInformation, 
-                [name]: value,
-            });
-
+            return;
         }
+        
+        setShapeInformation({
+            ...shapeInformation, 
+            [name]: value,
+        });
       }
 
     function handleFormulaChange(formula, edgeVerticeNumber, clipPathType) {
@@ -307,7 +320,7 @@ const CreateShape = (props) => {
                 show={props.show}
                 centered
                 size="lg"
-                onHide={props.handleClose}
+                onHide={() => {setShapeInformation({ ...initialState }); props.handleClose(); }}
                 backdrop="static"
             >
                 <Modal.Header closeButton>
