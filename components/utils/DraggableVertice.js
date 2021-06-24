@@ -56,12 +56,13 @@ const DraggableVertice = (props) => {
                                 props.setFocusNumber(-1);
                             }
                         }} 
-                        ref={target} />
+                        ref={target}
+                    />
             </Draggable>
 
             <Overlay target={target.current} show={show} placement="right">
                 <Tooltip>
-                    <p id={"deleteButton" + props.number} onMouseUp={handleDelete}>X</p>
+                    <span id={"deleteButton" + props.number} onMouseUp={handleDelete} style={{ cursor: "pointer" }}>X</span>
                 </Tooltip>
             </Overlay>
         </>
