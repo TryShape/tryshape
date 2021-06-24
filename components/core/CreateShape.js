@@ -103,7 +103,6 @@ const CreateShape = (props) => {
             if (value === "circle") {
                 setShapeInformation({
                 ...shapeInformation, 
-                "name": "", 
                 "type": "circle", 
                 "formula": "circle(50% at 50% 50%)",
                 });
@@ -112,7 +111,6 @@ const CreateShape = (props) => {
             if (value === "ellipse") {
                 setShapeInformation({
                 ...shapeInformation, 
-                "name": "", 
                 "type": "ellipse", 
                 "formula": "ellipse(25% 40% at 50% 50%)",
                 });
