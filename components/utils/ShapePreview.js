@@ -54,6 +54,11 @@ const ShapePreview = (props) => {
         const array = []; 
     
         for (let i = 0; i < props.shapeInformation.vertices; i++) {
+
+            if (props.shapeInformation.verticeCoordinates[i] === undefined) {
+                return;
+            }
+
           array.push(
             <DraggableVertice 
                 key={1000 + i}
