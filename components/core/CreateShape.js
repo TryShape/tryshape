@@ -90,7 +90,7 @@ const CreateShape = (props) => {
 
         } else if (name === "clipPathType") { // If Clip-Path Type is changed, change the value of the clipPathType
 
-            if (clipPathType === "polygon") {
+            if (value === "polygon") {
                 setShapeInformation({
                 ...shapeInformation, 
                 "name": "Tilted Square", 
@@ -99,7 +99,7 @@ const CreateShape = (props) => {
                 });
             }
 
-            if (clipPathType === "circle") {
+            if (value === "circle") {
                 setShapeInformation({
                 ...shapeInformation, 
                 "name": "Circle", 
@@ -108,7 +108,7 @@ const CreateShape = (props) => {
                 });
             }
 
-            if (clipPathType === "ellipse") {
+            if (value === "ellipse") {
                 setShapeInformation({
                 ...shapeInformation, 
                 "name": "Ellipse", 
@@ -120,9 +120,9 @@ const CreateShape = (props) => {
             setShapeInformation(prevState => {
                 return {
                 ...prevState, 
-                "clipPathType": clipPathType, 
-                "edges": clipPathType === "polygon" ? 4 : 0,
-                "vertices": clipPathType === "polygon" ? 4 : 0, 
+                "clipPathType": value, 
+                "edges": value === "polygon" ? 4 : 0,
+                "vertices": value === "polygon" ? 4 : 0, 
                 "notes": "", 
                 }
             })
