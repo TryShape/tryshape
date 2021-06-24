@@ -125,95 +125,95 @@ const CreateShape = (props) => {
     }
 
     function addNewVerticeCoordinates(x ,y, number) {
-    const xPercentage = Math.round((x / 280.0) * 100.0);
-    const yPercentage = Math.round((y / 280.0) * 100.0);
+        const xPercentage = Math.round((x / 280.0) * 100.0);
+        const yPercentage = Math.round((y / 280.0) * 100.0);
 
-    let newVerticeCoordinates = shapeInformation.verticeCoordinates;
-    newVerticeCoordinates[number] = {
-        "x": xPercentage + "%",
-        "y": yPercentage + "%"
-    }
+        let newVerticeCoordinates = shapeInformation.verticeCoordinates;
+        newVerticeCoordinates[number] = {
+            "x": xPercentage + "%",
+            "y": yPercentage + "%"
+        }
 
-    return newVerticeCoordinates;
+        return newVerticeCoordinates;
     }
 
     function generateNewFormula(newVerticeCoordinates) {
-    let newFormula = shapeInformation.clipPathType + "(";
+        let newFormula = shapeInformation.clipPathType + "(";
 
-    for (let i = 0; i < newVerticeCoordinates.length; i++) {
-        let newX = newVerticeCoordinates[i].x; 
-        let newY = newVerticeCoordinates[i].y;
+        for (let i = 0; i < newVerticeCoordinates.length; i++) {
+            let newX = newVerticeCoordinates[i].x; 
+            let newY = newVerticeCoordinates[i].y;
 
-        i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
-    }
+            i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
+        }
 
-    return newFormula;
+        return newFormula;
     }
 
     function handleFormulaChange(formula, edgeVerticeNumber, clipPathType) {
-    let newVerticeCoordinates = [];
+        let newVerticeCoordinates = [];
 
-    if (clipPathType === "polygon") {
-        let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-        formulaNumbers = formulaNumbers.split(", "); 
-        newVerticeCoordinates = formulaNumbers.map(x => {
-        let percentageArray = x.split(" ");
-        return {
-            "x": percentageArray[0], 
-            "y": percentageArray[1],
+        if (clipPathType === "polygon") {
+            let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
+            formulaNumbers = formulaNumbers.split(", "); 
+            newVerticeCoordinates = formulaNumbers.map(x => {
+            let percentageArray = x.split(" ");
+            return {
+                "x": percentageArray[0], 
+                "y": percentageArray[1],
+            }
+            });
         }
-        });
-    }
 
-    setShapeInformation(prevState => {
-        return {
-        ...prevState, 
-        "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-        "clipPathType": clipPathType === null ? prevState.clipPathType : clipPathType,
-        "vertices": edgeVerticeNumber, 
-        "edges": edgeVerticeNumber, 
-        "verticeCoordinates": newVerticeCoordinates, 
+        setShapeInformation(prevState => {
+            return {
+            ...prevState, 
+            "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
+            "clipPathType": clipPathType === null ? prevState.clipPathType : clipPathType,
+            "vertices": edgeVerticeNumber, 
+            "edges": edgeVerticeNumber, 
+            "verticeCoordinates": newVerticeCoordinates, 
+            }
+        });
         }
-    });
-    }
 
-    function handleClipPathChange(clipPathType) {
-    if (clipPathType === "polygon") {
-        setShapeInformation({
-        ...shapeInformation, 
-        "name": "Tilted Square", 
-        "type": "tiltedSquare", 
-        "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
-        });
-    }
-
-    if (clipPathType === "circle") {
-        setShapeInformation({
-        ...shapeInformation, 
-        "name": "Circle", 
-        "type": "circle", 
-        "formula": "circle(50% at 50% 50%)",
-        });
-    }
-
-    if (clipPathType === "ellipse") {
-        setShapeInformation({
-        ...shapeInformation, 
-        "name": "Ellipse", 
-        "type": "ellipse", 
-        "formula": "ellipse(25% 40% at 50% 50%)",
-        });
-    }
-
-    setShapeInformation(prevState => {
-        return {
-        ...prevState, 
-        "clipPathType": clipPathType, 
-        "edges": clipPathType === "polygon" ? 4 : 0,
-        "vertices": clipPathType === "polygon" ? 4 : 0, 
-        "notes": "", 
+        function handleClipPathChange(clipPathType) {
+        if (clipPathType === "polygon") {
+            setShapeInformation({
+            ...shapeInformation, 
+            "name": "Tilted Square", 
+            "type": "tiltedSquare", 
+            "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
+            });
         }
-    })
+
+        if (clipPathType === "circle") {
+            setShapeInformation({
+            ...shapeInformation, 
+            "name": "Circle", 
+            "type": "circle", 
+            "formula": "circle(50% at 50% 50%)",
+            });
+        }
+
+        if (clipPathType === "ellipse") {
+            setShapeInformation({
+            ...shapeInformation, 
+            "name": "Ellipse", 
+            "type": "ellipse", 
+            "formula": "ellipse(25% 40% at 50% 50%)",
+            });
+        }
+
+        setShapeInformation(prevState => {
+            return {
+            ...prevState, 
+            "clipPathType": clipPathType, 
+            "edges": clipPathType === "polygon" ? 4 : 0,
+            "vertices": clipPathType === "polygon" ? 4 : 0, 
+            "notes": "", 
+            }
+        })
     }
 
     const [validated, setValidated] = useState(false);
@@ -236,24 +236,35 @@ const CreateShape = (props) => {
                 onHide={props.handleClose}
                 backdrop="static"
             >
-                <Modal.Header>
+                <Modal.Header closeButton>
                     <Modal.Title>Create Shape</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container fluid>
                         <Row lg={2} md={1} sm={1} xs={1}>
                             <Col>
-                                <ShapeForm shapeInformation={shapeInformation} handleChange={handleFormChange} handleSubmit={handleSubmit} validated={validated} />
+                                <ShapeForm 
+                                    shapeInformation={shapeInformation} 
+                                    handleChange={handleFormChange} 
+                                    handleSubmit={handleSubmit} 
+                                    validated={validated} 
+                                />
                             </Col>
                             <Col>
-                                <ShapePreview shapeInformation={shapeInformation} handleChange={handlePreviewChange} />
+                                <ShapePreview 
+                                    shapeInformation={shapeInformation} 
+                                    handleChange={handlePreviewChange} 
+                                />
                             </Col>
                         </Row>
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => props.handleClose()}>
+                    <Button onClick={() => props.handleClose()} variant="outline-info">
                         Close
+                    </Button>
+                    <Button variant="secondary" type="submit" form="createShapeForm">
+                        Save
                     </Button>
                 </Modal.Footer>
             </Modal>

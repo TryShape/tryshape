@@ -11,9 +11,9 @@ const ColorPicker = styled.input`
 
 const ShapeForm = (props) => {
     return (
-        <Form noValidate validated={props.validated} onSubmit={props.handleSubmit} id="previewForm">
+        <Form noValidate validated={props.validated} onSubmit={props.handleSubmit} id="createShapeForm">
             <Form.Group>
-                <Form.Label>Shape Name:</Form.Label>
+                <Form.Label>Name</Form.Label>
                 <Form.Control 
                     type="text" 
                     name="name" 
@@ -25,7 +25,7 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Description:</Form.Label>
+                <Form.Label>Description</Form.Label>
                 <Form.Control 
                     as="textarea" 
                     name="notes" 
@@ -36,17 +36,18 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Shape Color:</Form.Label>
+                <Form.Label>Color Picker</Form.Label>
                 <ColorPicker 
                     type="color" 
                     name="backgroundColor"
                     value={props.shapeInformation.backgroundColor}
                     onChange={props.handleChange}
+                    className="form-control-color"
                 />
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Type of Clip Path:</Form.Label>
+                <Form.Label>Type of Clip-Path</Form.Label>
                 <Form.Control 
                     as="select" 
                     name="clipPathType" 
@@ -60,7 +61,7 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Clip-Path:</Form.Label>
+                <Form.Label>Clip-Path</Form.Label>
                 <Form.Control 
                     type="text" 
                     name="formula" 
