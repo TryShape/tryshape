@@ -1,9 +1,14 @@
 import React, { useRef } from "react";
+
+// react-draggable npm
 import Draggable from "react-draggable";
+
+// Styled Component
 import styled from "styled-components";
+
+// Bootstrap
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
-
 
 const CircleVertice = styled.div`
   width: 20px;
@@ -16,6 +21,8 @@ const CircleVertice = styled.div`
 `;
 
 const DraggableVertice = (props) => {
+
+    // Calculates x and y coordinates based on verticeCoordinates percentages
     let x = parseFloat(props.x) * 280.0 / 100.0;
     let y = parseFloat(props.y) * 280.0 / 100.0; 
 
