@@ -59,7 +59,7 @@ const CreateShape = (props) => {
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
-        // console.log(event, data);
+        console.log(event, data);
 
         // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
         if (name === "name") {
@@ -142,8 +142,8 @@ const CreateShape = (props) => {
             return;
         }
         
-        // If background of preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
-        if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") {
+        // If preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
+        if ((event.target.id === "shapeShadow" || event.target.id === "clippedShape") && name === "click" && shapeInformation.clipPathType === "polygon") {
 
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
