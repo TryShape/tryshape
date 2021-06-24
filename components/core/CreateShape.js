@@ -96,10 +96,7 @@ const CreateShape = (props) => {
 
             if (value === "polygon") {
                 setShapeInformation({
-                ...shapeInformation, 
-                "name": "Tilted Square", 
-                "type": "tiltedSquare", 
-                "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
+                ...initialState, 
                 });
             }
 
