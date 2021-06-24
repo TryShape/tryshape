@@ -20,7 +20,7 @@ const CreateShape = (props) => {
 
     // Store the default state as a variable so resetting form is easier
     const initialState = {
-        "name": "Tilted Square", 
+        "name": "", 
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
         "vertices": 4,
         "private": false,
@@ -103,7 +103,7 @@ const CreateShape = (props) => {
             if (value === "circle") {
                 setShapeInformation({
                 ...shapeInformation, 
-                "name": "Circle", 
+                "name": "", 
                 "type": "circle", 
                 "formula": "circle(50% at 50% 50%)",
                 });
@@ -112,7 +112,7 @@ const CreateShape = (props) => {
             if (value === "ellipse") {
                 setShapeInformation({
                 ...shapeInformation, 
-                "name": "Ellipse", 
+                "name": "", 
                 "type": "ellipse", 
                 "formula": "ellipse(25% 40% at 50% 50%)",
                 });
@@ -290,29 +290,21 @@ const CreateShape = (props) => {
             } else {
                 console.log(`The user ${props.user.email} present in DB`);
             }
+
+            // Finally, close the modal and update the shape in UI
+            props.handleClose();
+            toast.success(`Shape ${shapeInformation.name} created successfully.`);
+            props.setShapeAction({
+                ...props.shapeAction, 
+                "action": "add",
+                "payload": {
+                    "shape_id": insertShape['inserted_hashes']
+                } 
+            });
+        } else {
+            toast.error('OOPS!! We hit a bummer. Please try again.');
         }
-        props.handleClose();
-        toast.success(`Shape ${shapeInformation.name} created successfully.`);
-        props.setShapeAction({
-            ...props.shapeAction, 
-            "action": "add",
-            "payload": {
-                "backgroundColor": shapeInformation.backgroundColor,
-                "createdAt": null,
-                "createdBy": props.user.email,
-                "edges": shapeInformation.edges,
-                "email": null,
-                "email1": props.user.email,
-                "formula": shapeInformation.formula,
-                "likes": 0,
-                "name": shapeInformation.name,
-                "name1": props.user.displayName,
-                "notes": shapeInformation.notes,
-                "photoURL": props.user.photoURL,
-                "private": shapeInformation.private,
-                "type": shapeInformation.clipPathType
-            } 
-        });
+        
     }
 
     return(
