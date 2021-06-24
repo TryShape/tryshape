@@ -43,7 +43,7 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Color</Form.Label>
+                <Form.Label>Color picker</Form.Label>
                 <ColorPicker 
                     type="color" 
                     name="backgroundColor"
@@ -76,7 +76,7 @@ const ShapeForm = (props) => {
             <Form.Group>
                 <Form.Label>CSS clip-Path</Form.Label>
                 <Form.Control 
-                    type="text" 
+                    as="textarea" 
                     name="formula" 
                     value={props.shapeInformation.formula} 
                     onChange={props.handleChange} 

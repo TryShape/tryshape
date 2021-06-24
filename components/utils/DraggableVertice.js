@@ -46,7 +46,8 @@ const DraggableVertice = (props) => {
                 handle=".handle" 
                 position={{x: x, y: y}} 
                 grid={[2.8, 2.8]} 
-                onDrag={(e, data) => {handleDrag(e, data); props.setFocusNumber(-1)}}>
+                onDrag={(e, data) => {handleDrag(e, data); props.setFocusNumber(-1)}}
+            >
                     <CircleVertice 
                         className="handle" 
                         onClick={() => {

@@ -301,6 +301,13 @@ const CreateShape = (props) => {
                     "shape_id": insertShape['inserted_hashes']
                 } 
             });
+
+            setShapeInformation({
+                ...initialState, 
+            });
+
+            setValidated(false);
+
         } else {
             toast.error('OOPS!! We hit a bummer. Please try again.');
         }
