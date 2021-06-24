@@ -138,7 +138,7 @@ const CreateShape = (props) => {
                 "formula": newFormula, 
             });
 
-        } else if (name === "click" && event.target.id === "shapeShadow") { // If background of preview is clicked, add a verticeCoordinate value at its location and adjust formula
+        } else if (name === "click" && event.target.id === "shapeShadow" && shapeInformation.clipPathType === "polygon") { // If background of preview is clicked, add a verticeCoordinate value at its location and adjust formula
 
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
