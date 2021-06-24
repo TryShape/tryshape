@@ -25,6 +25,9 @@ import { FiSearch, FiPlus } from "react-icons/fi";
 // Styled Component
 import styled from "styled-components";
 
+// CreateShape Component
+import { CreateShape } from "..";
+
 const AppHeader = styled.div`
     position: fixed;
     z-index: 1;
@@ -127,6 +130,14 @@ const LoginBar = styled.div`
 
 
 const Header = ({ setOpen, user, setUser }) => {
+
+  // Controls when CreateShape Modal Shows
+  const [showCreateShape, setShowCreateShape] = useState(false);
+
+  const closeModal = () => {
+    setShowCreateShape(false);
+  }
+
   // console.log(user);
   // sign out function
   const signOut = () => {
@@ -168,7 +179,7 @@ const Header = ({ setOpen, user, setUser }) => {
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
-            <Button variant="primary" size="sm" className="mr-3">
+            <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
               <FiPlus />
               Add Shape
             </Button>     
@@ -194,6 +205,7 @@ const Header = ({ setOpen, user, setUser }) => {
           <div>Sign In</div>
         </Button>
       )}
+      <CreateShape show={showCreateShape} handleClose={closeModal} />
     </AppHeader>
   );
 };

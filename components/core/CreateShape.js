@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 
-import { Header, ShapeForm, ShapePreview } from "..";
+import { ShapeForm, ShapePreview } from "..";
 
 const CreateShape = (props) => {
     const [shapeInformation, setShapeInformation] = useState({
@@ -227,17 +229,34 @@ const CreateShape = (props) => {
 
     return(
         <>
-            <Header {...props} />
-            <Container fluid>
-                <Row lg={2} md={1} sm={1} xs={1}>
-                    <Col>
-                        <ShapePreview shapeInformation={shapeInformation} handleChange={handlePreviewChange} />
-                    </Col>
-                    <Col>
-                        <ShapeForm shapeInformation={shapeInformation} handleChange={handleFormChange} handleSubmit={handleSubmit} validated={validated} />
-                    </Col>
-                </Row>
-            </Container>
+            <Modal
+                show={props.show}
+                centered
+                size="xl"
+                onHide={props.handleClose}
+                backdrop="static"
+            >
+                <Modal.Header>
+                    <Modal.Title>Create Shape</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <Container fluid>
+                        <Row lg={2} md={1} sm={1} xs={1}>
+                            <Col>
+                                <ShapeForm shapeInformation={shapeInformation} handleChange={handleFormChange} handleSubmit={handleSubmit} validated={validated} />
+                            </Col>
+                            <Col>
+                                <ShapePreview shapeInformation={shapeInformation} handleChange={handlePreviewChange} />
+                            </Col>
+                        </Row>
+                    </Container>
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button onClick={() => props.handleClose()}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     );
 }
