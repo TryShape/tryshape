@@ -5,19 +5,25 @@ import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
+// Toast
+import toast from "react-hot-toast";
+
+// harperDb fetch call
+import { harperFetch } from "../../utils/HarperFetch";
+
 import { ShapeForm, ShapePreview } from "..";
 
 const CreateShape = (props) => {
     const [shapeInformation, setShapeInformation] = useState({
         "name": "Tilted Square", 
-        "type": "tiltedSquare",
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
         "vertices": 4,
+        "private": false,
         "edges": 4, 
         "notes": "", 
         "clipPathType": "polygon",
-        "showShadow": true, 
-        "backgroundColor": "#12a8d6", 
+        "showShadow": false, 
+        "backgroundColor": "#d61284", 
         "verticeCoordinates" : [
             {
                 "x": "10%", 
@@ -42,13 +48,18 @@ const CreateShape = (props) => {
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
-        console.log(event, data);
+        // console.log(event, data);
 
         if (name === "name") {
             setShapeInformation({
             ...shapeInformation, 
             "name": value, 
-            "type": value.toLowerCase(),
+            });
+        } else if (name === 'private') {
+            setShapeInformation({
+                ...shapeInformation, 
+                "private": !shapeInformation.private, 
+                
             });
         } else if (name === "formula") {
             const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length: 0;
@@ -171,8 +182,7 @@ const CreateShape = (props) => {
         if (clipPathType === "polygon") {
             setShapeInformation({
             ...shapeInformation, 
-            "name": "Tilted Square", 
-            "type": "tiltedSquare", 
+            "name": "Tilted Square",  
             "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
             });
         }
@@ -180,8 +190,7 @@ const CreateShape = (props) => {
         if (clipPathType === "circle") {
             setShapeInformation({
             ...shapeInformation, 
-            "name": "Circle", 
-            "type": "circle", 
+            "name": "Circle",  
             "formula": "circle(50% at 50% 50%)",
             });
         }
@@ -190,7 +199,6 @@ const CreateShape = (props) => {
             setShapeInformation({
             ...shapeInformation, 
             "name": "Ellipse", 
-            "type": "ellipse", 
             "formula": "ellipse(25% 40% at 50% 50%)",
             });
         }
@@ -208,13 +216,48 @@ const CreateShape = (props) => {
 
     const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
         setValidated(true);
+
+        console.log(shapeInformation);
+
+        // Create the shape in the DB
+        const insertShape = await harperFetch({
+            operation: "sql",
+            sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
+              values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
+        });
+
+        console.log(insertShape);
+        
+        // Create the user in the db
+        if (insertShape['inserted_hashes'].length > 0) {
+            // First check if the user exist
+            const result = await harperFetch({
+                operation: "sql",
+                sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
+            });
+            const count = (result[0]['COUNT(*)']);
+            console.log({count});
+            // If doesn't exist, create in db
+            if (count === 0) {
+                const insertUser = await harperFetch({
+                    operation: "sql",
+                    sql: `INSERT into tryshape.users(email, name, photoURL) 
+                        values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
+                });
+            } else {
+                console.log(`The user ${props.user.email} present in DB`);
+            }
+        }
+        props.handleClose();
+        toast.success(`Shape ${shapeInformation.name} created successfully.`);
     }
 
     return(
@@ -227,7 +270,7 @@ const CreateShape = (props) => {
                 backdrop="static"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Shape</Modal.Title>
+                    <Modal.Title>Create a Shape</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container fluid>

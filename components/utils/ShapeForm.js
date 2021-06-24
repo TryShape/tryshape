@@ -25,29 +25,7 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Description</Form.Label>
-                <Form.Control 
-                    as="textarea" 
-                    name="notes" 
-                    rows={3}
-                    value={props.shapeInformation.notes} 
-                    onChange={props.handleChange} 
-                />
-            </Form.Group>
-
-            <Form.Group>
-                <Form.Label>Color Picker</Form.Label>
-                <ColorPicker 
-                    type="color" 
-                    name="backgroundColor"
-                    value={props.shapeInformation.backgroundColor}
-                    onChange={props.handleChange}
-                    className="form-control-color"
-                />
-            </Form.Group>
-
-            <Form.Group>
-                <Form.Label>Type of Clip-Path</Form.Label>
+                <Form.Label>Type</Form.Label>
                 <Form.Control 
                     as="select" 
                     name="clipPathType" 
@@ -61,7 +39,38 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Clip-Path</Form.Label>
+                <Form.Label>Color</Form.Label>
+                <ColorPicker 
+                    type="color" 
+                    name="backgroundColor"
+                    value={props.shapeInformation.backgroundColor}
+                    onChange={props.handleChange}
+                    className="form-control-color"
+                />
+            </Form.Group>
+
+            <Form.Group>
+                <Form.Check
+                    name="private"
+                    label="Make it Private"
+                    checked={props.shapeInformation.private}
+                    onChange={(e) => props.handleChange(e)}
+                />
+            </Form.Group>
+
+            <Form.Group>
+                <Form.Label>What's it about?</Form.Label>
+                <Form.Control 
+                    as="textarea" 
+                    name="notes" 
+                    rows={3}
+                    value={props.shapeInformation.notes} 
+                    onChange={props.handleChange} 
+                />
+            </Form.Group>
+
+            <Form.Group>
+                <Form.Label>CSS clip-Path</Form.Label>
                 <Form.Control 
                     type="text" 
                     name="formula" 

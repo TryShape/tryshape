@@ -233,7 +233,7 @@ const Header = ({
           <div>Sign In</div>
         </Button>
       )}
-      <CreateShape show={showCreateShape} handleClose={closeModal} />
+      <CreateShape show={showCreateShape} handleClose={closeModal} user={user} />
     </AppHeader>
   );
 };
