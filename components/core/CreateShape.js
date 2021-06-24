@@ -234,7 +234,12 @@ const CreateShape = (props) => {
 
     // Returns a generated formula string from a verticeCoordinate array
     function generateNewFormula(newVerticeCoordinates) {
+
         let newFormula = shapeInformation.clipPathType + "(";
+
+        if (newVerticeCoordinates.length === 0) {
+            return newFormula + ")";
+        }
 
         for (let i = 0; i < newVerticeCoordinates.length; i++) {
             let newX = newVerticeCoordinates[i].x; 
