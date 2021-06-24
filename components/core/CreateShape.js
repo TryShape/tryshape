@@ -317,7 +317,7 @@ const CreateShape = (props) => {
                         Close
                     </Button>
                     <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>
-                        Save
+                        Create
                     </Button>
                 </Modal.Footer>
             </Modal>
