@@ -18,8 +18,7 @@ import { harperFetch } from "../../utils/HarperFetch";
 
 const CreateShape = (props) => {
 
-    // shapeInformation holds all information about the shape
-    const [shapeInformation, setShapeInformation] = useState({
+    const initialState = {
         "name": "Tilted Square", 
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
         "vertices": 4,
@@ -47,6 +46,11 @@ const CreateShape = (props) => {
                 "y": "80%", 
             }, 
         ]
+    }
+
+    // shapeInformation holds all information about the shape
+    const [shapeInformation, setShapeInformation] = useState({
+        ...initialState, 
     });
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
@@ -330,7 +334,7 @@ const CreateShape = (props) => {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => props.handleClose()} variant="outline-info">
+                    <Button onClick={() => { setShapeInformation({ ...initialState }); props.handleClose(); }} variant="outline-info">
                         Close
                     </Button>
                     <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>
