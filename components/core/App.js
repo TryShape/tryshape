@@ -14,8 +14,12 @@ import Loader from "react-loader-spinner";
 import { ShapeList, Header } from '..';
 
 const App = (props) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]); // shapes
+  const [loading, setLoading] = useState(true); // shapes loading
+
+  const [searchTerm, setSearchTerm] = useState(""); // search
+  const [sort, setSort] = useState("popularity"); // sort
+  
   const { user } = props;
 
   useEffect(async () => {
@@ -85,11 +89,13 @@ const App = (props) => {
     setLoading(false);
   }, [user]);
 
-  
-
   return (
     <>
-      <Header {...props} />
+      <Header {...props} 
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        sort={sort}
+        setSort={setSort} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}
@@ -99,7 +105,7 @@ const App = (props) => {
           width={300}
         />
       ) : (
-        <ShapeList {...props} data={ data } />
+        <ShapeList {...props} data={ data } searchTerm={searchTerm} sort={sort} />
       )}
     </>
   );

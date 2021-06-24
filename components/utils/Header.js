@@ -94,6 +94,7 @@ const NavbarSearchInputControl = styled(FormControl)`
 
 const CloseIcon = styled(FiX)`
   margin: 0.37rem;
+  cursor: pointer;
 `;
 
 const UserThumb = styled.div`
@@ -129,8 +130,17 @@ const LoginBar = styled.div`
 
 
 
-const Header = ({ setOpen, user, setUser }) => {
-
+const Header = ({ 
+  setOpen, 
+  user, 
+  setUser, 
+  searchTerm,
+  setSearchTerm,
+  sort,
+  setSort
+}) => {
+  
+  const [searchterm, setSearchterm] = useState('');
   // Controls when CreateShape Modal Shows
   const [showCreateShape, setShowCreateShape] = useState(false);
 
@@ -138,7 +148,6 @@ const Header = ({ setOpen, user, setUser }) => {
     setShowCreateShape(false);
   }
 
-  // console.log(user);
   // sign out function
   const signOut = () => {
     auth()
@@ -160,6 +169,7 @@ const Header = ({ setOpen, user, setUser }) => {
           <div className="sr-only">TryShape</div>
         </Logo>
       </Link>
+
       <NavbarSearchInputContainer>
         <NavbarSearchInput>
           <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
@@ -167,15 +177,33 @@ const Header = ({ setOpen, user, setUser }) => {
             placeholder="Search a shape"
             aria-label="Search a shape"
             aria-describedby="basic-addon1"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
-          <CloseIcon color='#ffffff' size='24px' />
+          {searchTerm && <CloseIcon title="Clear Search Query" color='#ffffff' size='24px' onClick={() => setSearchTerm('')}/>}
         </NavbarSearchInput>
-        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title="View by Popularity" className="border-0">
-          <Dropdown.Item href="#/action-1">Likes</Dropdown.Item>
-          <Dropdown.Item href="#/action-2" active>Popularity</Dropdown.Item>
-          <Dropdown.Item href="#/action-3">Newly Added</Dropdown.Item>
+        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title={`Sort by ${sort}`} className="border-0">
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='oldest'} 
+            onClick={() =>setSort('oldest')}>
+            Oldest
+          </Dropdown.Item>
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='popularity'} 
+            onClick={() =>setSort('popularity')}>
+            Popularity
+          </Dropdown.Item>
+          <Dropdown.Item 
+            href="#" 
+            active={sort==='recent'} 
+            onClick={() =>setSort('recent')}>
+            Recent
+          </Dropdown.Item>
         </DropdownButton>
       </NavbarSearchInputContainer>
+      
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
