@@ -73,7 +73,7 @@ const CreateShape = (props) => {
                 
             });
         } else if (name === "formula") {
-            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length: 0;
+            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" && value !== "" ? value.split(",").length: 0;
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
             if (value === "") {
