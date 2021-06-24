@@ -25,17 +25,18 @@ const App = (props) => {
     let shapes = [];
 
     if(user.length === 0) {
-      // User is not logged In
+      // User is not logged In. Fetch all the public shapes
       shapes = await harperFetch({
         operation: "sql",
         sql: `SELECT * 
           FROM tryshape.shapes s 
           INNER JOIN tryshape.users u 
           ON s.createdBy=u.email 
-          WHERE s.private=false`,
+          WHERE s.private=false
+          ORDER BY s.likes DESC`,
       });
     } else {
-      // User is logged in. Let's fetch the private shape and pther public shapes.
+      // User is logged in. Let's fetch the private shape and other public shapes.
       shapes = await harperFetch({
         operation: "sql",
         sql: `SELECT *
@@ -43,19 +44,44 @@ const App = (props) => {
           INNER JOIN tryshape.users u 
           ON s.createdBy=u.email 
           WHERE s.private=false 
-          OR createdBy = '${user.email}'`,
+          OR createdBy = '${user.email}'
+          ORDER BY s.likes DESC`,
       });
+
+      // Fetch the shapes liked by the logged-in user
+      const likedShapes = await harperFetch({
+        operation: "sql",
+        sql: `SELECT *
+          FROM tryshape.likes 
+          WHERE email = '${user.email}'`,
+      });
+
+      // If there are liked shapes, take out the shape_id
+      if (likedShapes.length > 0) {
+        let likedShapeIds = likedShapes.map((liked, index) => {
+          return liked['shape_id'];
+        })
+        shapes.map((shape, index) => {
+         
+            if (likedShapeIds.includes(shape['shape_id'])) {
+              shape['liked'] = true;
+            } else {
+              shape['liked'] = false;
+            }
+            return shape;
+        });
+      }
     }
 
-    console.log(shapes);
-    let modifiedShapes = shapes.map((shape, index) => {
+    // Add the showAdvanced property
+    shapes.map((shape, index) => {
       shape.showAdvanced = false;
       return shape;
     });
 
-    console.log(modifiedShapes);
+    console.log(shapes);
 
-    await setData(modifiedShapes);
+    await setData(shapes);
     setLoading(false);
   }, [user]);
 
