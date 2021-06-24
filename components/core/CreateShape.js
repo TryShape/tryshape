@@ -10,6 +10,12 @@ import Button from "react-bootstrap/Button";
 // ShapeForm and ShapePreview Components
 import { ShapeForm, ShapePreview } from "..";
 
+// Toast
+import toast from "react-hot-toast";
+
+// harperDb fetch call
+import { harperFetch } from "../../utils/HarperFetch";
+
 const CreateShape = (props) => {
 
     // shapeInformation holds all information about the shape
@@ -17,11 +23,12 @@ const CreateShape = (props) => {
         "name": "Tilted Square", 
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
         "vertices": 4,
+        "private": false,
         "edges": 4, 
         "notes": "", 
         "clipPathType": "polygon",
         "showShadow": true, 
-        "backgroundColor": "#12a8d6", 
+        "backgroundColor": "#d61284", 
         "verticeCoordinates" : [
             {
                 "x": "10%", 
@@ -47,10 +54,21 @@ const CreateShape = (props) => {
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
-        console.log(event, data);
+        // console.log(event, data);
 
         // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
-        if (name === "formula") {
+        if (name === "name") {
+            setShapeInformation({
+            ...shapeInformation, 
+            "name": value, 
+            });
+        } else if (name === 'private') {
+            setShapeInformation({
+                ...shapeInformation, 
+                "private": !shapeInformation.private, 
+                
+            });
+        } else if (name === "formula") {
             const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length: 0;
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
@@ -186,6 +204,7 @@ const CreateShape = (props) => {
         });
     }
 
+
     function addNewVerticeCoordinates(x ,y, number) {
         const xPercentage = Math.round((x / 280.0) * 100.0);
         const yPercentage = Math.round((y / 280.0) * 100.0);
@@ -212,17 +231,70 @@ const CreateShape = (props) => {
         return newFormula;
     }
 
-    
-
     const [validated, setValidated] = useState(false);
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async(event) => {
+        event.preventDefault();
         const form = event.currentTarget;
         if (form.checkValidity() === false) {
             event.preventDefault();
             event.stopPropagation();
         }
         setValidated(true);
+
+        console.log(shapeInformation);
+
+        // Create the shape in the DB
+        const insertShape = await harperFetch({
+            operation: "sql",
+            sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
+              values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
+        });
+
+        console.log(insertShape);
+        
+        // Create the user in the db
+        if (insertShape['inserted_hashes'].length > 0) {
+            // First check if the user exist
+            const result = await harperFetch({
+                operation: "sql",
+                sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
+            });
+            const count = (result[0]['COUNT(*)']);
+            console.log({count});
+            // If doesn't exist, create in db
+            if (count === 0) {
+                const insertUser = await harperFetch({
+                    operation: "sql",
+                    sql: `INSERT into tryshape.users(email, name, photoURL) 
+                        values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
+                });
+            } else {
+                console.log(`The user ${props.user.email} present in DB`);
+            }
+        }
+        props.handleClose();
+        toast.success(`Shape ${shapeInformation.name} created successfully.`);
+        props.setShapeAction({
+            ...props.shapeAction, 
+            "action": "add",
+            "payload": {
+                "backgroundColor": shapeInformation.backgroundColor,
+                "createdAt": null,
+                "createdBy": props.user.email,
+                "edges": shapeInformation.edges,
+                "email": null,
+                "email1": props.user.email,
+                "formula": shapeInformation.formula,
+                "likes": 0,
+                "name": shapeInformation.name,
+                "name1": props.user.displayName,
+                "notes": shapeInformation.notes,
+                "photoURL": props.user.photoURL,
+                "private": shapeInformation.private,
+                "type": shapeInformation.clipPathType
+            } 
+        });
     }
 
     return(
@@ -235,7 +307,7 @@ const CreateShape = (props) => {
                 backdrop="static"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Create Shape</Modal.Title>
+                    <Modal.Title>Create a Shape</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container fluid>
@@ -261,8 +333,8 @@ const CreateShape = (props) => {
                     <Button onClick={() => props.handleClose()} variant="outline-info">
                         Close
                     </Button>
-                    <Button variant="secondary" type="submit" form="createShapeForm">
-                        Save
+                    <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>
+                        Create
                     </Button>
                 </Modal.Footer>
             </Modal>

@@ -14,14 +14,22 @@ import Loader from "react-loader-spinner";
 import { ShapeList, Header } from '..';
 
 const App = (props) => {
-  const [data, setData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState([]); // shapes
+  const [loading, setLoading] = useState(true); // shapes loading
+
+  const [searchTerm, setSearchTerm] = useState(""); // search
+  const [sort, setSort] = useState("recent"); // sort
+
+  const [shapeAction, setShapeAction] = useState({
+    'action': '',
+    'payload': {}
+  });
+  
   const { user } = props;
 
   useEffect(async () => {
     setData([]);
     setLoading(true);
-
     let shapes = [];
 
     if(user.length === 0) {
@@ -80,16 +88,21 @@ const App = (props) => {
     });
 
     console.log(shapes);
-
+    console.log({shapeAction});
     await setData(shapes);
+    console.log(shapes);
     setLoading(false);
-  }, [user]);
-
-  
+  }, [user, shapeAction]);
 
   return (
     <>
-      <Header {...props} />
+      <Header {...props} 
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        sort={sort}
+        setSort={setSort}
+        shapeAction={shapeAction} 
+        setShapeAction={setShapeAction} />
       {loading ? (
         <Loader
           style={{margin: '20% auto auto 42%'}}
@@ -99,7 +112,7 @@ const App = (props) => {
           width={300}
         />
       ) : (
-        <ShapeList {...props} data={ data } />
+        <ShapeList {...props} data={ data } searchTerm={searchTerm} sort={sort} />
       )}
     </>
   );

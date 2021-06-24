@@ -89,40 +89,6 @@ const ShapePreview = (props) => {
                         onChange={(e) => props.handleChange(e)}
                     />
                 </Form>
-
-                <ShapeDetails>
-                    <ShapeDetailsItems>
-                        {props.shapeInformation.name === "" ? 
-                            null : 
-                            <><strong>Name: </strong> {props.shapeInformation.name}</>
-                        }
-                    </ShapeDetailsItems>
-                    <ShapeDetailsItems>
-                        {props.shapeInformation.notes === "" ? 
-                            null : 
-                            <>
-                                <strong>Did you know?</strong>
-                                <br />
-                                {props.shapeInformation.notes}
-                            </>
-                        }
-                    </ShapeDetailsItems>
-                    <ShapeDetailsItems>
-                        <span>
-                            <b>Edges:</b> {props.shapeInformation.edges}
-                        </span>
-                    </ShapeDetailsItems>
-                    <ShapeDetailsItems>
-                        <span>
-                            <b>Vertices:</b> {props.shapeInformation.vertices}
-                        </span>
-                    </ShapeDetailsItems>
-                    <ShapeDetailsItems>
-                        <span>
-                            <b>clip-path:</b> <code><b>{props.shapeInformation.formula}</b></code>
-                        </span>
-                    </ShapeDetailsItems>
-                </ShapeDetails>
             </Playground>
         </>
     );
