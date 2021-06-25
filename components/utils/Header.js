@@ -256,7 +256,8 @@ const Header = ({
         edit={false}
         user={user}
         shapeAction={shapeAction} 
-        setShapeAction={setShapeAction} />
+        setShapeAction={setShapeAction} 
+      />
     </AppHeader>
   );
 };

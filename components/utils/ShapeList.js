@@ -397,7 +397,12 @@ const ShapeList = (
         }
 
         {
-          filteredShape.length === 0 ? <NoShapeFound /> : filteredShape.map((shape, index) => (
+          filteredShape.length === 0 ? 
+            <NoShapeFound 
+              shapeAction = { shapeAction } 
+              setShapeAction = { setShapeAction } 
+              user = { user } 
+            /> : filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
               <ShapeCardBody>
