@@ -3,7 +3,39 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
-const DeleteShape = ({ show, setShow, shape }) => {
+import toast from "react-hot-toast";
+
+import { harperFetch } from "../../utils/HarperFetch";
+
+const DeleteShape = ({ show, setShow, shape, shapeAction, setShapeAction }) => {
+
+    const handleDelete = async() => {
+        const deleteShape = await harperFetch({
+            operation: "sql", 
+                sql: `
+                    DELETE FROM tryshape.shapes
+                    WHERE
+                        shape_id === '${shape.shape_id}'
+                `
+        });
+
+        console.log(deleteShape);
+
+        if (deleteShape["deleted_hashes"].length > 0) {
+            setShow(false);
+            toast.success(`Shape ${shape.name} deleted successfully.`);
+            setShapeAction({
+                ...shapeAction, 
+                "action": "delete",
+                "payload": {
+                    "shape_id": deleteShape["deleted_hashes"]
+                } 
+            });
+        } else {
+            toast.error('OOPS!! We hit a bummer. Please try again.');
+        } 
+    }
+
     return(
         <Modal
             size="md"
@@ -23,7 +55,7 @@ const DeleteShape = ({ show, setShow, shape }) => {
                 <Button onClick={() => setShow(false)}>
                     Cancel
                 </Button>
-                <Button>
+                <Button onClick={() => handleDelete()}>
                     Yes
                 </Button>
             </Modal.Footer>

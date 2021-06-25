@@ -416,7 +416,9 @@ const ShapeList = (
         { shapeToDelete && <DeleteShape
           show= { showDeleteModal }
           setShow={ setShowDeleteModal }
-          shape= { shapeToDelete } />
+          shape= { shapeToDelete }
+          shapeAction = { shapeAction }
+          setShapeAction = { setShapeAction } />
         }
 
         {
