@@ -30,6 +30,9 @@ import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 // Export Shape
 import { ExportShape, CopyShapeSource, NoShapeFound } from '..';
 
+// CreateShape to edit shape
+import { CreateShape } from "..";
+
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
 
@@ -222,6 +225,10 @@ const ShapeList = (
   const [showCopySourceModal, setCopySourceModal] = useState(false);
   const [shapeToSourceCopy, setShapeToSourceCopy] = useState();
 
+  // All about editing private shapes
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [shapeToEdit, setShapeToEdit] = useState();
+
   useEffect(() =>{
     const copy = [...shapes];
     if(sort === 'recent') {
@@ -270,6 +277,20 @@ const ShapeList = (
       // Show the export modal
       setShowExportModal(true);
     }
+  }
+
+  /**
+   * Method to execute when user clicks on the edit shape
+   */
+  const performEdit = shape => {
+    // Set the shape details to edit
+    setShapeToEdit(shape);
+    // Show the export modal
+    setShowEditModal(true);
+  }
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
   }
 
   /**
@@ -364,6 +385,12 @@ const ShapeList = (
           shape= { shapeToSourceCopy } />
         }
 
+        { shapeToEdit && <CreateShape
+          show= {showEditModal}
+          handleClose={ closeEditModal }
+          shapeInformation= { shapeToSourceCopy } />
+        }
+
         {
           filteredShape.length === 0 ? <NoShapeFound /> : filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
@@ -410,6 +437,11 @@ const ShapeList = (
                     <CopyIcon
                       size={24} />
                   </Button>
+                  {shape.private ? 
+                    <Button title="Edit Shape" vairant="outline-light" onClick={() => performEdit(shape)} className="btn-icon">
+                      Edit
+                    </Button> : null
+                  }
                   </ShapeActionsContainer>
                 </ShapeActions>
               </ShapeCardBody>
