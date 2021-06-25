@@ -128,33 +128,35 @@ const CreateShape = (props) => {
 
             if (value === "polygon") {
                 setShapeInformation({
-                ...initialState, 
+                    ...shapeInformation, 
+                    "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
+                    "vertices": 4, 
+                    "edges": 4, 
                 });
             }
 
             if (value === "circle") {
                 setShapeInformation({
-                ...shapeInformation, 
-                "type": "circle", 
-                "formula": "circle(50% at 50% 50%)",
+                    ...shapeInformation, 
+                    "type": "circle", 
+                    "formula": "circle(50% at 50% 50%)",
                 });
             }
 
             if (value === "ellipse") {
                 setShapeInformation({
-                ...shapeInformation, 
-                "type": "ellipse", 
-                "formula": "ellipse(25% 40% at 50% 50%)",
+                    ...shapeInformation, 
+                    "type": "ellipse", 
+                    "formula": "ellipse(25% 40% at 50% 50%)",
                 });
             }
 
             setShapeInformation(prevState => {
                 return {
-                ...prevState, 
-                "clipPathType": value, 
-                "edges": value === "polygon" ? 4 : 0,
-                "vertices": value === "polygon" ? 4 : 0, 
-                "notes": "", 
+                    ...prevState, 
+                    "clipPathType": value, 
+                    "edges": value === "polygon" ? 4 : 0,
+                    "vertices": value === "polygon" ? 4 : 0, 
                 }
             });
             return;
@@ -334,7 +336,8 @@ const CreateShape = (props) => {
                 toast.error('OOPS!! We hit a bummer. Please try again.');
             } 
 
-        } else { // Creating Shape
+        // Creating Shape
+        } else { 
 
             // Create the shape in the DB
             const insertShape = await harperFetch({
