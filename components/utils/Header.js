@@ -139,7 +139,8 @@ const Header = ({
   sort,
   setSort,
   shapeAction,
-  setShapeAction
+  setShapeAction,
+  simple
 }) => {
   
   const [searchterm, setSearchterm] = useState('');
@@ -172,7 +173,7 @@ const Header = ({
         </Logo>
       </Link>
 
-      <NavbarSearchInputContainer>
+      {!simple && <NavbarSearchInputContainer>
         <NavbarSearchInput>
           <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
           <NavbarSearchInputControl
@@ -204,15 +205,15 @@ const Header = ({
             Recent
           </Dropdown.Item>
         </DropdownButton>
-      </NavbarSearchInputContainer>
+      </NavbarSearchInputContainer>}
       
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
-            <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
+            {!simple && <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
               <FiPlus />
               Add Shape
-            </Button>     
+            </Button>}     
             <UserThumb>
               <img
                 src={
