@@ -20,7 +20,7 @@ import FormControl from 'react-bootstrap/FormControl';
 import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown'
 
-import { FiSearch, FiPlus } from "react-icons/fi";
+import { FiSearch, FiPlus, FiTwitter } from "react-icons/fi";
 
 // Styled Component
 import styled from "styled-components";
@@ -209,10 +209,14 @@ const Header = ({
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
+            <Button variant="outline-secondary" size="sm" className="mr-1" onClick={() => setShowCreateShape(true)}>
+              <FiTwitter />
+              Tweet us
+            </Button> 
             <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
               <FiPlus />
               Add Shape
-            </Button>     
+            </Button>
             <UserThumb>
               <img
                 src={
@@ -228,6 +232,7 @@ const Header = ({
               <FiPower color='var(--color-neutral-10' size="18px"/>
               <div className="sr-only">Sign Out</div>
             </LogoutButton>
+    
           </LoginBar>
         </>
       ) : (

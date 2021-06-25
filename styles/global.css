@@ -312,6 +312,14 @@ code {
   margin-right: 0;
 }
 
+.btn-icon--rounded {
+  border-radius: 50%;
+  padding: 0.6rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-width: 0.3rem;
+}
+
 /* Dropdown Menu */
 .dropdown-menu {
   border-color: transparent;
@@ -330,6 +338,11 @@ code {
 .dropdown-menu .dropdown-item.active {
   background-color: rgba(var(--color-brand-rgb), 0.08);
   color: var(--color-brand);
+}
+
+.dropdown-menu .dropdown-item:active {
+  background-color: var(--color-brand);
+  color: var(--color-neutral-10);
 }
 
 .dropdown-toggle::after {
