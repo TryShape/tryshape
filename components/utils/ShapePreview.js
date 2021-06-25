@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from "react";
+
+// Styled Component
 import styled from "styled-components";
+
+// Bootstrap
 import Form from "react-bootstrap/Form";
 
+// Draggablevertice Component
 import { DraggableVertice } from "..";
 
 const Playground = styled.div`
@@ -35,26 +40,25 @@ const Component = styled.div`
     bottom: 10px;
 `;
 
-const ShapeDetails = styled.ul`
-  background-color: #ebebeb;
-  border-radius: 4px;
-  padding: 10px;
-  width: 100%;
-`;
-
-const ShapeDetailsItems = styled.li`
-  word-wrap: break-word;
-`;
-
 const ShapePreview = (props) => {
 
+    // Holds an array of DraggableVertices
     const [vertices, setVertices] = useState([]);
+
+    // Set to a number that determines which DraggableVertice has its tooltip showing
+    // This way, only one vertice can show its close button at a time
     const [focusNumber, setFocusNumber] = useState(-1);
 
+    // Creation of DraggableVertices depending on shapeInformation values
     useEffect(() => {
         const array = []; 
     
         for (let i = 0; i < props.shapeInformation.vertices; i++) {
+
+            if (props.shapeInformation.verticeCoordinates[i] === undefined) {
+                return;
+            }
+
           array.push(
             <DraggableVertice 
                 key={1000 + i}
