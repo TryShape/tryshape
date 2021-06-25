@@ -55,11 +55,12 @@ const CreateShape = (props) => {
     });
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
-    function handleChange(event, data, number) {
+    const handleChange = (event, data, number) => {
+        
+        // console.log(event, data);
+        
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
-
-        console.log(event, data);
 
         // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
         if (name === "name") {
@@ -191,7 +192,7 @@ const CreateShape = (props) => {
     // Called when there is a change in the textbox for formula in the form
     // Adjusts verticeCoordinates, vertices, and edges accordingly
     // Ensures that the parentheses remain
-    function handleFormulaChange(formula, edgeVerticeNumber, clipPathType) {
+    const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
         let newVerticeCoordinates = [];
 
         if (clipPathType === "polygon") {
@@ -219,7 +220,7 @@ const CreateShape = (props) => {
     }
 
     // Returns an array that has a new verticeCoordinate
-    function addNewVerticeCoordinates(x ,y, number) {
+    const addNewVerticeCoordinates = (x ,y, number) => {
         const xPercentage = Math.round((x / 280.0) * 100.0);
         const yPercentage = Math.round((y / 280.0) * 100.0);
 
@@ -233,7 +234,7 @@ const CreateShape = (props) => {
     }
 
     // Returns a generated formula string from a verticeCoordinate array
-    function generateNewFormula(newVerticeCoordinates) {
+    const generateNewFormula = (newVerticeCoordinates) => {
 
         let newFormula = shapeInformation.clipPathType + "(";
 

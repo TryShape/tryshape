@@ -30,11 +30,11 @@ const DraggableVertice = (props) => {
     const show = props.focusNumber === props.number;
     const target = useRef(null);
 
-    function handleDrag(e, data) {
+    const handleDrag = (e, data) => {
         props.handleChange(e, data, props.number);
     }
 
-    function handleDelete(e) {
+    const handleDelete = (e) => {
         props.handleChange(e, null, props.number);
         props.setFocusNumber(-1);
     }
