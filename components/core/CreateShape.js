@@ -1,9 +1,14 @@
 import React, { useState } from "react";
+
+// Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
+
+// ShapeForm and ShapePreview Components
+import { ShapeForm, ShapePreview } from "..";
 
 // Toast
 import toast from "react-hot-toast";
@@ -11,11 +16,11 @@ import toast from "react-hot-toast";
 // harperDb fetch call
 import { harperFetch } from "../../utils/HarperFetch";
 
-import { ShapeForm, ShapePreview } from "..";
-
 const CreateShape = (props) => {
-    const [shapeInformation, setShapeInformation] = useState({
-        "name": "Tilted Square", 
+
+    // Store the default state as a variable so resetting form is easier
+    const initialState = {
+        "name": "", 
         "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
         "vertices": 4,
         "private": false,
@@ -42,30 +47,38 @@ const CreateShape = (props) => {
                 "y": "80%", 
             }, 
         ]
+    }
+
+    // shapeInformation holds all information about the shape
+    const [shapeInformation, setShapeInformation] = useState({
+        ...initialState, 
     });
 
-    function handleChange(event, data, number) {
+    // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
+    const handleChange = (event, data, number) => {
+        
+        // console.log(event, data);
+        
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
-        // console.log(event, data);
-
+        // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
         if (name === "name") {
             setShapeInformation({
             ...shapeInformation, 
             "name": value, 
             });
-        } else if (name === 'private') {
-            setShapeInformation({
-                ...shapeInformation, 
-                "private": !shapeInformation.private, 
-                
-            });
-        } else if (name === "formula") {
-            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" ? value.split(",").length: 0;
+            return;
+        }
+        
+        // If formula value is changed, alter formula value and verticeCoordinates value depending on clipPathType
+        if (name === "formula") {
 
+            const edgeVerticeNumber = shapeInformation.clipPathType === "polygon" && value !== "" ? value.split(",").length: 0;
+
+            // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
             if (value === "") {
-                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber)
+                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber);
             } else if (value.includes("polygon")) {
                 handleFormulaChange(value, edgeVerticeNumber, "polygon");
             } else if (value.includes("circle")) {
@@ -75,7 +88,50 @@ const CreateShape = (props) => {
             } else {
                 handleFormulaChange(value, edgeVerticeNumber);
             }
-        } else if (name === "mousemove") {
+            return;
+
+        }
+        
+        // If Clip-Path Type is changed, change the value of the clipPathType
+        if (name === "clipPathType") {
+
+            if (value === "polygon") {
+                setShapeInformation({
+                ...initialState, 
+                });
+            }
+
+            if (value === "circle") {
+                setShapeInformation({
+                ...shapeInformation, 
+                "type": "circle", 
+                "formula": "circle(50% at 50% 50%)",
+                });
+            }
+
+            if (value === "ellipse") {
+                setShapeInformation({
+                ...shapeInformation, 
+                "type": "ellipse", 
+                "formula": "ellipse(25% 40% at 50% 50%)",
+                });
+            }
+
+            setShapeInformation(prevState => {
+                return {
+                ...prevState, 
+                "clipPathType": value, 
+                "edges": value === "polygon" ? 4 : 0,
+                "vertices": value === "polygon" ? 4 : 0, 
+                "notes": "", 
+                }
+            });
+            return;
+        }
+        
+        // If DraggableVertice is moved, adjust verticeCoordinates and formula
+        if (name === "mousemove") {
+            
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
 
@@ -84,7 +140,12 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula, 
             });
-        } else if (name === "click" && event.target.id === "shapeShadow") {
+            return;
+        }
+        
+        // If preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
+        if ((event.target.id === "shapeShadow" || event.target.id === "clippedShape") && name === "click" && shapeInformation.clipPathType === "polygon") {
+
             const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
             const newFormula = generateNewFormula(newVerticeCoordinates);
 
@@ -95,7 +156,11 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula,
             });
-        } else if ((event.target.id.includes("deleteButton") || event.target.localName === "line") && number !== undefined) {
+            return;
+        }
+
+        // If delete button is pressed and passes a number that corresponds to the vertice, remove the corresponding verticeCoordinate and adjust formula
+        if (event.target.id.includes("deleteButton") && number !== undefined) {
 
             let newVerticeCoordinates = []; 
 
@@ -114,44 +179,20 @@ const CreateShape = (props) => {
                 "verticeCoordinates": newVerticeCoordinates, 
                 "formula": newFormula,
             }); 
-
-        } else if (name === "clipPathType") {
-            handleClipPathChange(value);
-        } else {
-            setShapeInformation({
-                ...shapeInformation, 
-                [name]: value,
-            });
+            return;
         }
-      }
-
-    function addNewVerticeCoordinates(x ,y, number) {
-        const xPercentage = Math.round((x / 280.0) * 100.0);
-        const yPercentage = Math.round((y / 280.0) * 100.0);
-
-        let newVerticeCoordinates = shapeInformation.verticeCoordinates;
-        newVerticeCoordinates[number] = {
-            "x": xPercentage + "%",
-            "y": yPercentage + "%"
-        }
-
-        return newVerticeCoordinates;
+        
+        // Handles all other ShapeForm and ShapePreview Changes
+        setShapeInformation({
+            ...shapeInformation, 
+            [name]: value,
+        });
     }
 
-    function generateNewFormula(newVerticeCoordinates) {
-        let newFormula = shapeInformation.clipPathType + "(";
-
-        for (let i = 0; i < newVerticeCoordinates.length; i++) {
-            let newX = newVerticeCoordinates[i].x; 
-            let newY = newVerticeCoordinates[i].y;
-
-            i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
-        }
-
-        return newFormula;
-    }
-
-    function handleFormulaChange(formula, edgeVerticeNumber, clipPathType) {
+    // Called when there is a change in the textbox for formula in the form
+    // Adjusts verticeCoordinates, vertices, and edges accordingly
+    // Ensures that the parentheses remain
+    const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
         let newVerticeCoordinates = [];
 
         if (clipPathType === "polygon") {
@@ -176,44 +217,42 @@ const CreateShape = (props) => {
             "verticeCoordinates": newVerticeCoordinates, 
             }
         });
-        }
-
-        function handleClipPathChange(clipPathType) {
-        if (clipPathType === "polygon") {
-            setShapeInformation({
-            ...shapeInformation, 
-            "name": "Tilted Square",  
-            "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
-            });
-        }
-
-        if (clipPathType === "circle") {
-            setShapeInformation({
-            ...shapeInformation, 
-            "name": "Circle",  
-            "formula": "circle(50% at 50% 50%)",
-            });
-        }
-
-        if (clipPathType === "ellipse") {
-            setShapeInformation({
-            ...shapeInformation, 
-            "name": "Ellipse", 
-            "formula": "ellipse(25% 40% at 50% 50%)",
-            });
-        }
-
-        setShapeInformation(prevState => {
-            return {
-            ...prevState, 
-            "clipPathType": clipPathType, 
-            "edges": clipPathType === "polygon" ? 4 : 0,
-            "vertices": clipPathType === "polygon" ? 4 : 0, 
-            "notes": "", 
-            }
-        })
     }
 
+    // Returns an array that has a new verticeCoordinate
+    const addNewVerticeCoordinates = (x ,y, number) => {
+        const xPercentage = Math.round((x / 280.0) * 100.0);
+        const yPercentage = Math.round((y / 280.0) * 100.0);
+
+        let newVerticeCoordinates = shapeInformation.verticeCoordinates;
+        newVerticeCoordinates[number] = {
+            "x": xPercentage + "%",
+            "y": yPercentage + "%"
+        }
+
+        return newVerticeCoordinates;
+    }
+
+    // Returns a generated formula string from a verticeCoordinate array
+    const generateNewFormula = (newVerticeCoordinates) => {
+
+        let newFormula = shapeInformation.clipPathType + "(";
+
+        if (newVerticeCoordinates.length === 0) {
+            return newFormula + ")";
+        }
+
+        for (let i = 0; i < newVerticeCoordinates.length; i++) {
+            let newX = newVerticeCoordinates[i].x; 
+            let newY = newVerticeCoordinates[i].y;
+
+            i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
+        }
+
+        return newFormula;
+    }
+
+    // Form Validation
     const [validated, setValidated] = useState(false);
 
     const handleSubmit = async(event) => {
@@ -255,29 +294,28 @@ const CreateShape = (props) => {
             } else {
                 console.log(`The user ${props.user.email} present in DB`);
             }
+
+            // Finally, close the modal and update the shape in UI
+            props.handleClose();
+            toast.success(`Shape ${shapeInformation.name} created successfully.`);
+            props.setShapeAction({
+                ...props.shapeAction, 
+                "action": "add",
+                "payload": {
+                    "shape_id": insertShape['inserted_hashes']
+                } 
+            });
+
+            setShapeInformation({
+                ...initialState, 
+            });
+
+            setValidated(false);
+
+        } else {
+            toast.error('OOPS!! We hit a bummer. Please try again.');
         }
-        props.handleClose();
-        toast.success(`Shape ${shapeInformation.name} created successfully.`);
-        props.setShapeAction({
-            ...props.shapeAction, 
-            "action": "add",
-            "payload": {
-                "backgroundColor": shapeInformation.backgroundColor,
-                "createdAt": null,
-                "createdBy": props.user.email,
-                "edges": shapeInformation.edges,
-                "email": null,
-                "email1": props.user.email,
-                "formula": shapeInformation.formula,
-                "likes": 0,
-                "name": shapeInformation.name,
-                "name1": props.user.displayName,
-                "notes": shapeInformation.notes,
-                "photoURL": props.user.photoURL,
-                "private": shapeInformation.private,
-                "type": shapeInformation.clipPathType
-            } 
-        });
+        
     }
 
     return(
@@ -286,7 +324,7 @@ const CreateShape = (props) => {
                 show={props.show}
                 centered
                 size="lg"
-                onHide={props.handleClose}
+                onHide={() => {setShapeInformation({ ...initialState }); props.handleClose(); }}
                 backdrop="static"
             >
                 <Modal.Header closeButton>
@@ -313,7 +351,7 @@ const CreateShape = (props) => {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => props.handleClose()} variant="outline-info">
+                    <Button onClick={() => { setShapeInformation({ ...initialState }); props.handleClose(); }} variant="outline-info">
                         Close
                     </Button>
                     <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>

@@ -1,6 +1,12 @@
 import React from "react";
+
+// Styled Component
 import styled from "styled-components";
+
+// Bootstrap
 import Form from "react-bootstrap/Form";
+import ToggleButton from "react-bootstrap/ToggleButton";
+import ToggleButtonGroup from "react-bootstrap/ToggleButtonGroup";
 
 const ColorPicker = styled.input`
     border-color: lightgray;
@@ -26,20 +32,29 @@ const ShapeForm = (props) => {
 
             <Form.Group>
                 <Form.Label>Type</Form.Label>
-                <Form.Control 
-                    as="select" 
-                    name="clipPathType" 
-                    value={props.shapeInformation.clipPathType} 
-                    onChange={props.handleChange}
-                >
-                    <option value="polygon">Polygon</option>
-                    <option value="circle">Circle</option>
-                    <option value="ellipse">Ellipse</option>
-                </Form.Control>
+                <div>
+                    <ToggleButtonGroup 
+                        type="radio" 
+                        name="clipPathType"
+                        value={props.shapeInformation.clipPathType}
+                        size="sm"
+                    >
+                        <ToggleButton value="polygon" variant="outline-dark" onChange={props.handleChange}>
+                            Polygon
+                        </ToggleButton>
+                        <ToggleButton value="circle" variant="outline-dark" onChange={props.handleChange}>
+                            Circle
+                        </ToggleButton>
+                        <ToggleButton value="ellipse" variant="outline-dark" onChange={props.handleChange}>
+                            Ellipse
+                        </ToggleButton>
+                    </ToggleButtonGroup>
+                </div>
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Color</Form.Label>
+                <Form.Label>Color picker</Form.Label>
+                <br />
                 <ColorPicker 
                     type="color" 
                     name="backgroundColor"
@@ -72,7 +87,7 @@ const ShapeForm = (props) => {
             <Form.Group>
                 <Form.Label>CSS clip-Path</Form.Label>
                 <Form.Control 
-                    type="text" 
+                    as="textarea" 
                     name="formula" 
                     value={props.shapeInformation.formula} 
                     onChange={props.handleChange} 
