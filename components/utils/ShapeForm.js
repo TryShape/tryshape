@@ -28,8 +28,15 @@ const ShapeForm = (props) => {
                     required
                 />
                 <Form.Control.Feedback type="invalid">Name required!</Form.Control.Feedback>
+                <Form.Check
+                    name="private"
+                    label="Make it Private"
+                    id="private"
+                    checked={props.shapeInformation.private}
+                    onChange={(e) => props.handleChange(e)}
+                    className="mt-1"
+                />
             </Form.Group>
-
             <Form.Group>
                 <Form.Label>Type</Form.Label>
                 <div>
@@ -53,26 +60,17 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
-                <Form.Label>Color picker</Form.Label>
-                <br />
-                <ColorPicker 
-                    type="color" 
-                    name="backgroundColor"
-                    value={props.shapeInformation.backgroundColor}
-                    onChange={props.handleChange}
-                    className="form-control-color"
-                />
+                <Form.Label>Color</Form.Label>
+                <div>
+                    <ColorPicker 
+                        type="color" 
+                        name="backgroundColor"
+                        value={props.shapeInformation.backgroundColor}
+                        onChange={props.handleChange}
+                        className="form-control-color"
+                    />
+                </div>
             </Form.Group>
-
-            <Form.Group>
-                <Form.Check
-                    name="private"
-                    label="Make it Private"
-                    checked={props.shapeInformation.private}
-                    onChange={(e) => props.handleChange(e)}
-                />
-            </Form.Group>
-
             <Form.Group>
                 <Form.Label>What's it about?</Form.Label>
                 <Form.Control 

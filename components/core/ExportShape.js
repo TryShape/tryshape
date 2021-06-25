@@ -149,6 +149,18 @@ const ExportShape = ({ show, setShow, shape }) => {
             <Container fluid>
               <Row>
                 <Col>
+                    <ShapeContainer>
+                      <Shape
+                        name={exportData.name}
+                        formula={shape.formula}
+                        width={`${exportData.width}px`}
+                        height={`${exportData.height}px`}
+                        backgroundColor={exportData.backgroundColor}
+                        id={getShapeId(exportData.name, true)}
+                      />
+                  </ShapeContainer>
+                </Col>
+                <Col>
                   <Form>
                     <Form.Group className="mb-3" id="export-name">
                       <Form.Label>Name</Form.Label>
@@ -170,6 +182,7 @@ const ExportShape = ({ show, setShow, shape }) => {
                         <Form.Label>Set a width({exportData.width}px)</Form.Label>
                         <Form.Control
                           type="range" 
+                          className="range-slider"
                           min="100" 
                           max="700" 
                           value={exportData.width} 
@@ -181,6 +194,7 @@ const ExportShape = ({ show, setShow, shape }) => {
                         <Form.Label>Set a height({exportData.height}px)</Form.Label>
                         <Form.Control
                           type="range" 
+                          className="range-slider"
                           min="100" 
                           max="700" 
                           value={exportData.height} 
@@ -210,18 +224,7 @@ const ExportShape = ({ show, setShow, shape }) => {
                     </div> 
                   </Form>
                 </Col>
-                <Col>
-                    <ShapeContainer>
-                      <Shape
-                        name={exportData.name}
-                        formula={shape.formula}
-                        width={`${exportData.width}px`}
-                        height={`${exportData.height}px`}
-                        backgroundColor={exportData.backgroundColor}
-                        id={getShapeId(exportData.name, true)}
-                      />
-                  </ShapeContainer>
-                </Col>
+                
               </Row>
             </Container>
           </Modal.Body>

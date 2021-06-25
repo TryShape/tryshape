@@ -10,6 +10,7 @@
 
   /* Primary Colors */
   --color-primary-accent: #18ffff;
+  --color-primary-accent-rgb: 24, 255, 255;
   --color-primary-accent-light: #52ffff;
   --color-primary-accent-dark: #00ebeb;
   --color-primary-pink: #f50057;
@@ -40,7 +41,7 @@
   /* Font Sizes */
   --fs-xs: 0.6rem;
   --fs-sm: 0.8rem;
-  --fs-rg: 0.96rem;
+  --fs-rg: 0.90rem;
   --fs-md: 1.4rem;
   --fs-lg: 2rem;
   --fs-xl: 3rem;
@@ -163,7 +164,8 @@ code {
   background-color: var(--color-brand-light);
 }
 
-.btn-secondary:active {
+.btn-secondary:active,
+.btn-secondary.focus {
   border-color: var(--color-brand-dark) !important;
   background-color: var(--color-brand-dark) !important;
 }
@@ -180,6 +182,7 @@ code {
 .btn-outline-info:focus {
   border-color: var(--color-brand);
   background-color: rgba(var(--color-brand-rgb), 0.1) !important;
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-brand-rgb), 0.3);
   color: var(--color-brand);
 }
 
@@ -187,6 +190,16 @@ code {
   border-color: var(--color-brand-dark) !important;
   background-color: rgba(var(--color-brand-rgb), 0.16) !important;
   color: var(--color-brand) !important;
+}
+
+.btn-outline-info.active {
+  border-color: var(--color-brand-dark) !important;
+  background-color: var(--color-brand-dark) !important;
+  color: var(--color-neutral-10) !important;
+}
+
+.btn-outline-info.active {
+  box-shadow: 0 0 0 0.2rem rgba(var(--color-brand-rgb), 0.3);
 }
 
 .btn-danger {
@@ -222,7 +235,8 @@ code {
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
 }
 
-.btn-outline-secondary:active {
+.btn-outline-secondary:active,
+.btn-outline-secondary.focus {
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   background-color: rgba(var(--color-neutral-10-rgb), 100%) !important;
   color: var(--color-brand) !important;
@@ -253,8 +267,16 @@ code {
 .btn-outline-dark:active {
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
   background-color: rgba(var(--color-neutral-100-rgb), 100%) !important;
-  color: var(--color-brand) !important;
+  color: var(--color-neutral-20) !important;
 }
+
+
+/* Button Group */
+.btn-group-toggle .btn {
+  font-weight: var(--fw-normal);
+  font-size: var(--fs-sm);
+}
+
 
 /* Button Sizes */
 .btn {
@@ -290,6 +312,14 @@ code {
   margin-right: 0;
 }
 
+.btn-icon--rounded {
+  border-radius: 50%;
+  padding: 0.6rem;
+  width: 3.6rem;
+  height: 3.6rem;
+  border-width: 0.3rem;
+}
+
 /* Dropdown Menu */
 .dropdown-menu {
   border-color: transparent;
@@ -310,6 +340,11 @@ code {
   color: var(--color-brand);
 }
 
+.dropdown-menu .dropdown-item:active {
+  background-color: var(--color-brand);
+  color: var(--color-neutral-10);
+}
+
 .dropdown-toggle::after {
   margin-left: .8em;
 }
@@ -328,8 +363,15 @@ code {
   color: var(--color-neutral-90);
   margin-bottom: 0.26rem;
 }
+.form-control {
+  font-size: var(--fs-rg);
+}
+.form-check-label {
+  font-size: var(--fs-rg);
+}
 .form-control-color {
   width: 5rem;
   height: 3rem;
   padding: 0.1rem 0.2rem;
 }
+

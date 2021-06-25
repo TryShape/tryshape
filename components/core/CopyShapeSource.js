@@ -33,8 +33,43 @@ import { FiCopy } from 'react-icons/fi';
 // misc utilities
 import { getShapeId } from "../../utils/misc";
 
-const CSSDisplay = styled.span`
+const CSSDisplayContainer = styled.div`
+  position: relative;
+  background-color: var(--color-neutral-80);
+  padding: 0 0 2rem 0;
+  height: 240px;
+  overflow: hidden;
+`;
+
+const CSSDisplay = styled.pre`
   white-space: pre-line;
+  color: #f5d67b;
+  max-height: 180px;
+  overflow: auto;
+  margin: 1rem 0.4rem 1rem 1rem;
+  padding-right: 0.4rem;
+`;
+
+const CopyButton = styled(Button)`
+  position: absolute;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  grid-gap: 0.4rem;
+  color: var(--color-neutral-10) !important;
+  left: 0.4rem;
+  bottom: 0.4rem;
+  width: calc(100% - 0.8rem);
+  padding: 0.3rem 0.6rem !important;
+  font-size: var(--fs-sm) !important;
+  background-color: var(--color-brand) !important;
+  cursor: pointer;
+
+  &:hover,
+  &:focus {
+    background-color: var(--color-brand-light) !important;
+    text-decoration: none !important;
+  }
 `;
 
 const CopyIcon = styled(FiCopy)`
@@ -98,16 +133,28 @@ const CopyShapeSource = ({ show, setShow, shape }) => {
             <Container fluid>
               <Row>
                 <Col>
+                    <ShapeContainer>
+                      <Shape
+                        name={shape.name}
+                        formula={shape.formula}
+                        width="300px"
+                        height="300px"
+                        backgroundColor={shape.backgroundColor}
+                        id={getShapeId(shape.name, true)}
+                      />
+                  </ShapeContainer>
+                </Col>
+                <Col>
                   <Form>
                     <div>
                       <Form.Group>
                         <Form.Label>Export As</Form.Label>
                         <div>
-                          <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-dark" size="sm" defaultValue={type}>
-                            <ToggleButton id="tbg-radio-1" value={'css'} variant="outline-dark" onClick={() => setType('css')}>
+                          <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-info" size="sm" defaultValue={type}>
+                            <ToggleButton id="tbg-radio-1" value={'css'} variant="outline-info" onClick={() => setType('css')}>
                                 Show CSS
                             </ToggleButton>
-                            <ToggleButton id="tbg-radio-2" value={'clip-path'} variant="outline-dark" onClick={() => setType('clip-path')}>
+                            <ToggleButton id="tbg-radio-2" value={'clip-path'} variant="outline-info" onClick={() => setType('clip-path')}>
                                 Show Clip-Path
                             </ToggleButton>
                           </ToggleButtonGroup>
@@ -125,44 +172,48 @@ const CopyShapeSource = ({ show, setShow, shape }) => {
                         <div>
                             {type === 'css' && 
                             <>
+                              <hr/>
                               <h3>CSS Snippet</h3>
-                              <CSSDisplay>
-                                <code>{getCSS(shape.formula)}</code>
-                              </CSSDisplay>
-                              <CopyIcon size={20} onClick={() => copy(shape.formula, true)}/>
+                              <CSSDisplayContainer >
+                                <CSSDisplay rel='css'>
+                                  <code>{getCSS(shape.formula)}</code>
+                                </CSSDisplay>
+                                <CopyButton onClick={() => copy(shape.formula, true)} variant="link" className="btn-icon">
+                                  <CopyIcon color='var(--color-neutral-10' size="16px"/>
+                                  <div>Copy to Clipboard</div>
+                                </CopyButton>
+                              </CSSDisplayContainer>
                             </>
                             }
                             {type === 'clip-path' && 
                               <div>
+                                <hr/>
                                 <h3>Clip-Path Value</h3>
-                                <code>{shape.formula}</code>
-                                <CopyIcon size={20} onClick={() => copy(shape.formula, false)}/>
+                                <CSSDisplayContainer >
+                                  <CSSDisplay rel='css'>
+                                    <code>{shape.formula}</code>
+                                  </CSSDisplay>
+                                  <CopyButton onClick={() => copy(shape.formula, false)} variant="link" className="btn-icon">
+                                    <CopyIcon color='var(--color-neutral-10' size="16px"/>
+                                    <div>Copy to Clipboard</div>
+                                  </CopyButton>
+                                </CSSDisplayContainer>
                               </div>
+                              
                             }
                         </div>
                       )
                     }
                   </Form>
                 </Col>
-                <Col>
-                    <ShapeContainer>
-                      <Shape
-                        name={shape.name}
-                        formula={shape.formula}
-                        width="300px"
-                        height="300px"
-                        backgroundColor={shape.backgroundColor}
-                        id={getShapeId(shape.name, true)}
-                      />
-                  </ShapeContainer>
-                </Col>
+                
               </Row>
             </Container>
           </Modal.Body>
 
           <Modal.Footer>
             <Button variant="outline-info" onClick={() => setShow(false)}>
-              Cancel
+              Close
             </Button>
           </Modal.Footer>
         </Modal>
