@@ -47,7 +47,7 @@ const NoShapeFound = () => {
             <p className="desc">We couldn't find the shape you are looking for. Why dont you start creating a shape of your own choice? or try to refine your search. </p>
             <Button variant='secondary'>
                 <FiPlus />
-                Create Shape Name
+                Create Shape
             </Button>
         </PageWrapper>
     )
