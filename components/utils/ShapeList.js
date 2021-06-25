@@ -388,7 +388,7 @@ const ShapeList = (
         { shapeToEdit && <CreateShape
           show= {showEditModal}
           handleClose={ closeEditModal }
-          shapeInformation= { shapeToEdit }
+          shape= { shapeToEdit }
           edit={true} />
         }
 

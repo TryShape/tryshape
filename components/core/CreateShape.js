@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 // Bootstrap
 import Container from "react-bootstrap/Container";
@@ -53,6 +53,40 @@ const CreateShape = (props) => {
     const [shapeInformation, setShapeInformation] = useState({
         ...initialState, 
     });
+
+    // Checks if edit is true and will provide different initial values
+    useEffect(() => {
+
+        if (props.edit) {
+
+            let formula = props.shape.formula; 
+            let slicedFormula = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
+            let newVerticeCoordinates = slicedFormula.split(", ");
+
+            newVerticeCoordinates = newVerticeCoordinates.map((value) => {
+                let coordinates = value.split(" ");
+                return {
+                    "x": coordinates[0],
+                    "y": coordinates[1],
+                }
+            });
+    
+            setShapeInformation({
+                ...shapeInformation, 
+                "name": props.shape.name, 
+                "formula": props.shape.formula,
+                "vertices": props.shape.vertices,
+                "private": true,
+                "edges": props.shape.edges, 
+                "notes": props.shape.notes, 
+                "clipPathType": props.shape.type,
+                "showShadow": true, 
+                "backgroundColor": props.shape.backgroundColor, 
+                "verticeCoordinates" : newVerticeCoordinates
+            });
+        }
+
+    }, [props.show]);
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
     const handleChange = (event, data, number) => {
