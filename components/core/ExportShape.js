@@ -208,14 +208,14 @@ const ExportShape = ({ show, setShow, shape }) => {
                       <Form.Group>
                         <Form.Label>Export As</Form.Label>
                         <div>
-                          <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-dark" size="sm" defaultValue={exportData.type}>
-                            <ToggleButton id="tbg-radio-1" value={'png'} variant="outline-dark" onClick={() => setExportType('png')}>
+                          <ToggleButtonGroup type="radio" name="options" defaultValue={1} variant="outline-info" size="sm" defaultValue={exportData.type}>
+                            <ToggleButton id="tbg-radio-1" value={'png'} variant="outline-info" onClick={() => setExportType('png')}>
                                 PNG
                             </ToggleButton>
-                            <ToggleButton id="tbg-radio-2" value={'jpeg'} variant="outline-dark" onClick={() => setExportType('jpeg')}>
+                            <ToggleButton id="tbg-radio-2" value={'jpeg'} variant="outline-info" onClick={() => setExportType('jpeg')}>
                                 JPEG
                             </ToggleButton>
-                            <ToggleButton id="tbg-radio-3" value={'svg'} variant="outline-dark" onClick={() => setExportType('svg')}>
+                            <ToggleButton id="tbg-radio-3" value={'svg'} variant="outline-info" onClick={() => setExportType('svg')}>
                                 SVG
                             </ToggleButton>
                           </ToggleButtonGroup>

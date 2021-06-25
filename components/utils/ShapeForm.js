@@ -46,13 +46,13 @@ const ShapeForm = (props) => {
                         value={props.shapeInformation.clipPathType}
                         size="sm"
                     >
-                        <ToggleButton value="polygon" variant="outline-dark" onChange={props.handleChange}>
+                        <ToggleButton value="polygon" variant="outline-info" onChange={props.handleChange}>
                             Polygon
                         </ToggleButton>
-                        <ToggleButton value="circle" variant="outline-dark" onChange={props.handleChange}>
+                        <ToggleButton value="circle" variant="outline-info" onChange={props.handleChange}>
                             Circle
                         </ToggleButton>
-                        <ToggleButton value="ellipse" variant="outline-dark" onChange={props.handleChange}>
+                        <ToggleButton value="ellipse" variant="outline-info" onChange={props.handleChange}>
                             Ellipse
                         </ToggleButton>
                     </ToggleButtonGroup>

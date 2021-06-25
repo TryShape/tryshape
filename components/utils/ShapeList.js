@@ -138,7 +138,7 @@ const ShapeCreditsThumb = styled.img`
   border-radius: 50%;
   height: 32px;
   width: 32px;
-  margin-right: 0.4rem;
+  margin-right: 0.7rem;
 `;
 
 const Playground = styled.div`
