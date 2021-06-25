@@ -328,7 +328,7 @@ const CreateShape = (props) => {
                 backdrop="static"
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Create a Shape</Modal.Title>
+                    <Modal.Title>{props.edit ? "Edit Shape" : "Create Shape"}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Container fluid>

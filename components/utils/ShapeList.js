@@ -388,7 +388,8 @@ const ShapeList = (
         { shapeToEdit && <CreateShape
           show= {showEditModal}
           handleClose={ closeEditModal }
-          shapeInformation= { shapeToSourceCopy } />
+          shapeInformation= { shapeToEdit }
+          edit={true} />
         }
 
         {
@@ -438,7 +439,7 @@ const ShapeList = (
                       size={24} />
                   </Button>
                   {shape.private ? 
-                    <Button title="Edit Shape" vairant="outline-light" onClick={() => performEdit(shape)} className="btn-icon">
+                    <Button title="Edit Shape" vairant="outline-light" onClick={() => {performEdit(shape); console.log(shape)}} className="btn-icon">
                       Edit
                     </Button> : null
                   }
