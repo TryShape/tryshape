@@ -36,7 +36,7 @@ export default function App({ Component, pageProps }) {
   return (
     
     <>
-      <Toaster position="top-right" reverseOrder={false} />
+      <Toaster position="bottom-right" reverseOrder={false} />
       <Component {...pageProps} {...props} />
       <SignInModal open={open} setOpen={setOpen} />
     </>
