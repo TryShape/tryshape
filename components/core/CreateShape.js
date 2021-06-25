@@ -406,6 +406,12 @@ const CreateShape = (props) => {
                     <Container fluid>
                         <Row lg={2} md={1} sm={1} xs={1}>
                             <Col>
+                                <ShapePreview 
+                                    shapeInformation={shapeInformation} 
+                                    handleChange={handleChange} 
+                                />
+                            </Col>
+                            <Col>
                                 <ShapeForm 
                                     shapeInformation={shapeInformation} 
                                     handleChange={handleChange} 
@@ -413,12 +419,7 @@ const CreateShape = (props) => {
                                     validated={validated} 
                                 />
                             </Col>
-                            <Col>
-                                <ShapePreview 
-                                    shapeInformation={shapeInformation} 
-                                    handleChange={handleChange} 
-                                />
-                            </Col>
+                            
                         </Row>
                     </Container>
                 </Modal.Body>

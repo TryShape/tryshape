@@ -141,7 +141,7 @@ const ShapeCreditsThumb = styled.img`
   border-radius: 50%;
   height: 32px;
   width: 32px;
-  margin-right: 0.4rem;
+  margin-right: 0.7rem;
 `;
 
 const Playground = styled.div`
@@ -165,12 +165,12 @@ const ShapeCardsContainer = styled.div`
 
 const ShapeCardBody = styled.div`
   position: relative;
-  padding: 1rem 1.6rem;
+  padding: 1rem 1.4rem;
 `;
 
 const ShapeCardHeader = styled.div`
   margin: 0;
-  padding: 0 1.8rem 1.6rem 1.8rem;
+  padding: 0 1.4rem 1.2rem 1.4rem;
 `;
 
 const ShapeCardSwitch = styled.div`
@@ -421,24 +421,24 @@ const ShapeList = (
                     {
                       shape.liked ? 
                         (
-                          <Button title="Remove Like" variant="danger" className="btn-icon">
+                          <Button title="Remove Like" variant="danger" className="btn-icon btn-icon--rounded">
                             <LikeFilledIcon size={24} />
                           </Button>
                         ) 
                         :
                         (
-                          <Button title="Add Like" variant="outline-light" className="btn-icon">
+                          <Button title="Add Like" variant="outline-light" className="btn-icon btn-icon--rounded">
                             <LikeIcon size={24} />
                           </Button>
                         )
                     }
                     
                   </span>{" "}
-                  <Button title="Export Shape" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon">
+                  <Button title="Export Shape" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
                     <ExportIcon
                       size={24} />
                   </Button>
-                  <Button title="Copy Source" variant="outline-light" onClick={() => performCopySource(shape)} className="btn-icon">
+                  <Button title="Copy Source" variant="outline-light" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
                     <CopyIcon
                       size={24} />
                   </Button>
