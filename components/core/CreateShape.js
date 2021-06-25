@@ -58,11 +58,9 @@ const CreateShape = (props) => {
     useEffect(() => {
 
         if (props.edit) {
-
             let formula = props.shape.formula; 
             let slicedFormula = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
             let newVerticeCoordinates = slicedFormula.split(", ");
-
             newVerticeCoordinates = newVerticeCoordinates.map((value) => {
                 let coordinates = value.split(" ");
                 return {
@@ -80,9 +78,8 @@ const CreateShape = (props) => {
                 "edges": props.shape.edges, 
                 "notes": props.shape.notes, 
                 "clipPathType": props.shape.type,
-                "showShadow": true, 
                 "backgroundColor": props.shape.backgroundColor, 
-                "verticeCoordinates" : newVerticeCoordinates
+                "verticeCoordinates" : newVerticeCoordinates, 
             });
         }
 
@@ -299,56 +296,92 @@ const CreateShape = (props) => {
         setValidated(true);
 
         console.log(shapeInformation);
-
-        // Create the shape in the DB
-        const insertShape = await harperFetch({
-            operation: "sql",
-            sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
-              values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
-        });
-
-        console.log(insertShape);
         
-        // Create the user in the db
-        if (insertShape['inserted_hashes'].length > 0) {
-            // First check if the user exist
-            const result = await harperFetch({
-                operation: "sql",
-                sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
-            });
-            const count = (result[0]['COUNT(*)']);
-            console.log({count});
-            // If doesn't exist, create in db
-            if (count === 0) {
-                const insertUser = await harperFetch({
-                    operation: "sql",
-                    sql: `INSERT into tryshape.users(email, name, photoURL) 
-                        values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
-                });
-            } else {
-                console.log(`The user ${props.user.email} present in DB`);
-            }
+        if (props.edit) {
 
-            // Finally, close the modal and update the shape in UI
+            const editShape = await harperFetch({
+                operation: "sql", 
+                sql: `
+                    UPDATE tryshape.shapes
+                    SET
+                        name = '${shapeInformation.name}', 
+                        formula = '${shapeInformation.formula}', 
+                        vertices = '${shapeInformation.vertices}', 
+                        private = '${shapeInformation.private}', 
+                        edges = '${shapeInformation.edges}', 
+                        notes = '${shapeInformation.notes}', 
+                        type = '${shapeInformation.clipPathType}', 
+                        backgroundColor = '${shapeInformation.backgroundColor}'
+                    WHERE
+                        shape_id === '${props.shape.shape_id}'
+                `
+            });
+
+            console.log(editShape);
+
             props.handleClose();
-            toast.success(`Shape ${shapeInformation.name} created successfully.`);
-            props.setShapeAction({
-                ...props.shapeAction, 
-                "action": "add",
-                "payload": {
-                    "shape_id": insertShape['inserted_hashes']
-                } 
-            });
-
-            setShapeInformation({
-                ...initialState, 
-            });
-
-            setValidated(false);
+            toast.success(`Shape ${shapeInformation.name} edited successfully.`);
+            // props.setShapeAction({
+            //     ...props.shapeAction, 
+            //     "action": "add",
+            //     "payload": {
+            //         "shape_id": insertShape['inserted_hashes']
+            //     } 
+            // });
 
         } else {
-            toast.error('OOPS!! We hit a bummer. Please try again.');
+
+            // Create the shape in the DB
+            const insertShape = await harperFetch({
+                operation: "sql",
+                sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
+                values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
+            });
+
+            console.log(insertShape);
+
+            // Create the user in the db
+            if (insertShape['inserted_hashes'].length > 0) {
+                // First check if the user exist
+                const result = await harperFetch({
+                    operation: "sql",
+                    sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
+                });
+                const count = (result[0]['COUNT(*)']);
+                console.log({count});
+                // If doesn't exist, create in db
+                if (count === 0) {
+                    const insertUser = await harperFetch({
+                        operation: "sql",
+                        sql: `INSERT into tryshape.users(email, name, photoURL) 
+                            values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
+                    });
+                } else {
+                    console.log(`The user ${props.user.email} present in DB`);
+                }
+
+                // Finally, close the modal and update the shape in UI
+                props.handleClose();
+                toast.success(`Shape ${shapeInformation.name} created successfully.`);
+                props.setShapeAction({
+                    ...props.shapeAction, 
+                    "action": "add",
+                    "payload": {
+                        "shape_id": insertShape['inserted_hashes']
+                    } 
+                });
+
+            } else {
+                toast.error('OOPS!! We hit a bummer. Please try again.');
+            }
+
         }
+
+        setShapeInformation({
+            ...initialState, 
+        });
+
+        setValidated(false);
         
     }
 
@@ -389,7 +422,7 @@ const CreateShape = (props) => {
                         Close
                     </Button>
                     <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>
-                        Create
+                        {props.edit ? "Save Changes" : "Create"}
                     </Button>
                 </Modal.Footer>
             </Modal>
