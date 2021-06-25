@@ -200,7 +200,9 @@ const ShapeList = (
     user, 
     data, 
     searchTerm, 
-    sort 
+    sort, 
+    shapeAction, 
+    setShapeAction
   }) => {
 
   const filterShape = (shapes, searchTerm) => {
@@ -389,6 +391,8 @@ const ShapeList = (
           show= {showEditModal}
           handleClose={ closeEditModal }
           shape= { shapeToEdit }
+          shapeAction = { shapeAction }
+          setShapeAction = { setShapeAction }
           edit={true} />
         }
 

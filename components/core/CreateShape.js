@@ -297,6 +297,7 @@ const CreateShape = (props) => {
 
         console.log(shapeInformation);
         
+        // Editing Shape
         if (props.edit) {
 
             const editShape = await harperFetch({
@@ -319,17 +320,21 @@ const CreateShape = (props) => {
 
             console.log(editShape);
 
-            props.handleClose();
-            toast.success(`Shape ${shapeInformation.name} edited successfully.`);
-            // props.setShapeAction({
-            //     ...props.shapeAction, 
-            //     "action": "add",
-            //     "payload": {
-            //         "shape_id": insertShape['inserted_hashes']
-            //     } 
-            // });
+            if (editShape["update_hashes"].length > 0) {
+                props.handleClose();
+                toast.success(`Shape ${shapeInformation.name} edited successfully.`);
+                props.setShapeAction({
+                    ...props.shapeAction, 
+                    "action": "edit",
+                    "payload": {
+                        "shape_id": editShape['update_hashes']
+                    } 
+                });
+            } else {
+                toast.error('OOPS!! We hit a bummer. Please try again.');
+            } 
 
-        } else {
+        } else { // Creating Shape
 
             // Create the shape in the DB
             const insertShape = await harperFetch({
