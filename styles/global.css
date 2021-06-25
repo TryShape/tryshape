@@ -41,7 +41,7 @@
   /* Font Sizes */
   --fs-xs: 0.6rem;
   --fs-sm: 0.8rem;
-  --fs-rg: 0.96rem;
+  --fs-rg: 0.90rem;
   --fs-md: 1.4rem;
   --fs-lg: 2rem;
   --fs-xl: 3rem;
@@ -328,6 +328,12 @@ code {
   font-weight: var(--fw-semibold);
   color: var(--color-neutral-90);
   margin-bottom: 0.26rem;
+}
+.form-control {
+  font-size: var(--fs-rg);
+}
+.form-check-label {
+  font-size: var(--fs-rg);
 }
 .form-control-color {
   width: 5rem;
