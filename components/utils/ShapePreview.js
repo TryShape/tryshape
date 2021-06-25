@@ -77,7 +77,7 @@ const ShapePreview = (props) => {
     return(
         <>
             <Playground>
-                <Box height="360px" width="360px" onClick={(e) => props.handleChange(e)}>
+                <Box height="300px" width="300px" onClick={(e) => props.handleChange(e)}>
                     { props.shapeInformation.showShadow && <Shadow backgroundColor={props.shapeInformation.backgroundColor} id="shapeShadow" /> }
                     <Component formula={props.shapeInformation.formula} backgroundColor={props.shapeInformation.backgroundColor} id="clippedShape" />
                     {vertices}

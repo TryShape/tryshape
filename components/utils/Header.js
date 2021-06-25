@@ -164,6 +164,16 @@ const Header = ({
       });
   };
 
+  const tweet = () => {
+    const link = `https://twitter.com/intent/tweet?text=Check%20this%20amazing%20app%20http://unshape.vercel.app/,%20created%20by%20@tapasadhikary%20and%20friends%0A%0A%23DEVCommunity%20%23100DaysOfCode%20%23unshape`;
+    if(typeof window !== 'undefined') {
+      window.open(
+        link,
+        '_blank' // <- This is what makes it open in a new window.
+      );
+    } 
+  }
+
   return (
     <AppHeader>
       <Link href="/">
@@ -209,9 +219,9 @@ const Header = ({
       {(user.email || user.displayName) ? (
         <>
           <LoginBar>   
-            <Button variant="outline-secondary" size="sm" className="mr-1" onClick={() => setShowCreateShape(true)}>
+            <Button variant="outline-secondary" size="sm" className="mr-1" onClick={tweet}>
               <FiTwitter />
-              Tweet us
+              Tweet it
             </Button> 
             <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
               <FiPlus />
