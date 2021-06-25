@@ -30,8 +30,11 @@ import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 // Export Shape
 import { ExportShape, CopyShapeSource, NoShapeFound } from '..';
 
-// CreateShape to edit shape
+// CreateShape
 import { CreateShape } from "..";
+
+// DeleteShape
+import { DeleteShape } from "..";
 
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
@@ -231,6 +234,10 @@ const ShapeList = (
   const [showEditModal, setShowEditModal] = useState(false);
   const [shapeToEdit, setShapeToEdit] = useState();
 
+  // All about editing private shapes
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [shapeToDelete, setShapeToDelete] = useState();
+
   useEffect(() =>{
     const copy = [...shapes];
     if(sort === 'recent') {
@@ -293,6 +300,16 @@ const ShapeList = (
 
   const closeEditModal = () => {
     setShowEditModal(false);
+  }
+
+  /**
+   * Method to execute when user clicks on the delte shape
+   */
+   const performDelete = shape => {
+    // Set the shape details to edit
+    setShapeToDelete(shape);
+    // Show the export modal
+    setShowDeleteModal(true);
   }
 
   /**
@@ -396,6 +413,12 @@ const ShapeList = (
           edit={true} />
         }
 
+        { shapeToDelete && <DeleteShape
+          show= { showDeleteModal }
+          setShow={ setShowDeleteModal }
+          shape= { shapeToDelete } />
+        }
+
         {
           filteredShape.length === 0 ? 
             <NoShapeFound 
@@ -450,6 +473,11 @@ const ShapeList = (
                   {shape.private ? 
                     <Button title="Edit Shape" vairant="outline-light" onClick={() => {performEdit(shape); console.log(shape)}} className="btn-icon">
                       Edit
+                    </Button> : null
+                  }
+                  {shape.private ? 
+                    <Button title="Delete Shape" vairant="outline-light" onClick={() => {performDelete(shape); console.log(shape)}} className="btn-icon">
+                      Delete
                     </Button> : null
                   }
                   </ShapeActionsContainer>
