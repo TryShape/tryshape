@@ -370,6 +370,9 @@ const CreateShape = (props) => {
 
                 // Finally, close the modal and update the shape in UI
                 props.handleClose();
+                if (props.setSearchTerm) {
+                    props.setSearchTerm('');
+                }
                 toast.success(`Shape ${shapeInformation.name} created successfully.`);
                 props.setShapeAction({
                     ...props.shapeAction, 

@@ -202,7 +202,8 @@ const ShapeList = (
     setOpen, 
     user, 
     data, 
-    searchTerm, 
+    searchTerm,
+    setSearchTerm, 
     sort, 
     shapeAction, 
     setShapeAction
@@ -426,7 +427,9 @@ const ShapeList = (
             <NoShapeFound 
               shapeAction = { shapeAction } 
               setShapeAction = { setShapeAction } 
-              user = { user } 
+              user = { user }
+              setOpen = { setOpen }
+              setSearchTerm = { setSearchTerm }
             /> : filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>

@@ -115,6 +115,7 @@ const App = (props) => {
         <ShapeList 
           {...props} 
           data={ data } 
+          setSearchTerm = { setSearchTerm }
           searchTerm={searchTerm} 
           sort={sort} 
           shapeAction={shapeAction} 
