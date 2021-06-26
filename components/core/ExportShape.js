@@ -230,15 +230,14 @@ const ExportShape = ({ show, setShow, shape }) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="outline-info" onClick={() => setShow(false)}>
-              Cancel
-            </Button>
             <Button variant="secondary"
               onClick={() => doExport(getShapeId(exportData.name, true), exportData.name)}
             >
               Export
             </Button>
-            
+            <Button variant="outline-dark" onClick={() => setShow(false)}>
+              Cancel
+            </Button>
           </Modal.Footer>
         </Modal>
       )}

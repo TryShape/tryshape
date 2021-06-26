@@ -164,6 +164,12 @@ code {
   background-color: var(--color-brand-light);
 }
 
+.btn-secondary:disabled {
+  border-color: transparent;
+  background-color: var(--color-neutral-30);
+  color: var(--color-neutral-50);
+}
+
 .btn-secondary:active,
 .btn-secondary.focus {
   border-color: var(--color-brand-dark) !important;
@@ -231,7 +237,8 @@ code {
 .btn-outline-secondary:hover,
 .btn-outline-secondary:focus {
   border: solid 1px var(--color-neutral-10);
-  background-color: rgba(var(--color-neutral-10-rgb), 15%);
+  background-color: rgba(var(--color-neutral-10-rgb), 100%);
+  color: var(--color-brand);
   box-shadow: 0 0 0 0 rgba(0,0,0,0);
 }
 
@@ -286,6 +293,7 @@ code {
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: var(--fs-sm);
+  font-weight: var(--fw-bold);
 }
 
 .btn-lg {
@@ -317,7 +325,7 @@ code {
   padding: 0.6rem;
   width: 3.6rem;
   height: 3.6rem;
-  border-width: 0.13rem;
+  border-width: 0.1rem;
 }
 
 /* Dropdown Menu */

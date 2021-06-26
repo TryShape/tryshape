@@ -112,7 +112,15 @@ const App = (props) => {
           width={300}
         />
       ) : (
-        <ShapeList {...props} data={ data } searchTerm={searchTerm} sort={sort} />
+        <ShapeList 
+          {...props} 
+          data={ data } 
+          setSearchTerm = { setSearchTerm }
+          searchTerm={searchTerm} 
+          sort={sort} 
+          shapeAction={shapeAction} 
+          setShapeAction={setShapeAction} 
+        />
       )}
     </>
   );

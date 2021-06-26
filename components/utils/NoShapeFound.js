@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 // Bootstrap
 import Button from "react-bootstrap/Button";
@@ -9,6 +9,9 @@ import styled from "styled-components";
 
 // icons
 import { FiPlus } from 'react-icons/fi';
+
+// CreateShape modal
+import { CreateShape } from "..";
 
 const PageWrapper = styled.div`
     display: flex;
@@ -38,18 +41,51 @@ const PageWrapper = styled.div`
 
 `;
 
-const NoShapeFound = () => {
+const NoShapeFound = ({ 
+    setOpen, 
+    user,  
+    setSearchTerm,
+    shapeAction, 
+    setShapeAction
+  }) => {
+
+    // Controls when CreateShape Modal Shows
+    const [showCreateShape, setShowCreateShape] = useState(false);
+
+    const performCreate = () => {
+        
+        if (user.length === 0) {
+            setOpen(true);
+        } else {
+            setShowCreateShape(true);
+        }
+    }
+
+    const closeModal = () => {
+        setShowCreateShape(false);
+    }
 
     return(
-        <PageWrapper>
-            <img src={ImgFeelingSad} width="360"/>
-            <h2 className="title">Whooops!</h2>
-            <p className="desc">We couldn't find the shape you are looking for. Why dont you start creating a shape of your own choice? or try to refine your search. </p>
-            <Button variant='secondary'>
-                <FiPlus />
-                Create Shape
-            </Button>
-        </PageWrapper>
+        <>
+            <PageWrapper>
+                <img src={ImgFeelingSad} width="360"/>
+                <h2 className="title">Whooops!</h2>
+                <p className="desc">Sorry, we couldn't find the shape you are looking for. Why don't you start creating a shape of your own choice? or try to refine your search. </p>
+                <Button variant='secondary' onClick={() => performCreate()}>
+                    <FiPlus />
+                    Create Shape
+                </Button>
+            </PageWrapper>
+            <CreateShape
+                show={showCreateShape} 
+                handleClose={closeModal} 
+                edit={false}
+                user={user}
+                shapeAction={shapeAction} 
+                setShapeAction={setShapeAction}
+                setSearchTerm={setSearchTerm}
+            />
+        </>
     )
 };
 

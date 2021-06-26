@@ -253,9 +253,11 @@ const Header = ({
       <CreateShape 
         show={showCreateShape} 
         handleClose={closeModal} 
+        edit={false}
         user={user}
         shapeAction={shapeAction} 
-        setShapeAction={setShapeAction} />
+        setShapeAction={setShapeAction} 
+      />
     </AppHeader>
   );
 };

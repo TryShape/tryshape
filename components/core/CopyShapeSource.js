@@ -212,7 +212,7 @@ const CopyShapeSource = ({ show, setShow, shape }) => {
           </Modal.Body>
 
           <Modal.Footer>
-            <Button variant="outline-info" onClick={() => setShow(false)}>
+            <Button variant="outline-dark" onClick={() => setShow(false)}>
               Close
             </Button>
           </Modal.Footer>

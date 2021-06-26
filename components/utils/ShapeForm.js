@@ -19,25 +19,6 @@ const ShapeForm = (props) => {
     return (
         <Form noValidate validated={props.validated} onSubmit={props.handleSubmit} id="createShapeForm">
             <Form.Group>
-                <Form.Label>Name</Form.Label>
-                <Form.Control 
-                    type="text" 
-                    name="name" 
-                    value={props.shapeInformation.name} 
-                    onChange={props.handleChange} 
-                    required
-                />
-                <Form.Control.Feedback type="invalid">Name required!</Form.Control.Feedback>
-                <Form.Check
-                    name="private"
-                    label="Make it Private"
-                    id="private"
-                    checked={props.shapeInformation.private}
-                    onChange={(e) => props.handleChange(e)}
-                    className="mt-1"
-                />
-            </Form.Group>
-            <Form.Group>
                 <Form.Label>Type</Form.Label>
                 <div>
                     <ToggleButtonGroup 
@@ -60,6 +41,26 @@ const ShapeForm = (props) => {
             </Form.Group>
 
             <Form.Group>
+                <Form.Label>Name</Form.Label>
+                <Form.Control 
+                    type="text" 
+                    name="name" 
+                    value={props.shapeInformation.name} 
+                    onChange={props.handleChange} 
+                    required
+                />
+                <Form.Control.Feedback type="invalid">Name required!</Form.Control.Feedback>
+                <Form.Check
+                    name="private"
+                    label="Make it Private"
+                    id="private"
+                    checked={props.shapeInformation.private}
+                    onChange={(e) => props.handleChange(e)}
+                    className="mt-1"
+                />
+            </Form.Group>
+
+            <Form.Group>
                 <Form.Label>Color</Form.Label>
                 <div>
                     <ColorPicker 
@@ -71,6 +72,7 @@ const ShapeForm = (props) => {
                     />
                 </div>
             </Form.Group>
+            
             <Form.Group>
                 <Form.Label>What's it about?</Form.Label>
                 <Form.Control 

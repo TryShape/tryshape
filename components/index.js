@@ -4,7 +4,8 @@ export { default as Landing } from "./core/Landing";
 export { default as SignInModal } from "./core/SignInModal";
 export { default as ExportShape } from "./core/ExportShape";
 export { default as CreateShape } from "./core/CreateShape";
-export {default as CopyShapeSource} from "./core/CopyShapeSource";
+export { default as CopyShapeSource } from "./core/CopyShapeSource";
+export { default as DeleteShape } from "./core/DeleteShape";
 
 // utils
 export { default as Header } from "./utils/Header";

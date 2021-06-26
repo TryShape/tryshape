@@ -23,12 +23,18 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 import Switch from "react-switch";
 
 // icons
-import { FiCopy, FiDownload, FiLock } from 'react-icons/fi';
+import { FiCopy, FiDelete, FiDownload, FiEdit2, FiLock, FiTrash2 } from 'react-icons/fi';
 import { BiExport } from "react-icons/bi";
 import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 
 // Export Shape
 import { ExportShape, CopyShapeSource, NoShapeFound } from '..';
+
+// CreateShape
+import { CreateShape } from "..";
+
+// DeleteShape
+import { DeleteShape } from "..";
 
 // misc unitless
 import { getShapeFileName, getShapeId } from '../../utils/misc';
@@ -59,11 +65,22 @@ const ShapeCard = styled.div`
   }
 `;
 
-const ShapeActionsContainer = styled.div`
+const ShapeActionsPrimary = styled.div`
   padding: 2rem;
   display: flex;
   grid-gap: 1rem;
   justify-content: center;
+`;
+
+const ShapeActionsSecondary = styled.div`
+  padding: 2rem;
+  display: flex;
+  grid-gap: 1rem;
+  justify-content: center;
+
+  button {
+    flex: 1;
+  }
 `;
 
 const ShapeActions = styled.div`
@@ -77,10 +94,14 @@ const ShapeActions = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const ShapeName = styled.h4`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-gap: .3rem;
   margin: 0 0 0.8rem 0;
   font-weight: var(--fw-bold);
   font-size: var(--fs-rg);
@@ -196,8 +217,11 @@ const ShapeList = (
     setOpen, 
     user, 
     data, 
-    searchTerm, 
-    sort 
+    searchTerm,
+    setSearchTerm, 
+    sort, 
+    shapeAction, 
+    setShapeAction
   }) => {
 
   const filterShape = (shapes, searchTerm) => {
@@ -221,6 +245,14 @@ const ShapeList = (
   // All about copy source states
   const [showCopySourceModal, setCopySourceModal] = useState(false);
   const [shapeToSourceCopy, setShapeToSourceCopy] = useState();
+
+  // All about editing private shapes
+  const [showEditModal, setShowEditModal] = useState(false);
+  const [shapeToEdit, setShapeToEdit] = useState();
+
+  // All about editing private shapes
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [shapeToDelete, setShapeToDelete] = useState();
 
   useEffect(() =>{
     const copy = [...shapes];
@@ -270,6 +302,30 @@ const ShapeList = (
       // Show the export modal
       setShowExportModal(true);
     }
+  }
+
+  /**
+   * Method to execute when user clicks on the edit shape
+   */
+  const performEdit = shape => {
+    // Set the shape details to edit
+    setShapeToEdit(shape);
+    // Show the export modal
+    setShowEditModal(true);
+  }
+
+  const closeEditModal = () => {
+    setShowEditModal(false);
+  }
+
+  /**
+   * Method to execute when user clicks on the delte shape
+   */
+   const performDelete = shape => {
+    // Set the shape details to edit
+    setShapeToDelete(shape);
+    // Show the export modal
+    setShowDeleteModal(true);
   }
 
   /**
@@ -364,13 +420,37 @@ const ShapeList = (
           shape= { shapeToSourceCopy } />
         }
 
+        { shapeToEdit && <CreateShape
+          show= {showEditModal}
+          handleClose={ closeEditModal }
+          shape= { shapeToEdit }
+          shapeAction = { shapeAction }
+          setShapeAction = { setShapeAction }
+          edit={true} />
+        }
+
+        { shapeToDelete && <DeleteShape
+          show= { showDeleteModal }
+          setShow={ setShowDeleteModal }
+          shape= { shapeToDelete }
+          shapeAction = { shapeAction }
+          setShapeAction = { setShapeAction } />
+        }
+
         {
-          filteredShape.length === 0 ? <NoShapeFound /> : filteredShape.map((shape, index) => (
+          filteredShape.length === 0 ? 
+            <NoShapeFound 
+              shapeAction = { shapeAction } 
+              setShapeAction = { setShapeAction } 
+              user = { user }
+              setOpen = { setOpen }
+              setSearchTerm = { setSearchTerm }
+            /> : filteredShape.map((shape, index) => (
           <React.Fragment key={index}>
             <ShapeCard>
               <ShapeCardBody>
                 <ShapeNameHeader>
-                  <ShapeName>{shape.name}{shape.private && <FiLock />}</ShapeName>
+                  <ShapeName>{shape.name}{shape.private && <FiLock color='var(--color-neutral-50)' />}</ShapeName>
                   <ShapeLikes><LikeFilledIcon size='16px' color='var(--color-neutral-40)'/><ShapeLikesCount>{shape.likes}</ShapeLikesCount></ShapeLikes>
                 </ShapeNameHeader>
                 <Shape
@@ -383,7 +463,7 @@ const ShapeList = (
                   showShadow={shape.showAdvanced}
                 />
                 <ShapeActions className="shape-actions">
-                  <ShapeActionsContainer>
+                  <ShapeActionsPrimary>
                   <span
                     onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
@@ -395,22 +475,36 @@ const ShapeList = (
                         ) 
                         :
                         (
-                          <Button title="Add Like" variant="outline-light" className="btn-icon btn-icon--rounded">
+                          <Button title="Add Like" variant="outline-secondary" className="btn-icon btn-icon--rounded">
                             <LikeIcon size={24} />
                           </Button>
                         )
                     }
                     
                   </span>{" "}
-                  <Button title="Export Shape" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
+                  <Button title="Export Shape" variant="outline-secondary" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
                     <ExportIcon
                       size={24} />
                   </Button>
-                  <Button title="Copy Source" variant="outline-light" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
+                  <Button title="Copy Source" variant="outline-secondary" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
                     <CopyIcon
                       size={24} />
                   </Button>
-                  </ShapeActionsContainer>
+                  </ShapeActionsPrimary>
+                  <ShapeActionsSecondary>
+                    {shape.private ? 
+                      <Button title="Edit Shape" size='sm' variant="outline-secondary" onClick={() => {performEdit(shape); console.log(shape)}}>
+                        <FiEdit2 />
+                        Edit
+                      </Button> : null
+                    }
+                    {shape.private ? 
+                      <Button title="Delete Shape" size='sm' variant="outline-secondary" onClick={() => {performDelete(shape); console.log(shape)}}>
+                        <FiTrash2 />
+                        Delete
+                      </Button> : null
+                    }
+                  </ShapeActionsSecondary>
                 </ShapeActions>
               </ShapeCardBody>
               <ShapeCardHeader>
