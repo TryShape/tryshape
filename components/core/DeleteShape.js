@@ -7,6 +7,42 @@ import toast from "react-hot-toast";
 
 import { harperFetch } from "../../utils/HarperFetch";
 
+// Styled Component
+import styled from "styled-components";
+
+// icons
+import { FiTrash2 } from 'react-icons/fi';
+
+
+const ModalHeader = styled.div`
+    display: flex;
+    align-items: center;
+    grid-gap: 0.4rem;
+`;
+
+const ModalContent = styled.div`
+    display: flex;
+    align-items: flex-start;
+    grid-gap: 1rem;
+    padding: 1rem 0 0 0.6rem;
+`;
+
+const IconWrapper = styled.div`
+    padding: 1.2rem 1rem 1rem 1rem;
+    
+    
+`;
+
+const ContentWrapper = styled.div`
+    padding: 1rem 0;
+
+    .modal-title {
+        margin-left: 0;
+    }
+`;
+
+
+
 const DeleteShape = ({ show, setShow, shape, shapeAction, setShapeAction }) => {
 
     const handleDelete = async() => {
@@ -43,20 +79,23 @@ const DeleteShape = ({ show, setShow, shape, shapeAction, setShapeAction }) => {
             onHide={() => setShow(false)}
             centered
         >
-            <Modal.Header closeButton>
-                <Modal.Title>
-                    Delete Shape
-                </Modal.Title>
-            </Modal.Header>
             <Modal.Body>
-                <p>Are you sure you want to delete this shape? </p>
+                <ModalContent>
+                    <IconWrapper>
+                        <FiTrash2 size="48px" color='var(--color-primary-pink)' />
+                    </IconWrapper>
+                    <ContentWrapper>
+                        <Modal.Title>Delete Shape</Modal.Title>
+                        <p>Are you sure you want to delete this shape? </p>
+                    </ContentWrapper>
+                </ModalContent>
             </Modal.Body>
             <Modal.Footer>
-                <Button onClick={() => setShow(false)}>
-                    Cancel
-                </Button>
-                <Button onClick={() => handleDelete()}>
+                <Button onClick={() => handleDelete()} variant="danger">
                     Yes
+                </Button>
+                <Button onClick={() => setShow(false)} variant="outline-dark">
+                    No
                 </Button>
             </Modal.Footer>
         </Modal>

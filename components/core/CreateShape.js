@@ -430,11 +430,11 @@ const CreateShape = (props) => {
                     </Container>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button onClick={() => { setShapeInformation({ ...initialState }); props.handleClose(); }} variant="outline-info">
-                        Close
-                    </Button>
                     <Button variant="secondary" type="submit" form="createShapeForm" disabled={!shapeInformation.name}>
                         {props.edit ? "Save Changes" : "Create"}
+                    </Button>
+                    <Button onClick={() => { setShapeInformation({ ...initialState }); props.handleClose(); }} variant="outline-dark">
+                        Cancel
                     </Button>
                 </Modal.Footer>
             </Modal>

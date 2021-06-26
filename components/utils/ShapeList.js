@@ -23,7 +23,7 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 import Switch from "react-switch";
 
 // icons
-import { FiCopy, FiDownload, FiLock } from 'react-icons/fi';
+import { FiCopy, FiDelete, FiDownload, FiEdit2, FiLock, FiTrash2 } from 'react-icons/fi';
 import { BiExport } from "react-icons/bi";
 import { BsFillHeartFill, BsHeart} from "react-icons/bs";
 
@@ -65,11 +65,22 @@ const ShapeCard = styled.div`
   }
 `;
 
-const ShapeActionsContainer = styled.div`
+const ShapeActionsPrimary = styled.div`
   padding: 2rem;
   display: flex;
   grid-gap: 1rem;
   justify-content: center;
+`;
+
+const ShapeActionsSecondary = styled.div`
+  padding: 2rem;
+  display: flex;
+  grid-gap: 1rem;
+  justify-content: center;
+
+  button {
+    flex: 1;
+  }
 `;
 
 const ShapeActions = styled.div`
@@ -83,10 +94,14 @@ const ShapeActions = styled.div`
   left: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-between;
 `;
 
 const ShapeName = styled.h4`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-gap: .3rem;
   margin: 0 0 0.8rem 0;
   font-weight: var(--fw-bold);
   font-size: var(--fs-rg);
@@ -435,7 +450,7 @@ const ShapeList = (
             <ShapeCard>
               <ShapeCardBody>
                 <ShapeNameHeader>
-                  <ShapeName>{shape.name}{shape.private && <FiLock />}</ShapeName>
+                  <ShapeName>{shape.name}{shape.private && <FiLock color='var(--color-neutral-50)' />}</ShapeName>
                   <ShapeLikes><LikeFilledIcon size='16px' color='var(--color-neutral-40)'/><ShapeLikesCount>{shape.likes}</ShapeLikesCount></ShapeLikes>
                 </ShapeNameHeader>
                 <Shape
@@ -448,7 +463,7 @@ const ShapeList = (
                   showShadow={shape.showAdvanced}
                 />
                 <ShapeActions className="shape-actions">
-                  <ShapeActionsContainer>
+                  <ShapeActionsPrimary>
                   <span
                     onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
                     {
@@ -460,32 +475,36 @@ const ShapeList = (
                         ) 
                         :
                         (
-                          <Button title="Add Like" variant="outline-light" className="btn-icon btn-icon--rounded">
+                          <Button title="Add Like" variant="outline-secondary" className="btn-icon btn-icon--rounded">
                             <LikeIcon size={24} />
                           </Button>
                         )
                     }
                     
                   </span>{" "}
-                  <Button title="Export Shape" variant="outline-light" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
+                  <Button title="Export Shape" variant="outline-secondary" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
                     <ExportIcon
                       size={24} />
                   </Button>
-                  <Button title="Copy Source" variant="outline-light" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
+                  <Button title="Copy Source" variant="outline-secondary" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
                     <CopyIcon
                       size={24} />
                   </Button>
-                  {shape.private ? 
-                    <Button title="Edit Shape" vairant="outline-light" onClick={() => {performEdit(shape); console.log(shape)}} className="btn-icon">
-                      Edit
-                    </Button> : null
-                  }
-                  {shape.private ? 
-                    <Button title="Delete Shape" vairant="outline-light" onClick={() => {performDelete(shape); console.log(shape)}} className="btn-icon">
-                      Delete
-                    </Button> : null
-                  }
-                  </ShapeActionsContainer>
+                  </ShapeActionsPrimary>
+                  <ShapeActionsSecondary>
+                    {shape.private ? 
+                      <Button title="Edit Shape" size='sm' variant="outline-secondary" onClick={() => {performEdit(shape); console.log(shape)}}>
+                        <FiEdit2 />
+                        Edit
+                      </Button> : null
+                    }
+                    {shape.private ? 
+                      <Button title="Delete Shape" size='sm' variant="outline-secondary" onClick={() => {performDelete(shape); console.log(shape)}}>
+                        <FiTrash2 />
+                        Delete
+                      </Button> : null
+                    }
+                  </ShapeActionsSecondary>
                 </ShapeActions>
               </ShapeCardBody>
               <ShapeCardHeader>
