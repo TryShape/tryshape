@@ -105,11 +105,11 @@ const App = (props) => {
         setShapeAction={setShapeAction} />
       {loading ? (
         <Loader
-          style={{margin: '20% auto auto 42%'}}
+          style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}
           type="Circles"
-          color="#eb3d86"
-          height={300}
-          width={300}
+          color="rgba(var(--color-brand-rgb), 0.6)"
+          height={200}
+          width={200}
         />
       ) : (
         <ShapeList 

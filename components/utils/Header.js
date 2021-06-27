@@ -37,6 +37,14 @@ const AppHeader = styled(Navbar)`
         width: 36px;
       }
     }
+
+    .navbar-collapse {
+      flex-grow: unset !important;
+    }
+
+    @media (min-width: 992px) {
+      justify-content: space-between !important;
+    }
 `;
 
 const Logo = styled.h1`
@@ -189,11 +197,10 @@ const LoginBarBefore = styled.div`
 
   @media (max-width: 991px) {
     justify-content: flex-end;
-    border: solid 1px rgba(var(--color-neutral-10-rgb), 0.2);
-    border-left-width: 0;
-    border-right-width: 0;
-    margin: 0.4rem 0;
-    padding: 0.6rem 0;
+    border-top: solid 1px rgba(var(--color-neutral-10-rgb), 0.2);
+    margin: 0.4rem 0 0 0;
+    padding: 0.8rem 0.8rem 0.4rem 0;
+    flex-wrap: wrap !important;
   }
 `;
 

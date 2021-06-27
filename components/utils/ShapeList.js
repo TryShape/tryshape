@@ -44,7 +44,7 @@ import { formatRelative } from "date-fns";
 
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
-    padding: 5rem 0 2rem 0;
+    padding: 2rem 0 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(240px, 1fr));
     grid-gap: 2rem;   
