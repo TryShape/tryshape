@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
+
+// axios
 import axios from "axios";
+
+// dynamic from next
 import dynamic from "next/dynamic";
-
-// harperDb fetch call
-import { harperFetch } from "../../utils/HarperFetch";
-
-// Dummy Shape Data
-// import { shapes } from "../../data/shapes";
 
 // loader
 import Loader from "react-loader-spinner";
@@ -52,12 +50,12 @@ const App = (props) => {
       shapes = response.data;
 
       // Fetch the shapes liked by the logged-in user
-      const likedShapes = await harperFetch({
-        operation: "sql",
-        sql: `SELECT *
-          FROM tryshape.likes 
-          WHERE email = '${user.email}'`,
+      const likedResponse = await axios.get("/api/GET/likes", {
+        params: {
+          email: user.email
+        }
       });
+      const likedShapes = likedResponse.data;
 
       // If there are liked shapes, take out the shape_id
       if (likedShapes.length > 0) {
