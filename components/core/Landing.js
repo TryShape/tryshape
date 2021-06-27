@@ -17,7 +17,17 @@ import IconSvg from '../../public/images/icon-svg.svg';
 import IconCss from '../../public/images/icon-css.svg';
 
 // icon
-import { FiMenu, FiLinkedin, FiTwitter, FiShare, FiShare2, FiPenTool, FiSearch, FiMail, FiGithub } from "react-icons/fi";
+import { 
+  FiMenu, 
+  FiLinkedin, 
+  FiTwitter, 
+  FiShare, 
+  FiShare2, 
+  FiPenTool, 
+  FiSearch, 
+  FiMail, 
+  FiGithub, 
+  FiYoutube } from "react-icons/fi";
 
 // link
 import Link from "next/link";
@@ -547,12 +557,13 @@ const Landing = ({ setOpen, user, setUser }) => {
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
-                  <a href="#"><FiGithub /></a>
-                  <a href="#"><FiTwitter /></a>
-                  <a href="#"><FiLinkedin /></a>
-                  <a href="#"><FiMail /></a>
+                  <a href="https://github.com/TryShape" target="_blank"><FiGithub /></a>
+                  <a href="https://twitter.com/tapasadhikary" target="_blank"><FiTwitter /></a>
+                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank"><FiLinkedin /></a>
+                  <a href="https://www.youtube.com/c/TapasAdhikary/featured"><FiYoutube /></a>
+                  <a href="mailto:tapas.adhikary@gmail.com"><FiMail /></a>
                 </SocialLinks>
-                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="#">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
+                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
               </Container>
             </SectionContact>
         </div>
