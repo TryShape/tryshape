@@ -1,8 +1,6 @@
 export default async function handler(req, res) {
     const { type, email } = req.query;
-    console.log(req.query);
-    console.log(`Shape type to query is ${type}`);
-
+    
     let sql;
     if (type === 'private') {
         sql = `SELECT * 
@@ -13,7 +11,6 @@ export default async function handler(req, res) {
     } else if(type === 'public') {
         sql = `SELECT * FROM tryshape.shapes`;
     } else if(type === 'public-logged-in') {
-        console.log(`email is ${email}`);
         sql = `SELECT *
             FROM tryshape.shapes s
             INNER JOIN tryshape.users u 
@@ -36,7 +33,6 @@ export default async function handler(req, res) {
     });
   
     const data = await request.json();
-    // console.log(data);
   
     res.status(200).json(data);
   }

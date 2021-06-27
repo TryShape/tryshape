@@ -74,7 +74,7 @@ const CreateShape = (props) => {
                 "name": props.shape.name, 
                 "formula": props.shape.formula,
                 "vertices": props.shape.vertices,
-                "private": true,
+                "private": props.shape.private,
                 "edges": props.shape.edges, 
                 "notes": props.shape.notes, 
                 "clipPathType": props.shape.type,

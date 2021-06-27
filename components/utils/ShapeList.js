@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+// axios
+import axios from "axios";
+
 // Bootstrap
 import Container from 'react-bootstrap/Container'
 import Button from "react-bootstrap/Button";
@@ -9,9 +12,6 @@ import styled from "styled-components";
 
 // dynamic from Next.js
 import dynamic from "next/dynamic";
-
-// harperDb fetch call
-import { harperFetch } from "../../utils/HarperFetch";
 
 // Toast
 import toast from "react-hot-toast";
@@ -350,64 +350,75 @@ const ShapeList = (
 
       // Check if already an entry for this user's like
       // for the shape present.
-      const isPresent = await harperFetch({
-        operation: "sql",
-        sql: `SELECT * 
-            FROM tryshape.likes 
-            WHERE shape_id='${shapeId}' AND email='${user.email}'`,
+      const likedResponse = await axios.get("/api/GET/likes", {
+        params: {
+          shapeId: shapeId,
+          email: user.email
+        }
       });
+      const isPresent = likedResponse.data;
+      console.log({isPresent});
       // Get the latest likes count from db
-      const returnValue = await harperFetch({
-        operation: "sql",
-        sql: `SELECT s.likes 
-          FROM tryshape.shapes s 
-          WHERE s.shape_id='${shapeId}'`,
+      const shapeResponse = await axios.get("/api/GET/shape", {
+        params: {
+          shapeId: shapeId
+        }
       });
+      const returnValue = shapeResponse.data;
           
       if (isPresent.length === 0) {
         // If not present, add for like
-        const insertLike = await harperFetch({
-          operation: "sql",
-          sql: `INSERT into tryshape.likes(shape_id, email) 
-              values('${shapeId}', '${user.email}')`,
+        const insertLikeResponse = await axios.post('/api/POST/like', {
+          shapeId: shapeId,
+          email: user.email
         });
+        const insertLike = insertLikeResponse.data;
+        console.log({insertLike});
 
-        if (insertLike) {
+        if (insertLike.data.inserted_hashes.length > 0) {
           // Update the count by 1
           likes = returnValue[0].likes + 1;
         }
       } else {
-        // If present, delete to remove like
-        const deleteLike = await harperFetch({
-          operation: "sql",
-          sql: `DELETE from tryshape.likes 
-              WHERE shape_id='${shapeId}' AND email='${user.email}'`,
+        // If present, get the like id
+        const likeId = isPresent[0].like_id;
+        // delete to remove like
+        const deleteLikeResponse = await axios.post('/api/DELETE/like', {
+          likeId: likeId
         });
-        if (deleteLike) {
+        const deleteLike = deleteLikeResponse.data;
+        console.log({deleteLike});
+
+        if (deleteLike.data.deleted_hashes.length > 0) {
           // update the like count decrease by 1
           likes = returnValue[0].likes - 1;
         }
       }
 
       // Update the shape data with the updated count
-      const updated = await harperFetch({
-        operation: "sql",
-        sql: `UPDATE tryshape.shapes SET likes = ${likes} WHERE shape_id='${shapeId}'`
+      const updateShapeResponse = await axios.post('/api/PUT/shape', {
+        shapeId: shapeId,
+        likes: likes
       });
+      const updated = updateShapeResponse.data;
+      console.log({updated});
 
-      // Update the shape data in the shapes array
-      let modifiedShapes = shapes.map((shape, index) => {
-        if (shape['shape_id'] === shapeId) {
-          return {
-            ...shape,
-            liked: !shape.liked,
-            likes: likes
-          };
-        }
-        return shape;
-      });
-      setShapes(...[modifiedShapes]);
-      //setData(...[modifiedShapes]);
+      if (updated.data.update_hashes.length > 0) {
+        // Update the shape data in the shapes array
+        let modifiedShapes = shapes.map((shape, index) => {
+          if (shape['shape_id'] === shapeId) {
+            return {
+              ...shape,
+              liked: !shape.liked,
+              likes: likes
+            };
+          }
+          return shape;
+        });
+        setShapes(...[modifiedShapes]);
+      } else {
+        toast.error('Not able to update the likes at this moment.');
+      }
     }
   };
 
