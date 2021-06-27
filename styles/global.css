@@ -47,6 +47,13 @@
   --fs-xl: 3rem;
   --fs-xxl: 0.8rem;
   --fs-xxxl: 0.8rem;
+
+  /* Responsive Breakpoints */
+  --screen-sm-min: 768px;
+  --screen-md-min: 992px;
+  --screen-md-max: 1024px;
+  --screen-lg-min: 1172px;
+  --screen-lg-max: 1200px;
 }
 
 /* Typography */
