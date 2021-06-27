@@ -31,7 +31,7 @@ const LandingBanner = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 74px);   
+    min-height: 100vh;   
     background-color: var(--color-brand);
     background: rgb(93,33,210);
     background: linear-gradient(180deg, rgba(93,33,210,1) 0%, rgba(175,33,210,1) 100%);
@@ -56,7 +56,7 @@ const LandingBanner = styled.section`
 
 const BannerHeader = styled(Navbar)`
   padding: 1rem 1.8rem !important;
-  background-color: var(--color-brand);
+  background-color: rgba(var(--color-brand-rgb), 0.86);
 
   .navbar-toggler:hover,
   .navbar-toggler:focus {
@@ -417,7 +417,7 @@ const Landing = ({ setOpen, user, setUser }) => {
     
     return(
         <div>
-            <BannerHeader sticky="top" expand="md">
+            <BannerHeader fixed="top" expand="md">
               <Navbar.Brand><Logo><div className="sr-only">TryShape</div></Logo></Navbar.Brand>
               <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
