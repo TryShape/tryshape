@@ -246,9 +246,15 @@ const Header = ({
           </LoginBar>
         </>
       ) : (
-        <Button variant="outline-secondary" size="sm" onClick={() => setOpen(true)}>
-          <div>Sign In</div>
-        </Button>
+        <>
+          <Button variant="outline-secondary" size="sm" className="mr-1" onClick={tweet}>
+            <FiTwitter />
+            Tweet it
+          </Button>
+          <Button variant="outline-secondary" size="sm" onClick={() => setOpen(true)}>
+            <div>Sign In</div>
+          </Button>
+        </>
       )}
       <CreateShape 
         show={showCreateShape} 
