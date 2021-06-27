@@ -419,7 +419,7 @@ const Landing = ({ setOpen, user, setUser }) => {
         <div>
             <BannerHeader sticky="top" expand="md">
               <Navbar.Brand><Logo><div className="sr-only">TryShape</div></Logo></Navbar.Brand>
-              <Navbar.Toggle className="navbar-toggler-light">
+              <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
               </Navbar.Toggle>
               <Navbar.Collapse className="justify-content-end">

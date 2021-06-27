@@ -10,7 +10,8 @@ import { auth } from "../../utils/firebase";
 import toast from "react-hot-toast";
 
 // icon
-import { FiPower, FiX } from "react-icons/fi";
+import { FiMenu, FiPower, FiX,  FiLogIn, FiSearch, FiPlus, FiTwitter } from "react-icons/fi";
+import { BiSortDown } from "react-icons/bi";
 import ImgLogo from '../../public/images/img-logo.svg'
 
 // Bootstrap
@@ -18,9 +19,8 @@ import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import DropdownButton from 'react-bootstrap/DropdownButton';
-import Dropdown from 'react-bootstrap/Dropdown'
-
-import { FiSearch, FiPlus, FiTwitter } from "react-icons/fi";
+import Dropdown from 'react-bootstrap/Dropdown';
+import Navbar from 'react-bootstrap/Navbar';
 
 // Styled Component
 import styled from "styled-components";
@@ -28,17 +28,15 @@ import styled from "styled-components";
 // CreateShape Component
 import { CreateShape } from "..";
 
-const AppHeader = styled.div`
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    right: 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 100%;
+const AppHeader = styled(Navbar)`
     padding: 0.6rem 0.8rem;
     background-color: var(--color-brand);
+
+    .navbar-brand {
+      @media (max-width: 767px) {
+        width: 36px;
+      }
+    }
 `;
 
 const Logo = styled.h1`
@@ -52,13 +50,33 @@ const Logo = styled.h1`
    margin: 2px 0 0 -8px;
    line-height: 1;
    cursor: pointer;
+
+   @media (max-width: 767px) {
+    width: 26px;
+    margin: -2px 0 0 0;
+    background-size: cover;
+    background-position: center left;
+  }
 `;
 
 const NavbarSearchInputContainer = styled.div`
   display: flex;
   align-items: center;
-  max-width: 560px;
-  width: 60% !important;
+  max-width: 420px;
+  width: 64% !important;
+
+  @media (min-width: 1280px) {
+    max-width: 560px;
+  }
+
+  @media (max-width: 991px) {
+    // max-width: 420px;
+    flex: 1;
+  }
+
+  @media (max-width: 767px) {
+    // max-width: 320px;
+  }
 `;
 
 const NavbarSearchInput = styled(InputGroup)`
@@ -117,6 +135,12 @@ const UserThumbName = styled.div`
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  @media (max-width: 991px) {
+    max-width: unset;
+    overflow: unset;
+    text-overflow: unset;
+  }
 `;
 
 const LogoutButton = styled(Button)`
@@ -126,6 +150,51 @@ const LogoutButton = styled(Button)`
 const LoginBar = styled.div`
   display: flex;
   align-items: center;
+
+  @media (max-width: 991px) {
+    justify-content: flex-end;
+    border-top: solid 1px rgba(var(--color-neutral-10-rgb), 0.2);
+    margin: 0.4rem 0 0 0;
+    padding: 0.8rem 0.8rem 0.4rem 0;
+    flex-wrap: wrap !important;
+  }
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    grid-gap: 0.6rem;
+    align-items: stretch;
+     .login-element {
+       
+     }
+  }
+`;
+
+const UserMeta = styled.div`
+  display: flex;
+  align-self: center;
+`;
+
+const LoginSeperator = styled.div`
+  width: 1px;
+  height: 1.8rem;
+  background-color: rgba(var(--color-neutral-10-rgb), 0.4);
+  margin: 0 0.2rem 0 0.7rem;
+  align-self: center;
+`;
+
+const LoginBarBefore = styled.div`
+  display: flex;
+  align-items: center;
+  grid-gap: 0.2em;
+
+  @media (max-width: 991px) {
+    justify-content: flex-end;
+    border: solid 1px rgba(var(--color-neutral-10-rgb), 0.2);
+    border-left-width: 0;
+    border-right-width: 0;
+    margin: 0.4rem 0;
+    padding: 0.6rem 0;
+  }
 `;
 
 
@@ -175,13 +244,14 @@ const Header = ({
   }
 
   return (
-    <AppHeader>
-      <Link href="/">
-        <Logo>       
-          <div className="sr-only">TryShape</div>
-        </Logo>
-      </Link>
-
+    <AppHeader sticky="top" expand="lg">
+      <Navbar.Brand>
+        <Link href="/">
+          <Logo>       
+            <div className="sr-only">TryShape</div>
+          </Logo>
+        </Link>
+      </Navbar.Brand>
       <NavbarSearchInputContainer>
         <NavbarSearchInput>
           <NavbarSearchInputText id="basic-addon1"><FiSearch color='white' size='18px' /></NavbarSearchInputText>
@@ -194,76 +264,93 @@ const Header = ({
           />
           {searchTerm && <CloseIcon title="Clear Search Query" color='#ffffff' size='24px' onClick={() => setSearchTerm('')}/>}
         </NavbarSearchInput>
-        <DropdownButton variant="outline-secondary" size="sm" id="dropdown-basic-button" title={`Sort by ${sort}`} className="border-0">
-          <Dropdown.Item 
-            href="#" 
-            active={sort==='oldest'} 
-            onClick={() =>setSort('oldest')}>
-            Oldest
-          </Dropdown.Item>
-          <Dropdown.Item 
-            href="#" 
-            active={sort==='popularity'} 
-            onClick={() =>setSort('popularity')}>
-            Popularity
-          </Dropdown.Item>
-          <Dropdown.Item 
-            href="#" 
-            active={sort==='recent'} 
-            onClick={() =>setSort('recent')}>
-            Recent
-          </Dropdown.Item>
-        </DropdownButton>
+        <Dropdown>
+          <Dropdown.Toggle variant="outline-secondary" size="sm" id="dropdown-basic"className="border-0">
+            <BiSortDown className='mr-0 d-lg-none' size="1.4rem" />
+            <span className='d-none d-lg-inline'>
+              {`Sort by ${sort}`}
+            </span> 
+          </Dropdown.Toggle>
+          <Dropdown.Menu>
+            <Dropdown.Item 
+              href="#" 
+              active={sort==='oldest'} 
+              onClick={() =>setSort('oldest')}>
+              Oldest
+            </Dropdown.Item>
+            <Dropdown.Item 
+              href="#" 
+              active={sort==='popularity'} 
+              onClick={() =>setSort('popularity')}>
+              Popularity
+            </Dropdown.Item>
+            <Dropdown.Item 
+              href="#" 
+              active={sort==='recent'} 
+              onClick={() =>setSort('recent')}>
+              Recent
+            </Dropdown.Item>
+          </Dropdown.Menu>
+        </Dropdown>
       </NavbarSearchInputContainer>
-      
-      {(user.email || user.displayName) ? (
-        <>
-          <LoginBar>   
-            <Button variant="outline-secondary" size="sm" className="mr-1" onClick={tweet}>
-              <FiTwitter />
-              Tweet it
-            </Button> 
-            <Button variant="primary" size="sm" className="mr-3" onClick={() => setShowCreateShape(true)}>
-              <FiPlus />
-              Add Shape
-            </Button>
-            <UserThumb>
-              <img
-                src={
-                  user.photoURL
-                    ? user.photoURL
-                    : `https://unavatar.vercel.app/${user.email}`
-                }
-                alt="profile"
-              />
-              <UserThumbName>{user.displayName ? user.displayName : "User"}</UserThumbName>
-            </UserThumb>
-            <LogoutButton onClick={signOut} variant="link" className="btn-icon p-0 ml-2">
-              <FiPower color='var(--color-neutral-10' size="18px"/>
-              <div className="sr-only">Sign Out</div>
-            </LogoutButton>
-    
-          </LoginBar>
-        </>
-      ) : (
-        <>
-          <Button variant="outline-secondary" size="sm" className="mr-1" onClick={tweet}>
-            <FiTwitter />
-            Tweet it
-          </Button>
-          <Button variant="outline-secondary" size="sm" onClick={() => setOpen(true)}>
-            <div>Sign In</div>
-          </Button>
-        </>
-      )}
-      <CreateShape 
-        show={showCreateShape} 
-        handleClose={closeModal} 
-        edit={false}
-        user={user}
-        shapeAction={shapeAction} 
-        setShapeAction={setShapeAction} 
-      />
+      <Navbar.Toggle>
+          <FiMenu color="var(--color-neutral-10" size="24px"/>
+      </Navbar.Toggle>
+      <Navbar.Collapse className="justify-content-end">
+        {(user.email || user.displayName) ? (
+          <>
+            <LoginBar>   
+              <Button variant="outline-secondary" size="sm" className="mr-1 login-element" onClick={tweet}>
+                <FiTwitter />
+                Tweet it
+              </Button> 
+              <Button variant="primary" size="sm" className="mr-md-3 login-element" onClick={() => setShowCreateShape(true)}>
+                <FiPlus />
+                Add Shape
+              </Button>
+              <UserMeta className="login-element">
+                <UserThumb>
+                  <img
+                    src={
+                      user.photoURL
+                        ? user.photoURL
+                        : `https://unavatar.vercel.app/${user.email}`
+                    }
+                    alt="profile"
+                  />
+                  <UserThumbName>{user.displayName ? user.displayName : "User"}</UserThumbName>
+                </UserThumb>
+                <LoginSeperator />
+                <LogoutButton onClick={signOut} variant="link" className="btn-icon p-0 ml-2">
+                  <FiPower color='var(--color-neutral-10' size="18px"/>
+                  <div className="sr-only">Sign Out</div>
+                </LogoutButton>
+              </UserMeta>
+            </LoginBar>
+          </>
+        ) : (
+          <>
+            <LoginBarBefore>
+              <Button variant="outline-secondary" size="sm" className="mr-1" onClick={tweet}>
+                <FiTwitter />
+                Tweet it
+              </Button>
+              <Button variant="outline-secondary" size="sm" onClick={() => setOpen(true)}>
+                <FiLogIn />
+                Sign In
+              </Button>
+            </LoginBarBefore>
+          </>
+        )}
+        <CreateShape 
+          show={showCreateShape} 
+          handleClose={closeModal} 
+          edit={false}
+          user={user}
+          shapeAction={shapeAction} 
+          setShapeAction={setShapeAction} 
+        />
+      </Navbar.Collapse>
     </AppHeader>
   );
 };
