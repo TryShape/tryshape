@@ -163,7 +163,7 @@ const CreateShape = (props) => {
         }
         
         // If DraggableVertice is moved, adjust verticeCoordinates and formula
-        if (name === "mousemove" || "touchmove") {
+        if (name === "mousemove" || name === "touchmove") {
             
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -296,8 +296,6 @@ const CreateShape = (props) => {
             event.stopPropagation();
         }
         setValidated(true);
-
-        console.log(shapeInformation);
         
         // Editing Shape
         if (props.edit) {
