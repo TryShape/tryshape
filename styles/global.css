@@ -3,6 +3,7 @@
   --color-brand-light: #9553ff;
   --color-brand-dark: #491aa8;
   --color-brand-rgb: 93, 33, 210;
+  --color-brand-dark-rgb: #73, 28, 168;
   --color-brand-secondary: #af21d2;
   --color-brand-secondary-rgb: 175, 33, 210;
   --color-brand-teritiary: #2445ff;
@@ -47,6 +48,22 @@
   --fs-xl: 3rem;
   --fs-xxl: 0.8rem;
   --fs-xxxl: 0.8rem;
+
+  /* Line Height */
+  --lh-xs: 0.8rem;
+  --lh-sm: 1.4rem;
+  --lh-rg: 2.4rem;
+  --lh-md: 1.8rem;
+  --lh-lg: 2.4rem;
+  --lh-xl: 3rem;
+  
+
+  /* Responsive Breakpoints */
+  --screen-sm-min: 768px;
+  --screen-md-min: 992px;
+  --screen-md-max: 1024px;
+  --screen-lg-min: 1172px;
+  --screen-lg-max: 1200px;
 }
 
 /* Typography */
@@ -59,6 +76,7 @@ body {
   font-family: Inter, -apple-system, Roboto, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 16px;
+  scroll-behavior: smooth;
 }
 
 body * {
@@ -120,6 +138,7 @@ code {
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--color-neutral-90);
+  line-height: var(--lh-rg);
 }
 
 .p-desc {

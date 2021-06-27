@@ -44,10 +44,18 @@ import { formatRelative } from "date-fns";
 
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
-    padding: 5rem 0 2rem 0;
+    padding: 2rem 0 2rem 0;
     display: grid;
     grid-template-columns: repeat(3, minmax(240px, 1fr));
     grid-gap: 2rem;   
+
+    @media (max-width: 991px) {
+      grid-template-columns: repeat(2, minmax(300px, 1fr));
+    }
+
+    @media (max-width: 767px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
 `;
 
 const ShapeCard = styled.div`
