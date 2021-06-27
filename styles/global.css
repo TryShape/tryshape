@@ -48,6 +48,15 @@
   --fs-xxl: 0.8rem;
   --fs-xxxl: 0.8rem;
 
+  /* Line Height */
+  --lh-xs: 0.8rem;
+  --lh-sm: 1.4rem;
+  --lh-rg: 2.4rem;
+  --lh-md: 1.8rem;
+  --lh-lg: 2.4rem;
+  --lh-xl: 3rem;
+  
+
   /* Responsive Breakpoints */
   --screen-sm-min: 768px;
   --screen-md-min: 992px;
@@ -128,6 +137,7 @@ code {
   font-size: var(--fs-lg);
   font-weight: var(--fw-bold);
   color: var(--color-neutral-90);
+  line-height: var(--lh-rg);
 }
 
 .p-desc {
