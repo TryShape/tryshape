@@ -411,6 +411,10 @@ const ShapeList = (
     }
   };
 
+  const canEditOrDelete = shape => {
+    return user.email === shape.createdBy;
+  }
+
   
 
   return (
@@ -500,13 +504,13 @@ const ShapeList = (
                   </Button>
                   </ShapeActionsPrimary>
                   <ShapeActionsSecondary>
-                    {shape.private ? 
+                    {canEditOrDelete(shape) ? 
                       <Button title="Edit Shape" size='sm' variant="outline-secondary" onClick={() => {performEdit(shape); console.log(shape)}}>
                         <FiEdit2 />
                         Edit
                       </Button> : null
                     }
-                    {shape.private ? 
+                    {canEditOrDelete(shape) ? 
                       <Button title="Delete Shape" size='sm' variant="outline-secondary" onClick={() => {performDelete(shape); console.log(shape)}}>
                         <FiTrash2 />
                         Delete
