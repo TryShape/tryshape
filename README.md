@@ -89,6 +89,8 @@ Please access TryShape using the URL:
 - Sort shapes by, most liked, recent, and oldest.
 ### ✅ Authentication & Authorization
 - Features like export, like, create, edit shapes need you to autheticate with the app. You can use your Gmail or GitHub credntials to authenticate to the app. It is secured and powered by `Google Firebase`.
+### ✅ Responsive and Mobile Friendly
+- Use `TryShape` seamlessly from any devices.
 
 ## 🏗️ How to Set up `TryShape` for Development?
 You can run TryShape locally with a few easy steps.
