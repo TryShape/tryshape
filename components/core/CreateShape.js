@@ -16,9 +16,6 @@ import { ShapeForm, ShapePreview } from "..";
 // Toast
 import toast from "react-hot-toast";
 
-// harperDb fetch call
-import { harperFetch } from "../../utils/HarperFetch";
-
 const CreateShape = (props) => {
 
     // Store the default state as a variable so resetting form is easier
@@ -337,30 +334,43 @@ const CreateShape = (props) => {
         } else { 
 
             // Create the shape in the DB
-            const insertShape = await harperFetch({
-                operation: "sql",
-                sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
-                values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
+            const insertShapeResponse = await axios.post('/api/POST/shape', {
+                name: shapeInformation.name, 
+                formula: shapeInformation.formula, 
+                vertices: shapeInformation.vertices, 
+                visibility: shapeInformation.private, 
+                edges: shapeInformation.edges, 
+                notes: shapeInformation.notes, 
+                type: shapeInformation.clipPathType, 
+                backgroundColor: shapeInformation.backgroundColor,
+                createdBy: props.user.email,
+                likes: 0
             });
+            const insertShape = insertShapeResponse.data
 
-            console.log(insertShape);
+            console.log({insertShape});
 
             // Create the user in the db
-            if (insertShape['inserted_hashes'].length > 0) {
+            if (insertShape.data['inserted_hashes'].length > 0) {
                 // First check if the user exist
-                const result = await harperFetch({
-                    operation: "sql",
-                    sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
-                });
-                const count = (result[0]['COUNT(*)']);
+                const userResponse = await axios.get("/api/GET/user", {
+                    params: {
+                      email: props.user.email
+                    }
+                  });
+                const result = userResponse.data;
+                const count = result.length;
                 console.log({count});
+
                 // If doesn't exist, create in db
                 if (count === 0) {
-                    const insertUser = await harperFetch({
-                        operation: "sql",
-                        sql: `INSERT into tryshape.users(email, name, photoURL) 
-                            values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
+                    const insertUserResponse = await axios.post('/api/POST/user', {
+                        displayName: props.user.displayName, 
+                        email: props.user.email, 
+                        photoURL: props.user.photoURL
                     });
+                    const insertUser = insertUserResponse.data;
+                    console.log({insertUser});
                 } else {
                     console.log(`The user ${props.user.email} present in DB`);
                 }
@@ -375,7 +385,7 @@ const CreateShape = (props) => {
                     ...props.shapeAction, 
                     "action": "add",
                     "payload": {
-                        "shape_id": insertShape['inserted_hashes']
+                        "shape_id": insertShape.data['inserted_hashes']
                     } 
                 });
 
