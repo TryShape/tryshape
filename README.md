@@ -1,15 +1,11 @@
 
 
 <p align="center">
-    <a href="https://tryshape.vercel.app/">
-        <img src="https://res.cloudinary.com/atapas/image/upload/v1624874245/demos/TryShape-GitHub-icon-only_lwjrc3.png" alt="logo" width="125"/>
+    <a href="https://tryshape.vercel.app/ target="_blank">
+        <img src="./public/readme/TryShape-GitHub-icon-only.png" alt="logo" width="125"/>
     </a>
     
 <p/>
-
-<p align="center">
-    <img src="https://res.cloudinary.com/atapas/image/upload/v1624876097/demos/tryshape-text-transparent_n8md87.png" width="300" />
-</p>
 
 <h4 align="center">Create, Export, Share, and Use any Shapes of your choice.</h4>
 
@@ -42,6 +38,12 @@
 </p>
 
 ## 👋 Introducing `TryShape`
+<p align="center">
+    <a href="https://tryshape.vercel.app/ target="_blank">
+        <img src="./public/readme/landing.png" alt="landing" />
+    </a>
+</p>
+
 `TryShape` is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS.
 
 ## 🚀 Demo
