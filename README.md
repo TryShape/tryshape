@@ -175,5 +175,26 @@ If you find something is missing, `TryShape` is listening. Please create a featu
 </a>
 
 
-## 🤝 Contributions
-TBA
+## 🤝 Contributing to `TryShape`
+Any kind of positive contributions are welcome! Please help us to grow by contributing to the project.
+
+If you wish to contribute, you can work on any features [listed here](https://github.com/TryShape/tryshape/tree/issue-51-update-readme#-upcoming-features) or create one on your own. After adding your code, please send us a Pull Request.
+
+> Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
+
+## 🙏 Support
+
+We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you go away.
+
+If you found the app helpful, consider supporting us with a coffee.
+
+<a href="https://www.buymeacoffee.com/greenroots">
+    <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" height="50px">
+</a>
+
+---
+
+<h3 align="center">
+A ⭐️ to <b>TryShape</b> is to build its triceps 💪 stronger.
+</h3>
+
