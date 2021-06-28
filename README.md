@@ -43,7 +43,7 @@ TBA
 ## What's In TryShape
 `TryShape` comes with a bundle of features to give your creativity a shape. You can do the followings with TryShape,
 ### Create Shapes
-- Create a any shape using an intuitive editor.
+- Create any shapes using an intuitive editor.
 - Create Polygonal, Circular, Elliptical shapes without knowing the underlying complexities like CSS clip-path.
 - Add/Remove vertices, join them, drag-drop to position them to create a shape.
 - Provide your choice of colors, add the contextual information as notes while creating the shapes.
@@ -67,21 +67,28 @@ TBA
 ### Sort Shapes
 - Sort shapes by, most liked, recent, and oldest.
 ### Authentication & Authorization
-- Features like export, like, create, edit shapes need you to autheticate with the app. You can use your Gmail or GitHub credntials to authenticate to the app. It is secured and powered by Google Firebase.
+- Features like export, like, create, edit shapes need you to autheticate with the app. You can use your Gmail or GitHub credntials to authenticate to the app. It is secured and powered by `Google Firebase`.
 
 ## How to Set up TryShape for Development?
 TBA
 
 ## Upcoming Features
-`TryShape` has all the potentials to grow further. Here are some of the upcoming features planned,
+`TryShape` has all the potentials to grow further. Here are some of the upcoming features planned(not in any order),
 
-- Add the ability to create shape using SVG elements.
-- Manage your shape collection.
-- Import shapes.
+- Add the ability to create shape using SVG elements to support Curvy Node adjustments.
+- Manage your shape collection
+- Show Trending shapes
+- Import shapes
+- Following a contributor.
 - PWA(Progressive Web App)
 - Accessibility improvements
-- Flxible Datastore
+- Flexible Datastore
 - Better Performance
+- Tagging a shape
+- Provide comment on a shape.
+- More authetication mechanisms like twitter, facebook, etc.
+
+If you find something is missing, `TryShape` is listening. Please create a feature request [from here](https://github.com/TryShape/tryshape/issues/new/choose).
 
 ## Contributions
 TBA
