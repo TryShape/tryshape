@@ -17,7 +17,17 @@ import IconSvg from '../../public/images/icon-svg.svg';
 import IconCss from '../../public/images/icon-css.svg';
 
 // icon
-import { FiMenu, FiLinkedin, FiTwitter, FiShare, FiShare2, FiPenTool, FiSearch, FiMail, FiGithub } from "react-icons/fi";
+import { 
+  FiMenu, 
+  FiLinkedin, 
+  FiTwitter, 
+  FiShare, 
+  FiShare2, 
+  FiPenTool, 
+  FiSearch, 
+  FiMail, 
+  FiGithub, 
+  FiYoutube } from "react-icons/fi";
 
 // link
 import Link from "next/link";
@@ -31,7 +41,7 @@ const LandingBanner = styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 74px);   
+    min-height: 100vh;   
     background-color: var(--color-brand);
     background: rgb(93,33,210);
     background: linear-gradient(180deg, rgba(93,33,210,1) 0%, rgba(175,33,210,1) 100%);
@@ -56,7 +66,7 @@ const LandingBanner = styled.section`
 
 const BannerHeader = styled(Navbar)`
   padding: 1rem 1.8rem !important;
-  background-color: var(--color-brand);
+  background-color: rgba(var(--color-brand-rgb), 0.86);
 
   .navbar-toggler:hover,
   .navbar-toggler:focus {
@@ -417,7 +427,7 @@ const Landing = ({ setOpen, user, setUser }) => {
     
     return(
         <div>
-            <BannerHeader sticky="top" expand="md">
+            <BannerHeader fixed="top" expand="md">
               <Navbar.Brand><Logo><div className="sr-only">TryShape</div></Logo></Navbar.Brand>
               <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
@@ -547,12 +557,13 @@ const Landing = ({ setOpen, user, setUser }) => {
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
-                  <a href="#"><FiGithub /></a>
-                  <a href="#"><FiTwitter /></a>
-                  <a href="#"><FiLinkedin /></a>
-                  <a href="#"><FiMail /></a>
+                  <a href="https://github.com/TryShape" target="_blank"><FiGithub /></a>
+                  <a href="https://twitter.com/tapasadhikary" target="_blank"><FiTwitter /></a>
+                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank"><FiLinkedin /></a>
+                  <a href="https://www.youtube.com/c/TapasAdhikary/featured"><FiYoutube /></a>
+                  <a href="mailto:tapas.adhikary@gmail.com"><FiMail /></a>
                 </SocialLinks>
-                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="#">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
+                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
               </Container>
             </SectionContact>
         </div>
