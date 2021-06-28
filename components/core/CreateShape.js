@@ -247,13 +247,13 @@ const CreateShape = (props) => {
 
         if (clipPathType === "polygon") {
             let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            formulaNumbers = formulaNumbers.split(", "); 
+            formulaNumbers = formulaNumbers.split(","); 
             newVerticeCoordinates = formulaNumbers.map(x => {
-            let percentageArray = x.split(" ");
-            return {
-                "x": percentageArray[0], 
-                "y": percentageArray[1],
-            }
+                let percentageArray = x.trim().split(" ");
+                return {
+                    "x": percentageArray[0], 
+                    "y": percentageArray[1],
+                }
             });
         }
 
