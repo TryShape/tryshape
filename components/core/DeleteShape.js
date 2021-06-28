@@ -1,11 +1,14 @@
 import React from "react";
 
+// axios
+import axios from "axios";
+
+// bootstrap
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 
+// toast
 import toast from "react-hot-toast";
-
-import { harperFetch } from "../../utils/HarperFetch";
 
 // Styled Component
 import styled from "styled-components";
@@ -46,25 +49,20 @@ const ContentWrapper = styled.div`
 const DeleteShape = ({ show, setShow, shape, shapeAction, setShapeAction }) => {
 
     const handleDelete = async() => {
-        const deleteShape = await harperFetch({
-            operation: "sql", 
-                sql: `
-                    DELETE FROM tryshape.shapes
-                    WHERE
-                        shape_id === '${shape.shape_id}'
-                `
+        const deleteShapeResponse = await axios.post('/api/DELETE/shape', {
+            shapeId: shape.shape_id
         });
+        const deleteShape = deleteShapeResponse.data;
+        console.log({deleteShape});
 
-        console.log(deleteShape);
-
-        if (deleteShape["deleted_hashes"].length > 0) {
+        if (deleteShape.data["deleted_hashes"].length > 0) {
             setShow(false);
             toast.success(`Shape ${shape.name} deleted successfully.`);
             setShapeAction({
                 ...shapeAction, 
                 "action": "delete",
                 "payload": {
-                    "shape_id": deleteShape["deleted_hashes"]
+                    "shape_id": deleteShape.data["deleted_hashes"]
                 } 
             });
         } else {

@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+// axios
+import axios from "axios";
+
 // Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -12,9 +15,6 @@ import { ShapeForm, ShapePreview } from "..";
 
 // Toast
 import toast from "react-hot-toast";
-
-// harperDb fetch call
-import { harperFetch } from "../../utils/HarperFetch";
 
 const CreateShape = (props) => {
 
@@ -74,7 +74,7 @@ const CreateShape = (props) => {
                 "name": props.shape.name, 
                 "formula": props.shape.formula,
                 "vertices": props.shape.vertices,
-                "private": true,
+                "private": props.shape.private,
                 "edges": props.shape.edges, 
                 "notes": props.shape.notes, 
                 "clipPathType": props.shape.type,
@@ -87,8 +87,6 @@ const CreateShape = (props) => {
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
     const handleChange = (event, data, number) => {
-        
-        // console.log(event, data);
         
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
@@ -131,7 +129,25 @@ const CreateShape = (props) => {
                     ...shapeInformation, 
                     "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
                     "vertices": 4, 
-                    "edges": 4, 
+                    "edges": 4,
+                    "verticeCoordinates" : [
+                        {
+                            "x": "10%", 
+                            "y": "10%", 
+                        }, 
+                        {
+                            "x": "90%", 
+                            "y": "10%", 
+                        }, 
+                        {
+                            "x": "90%", 
+                            "y": "90%", 
+                        }, 
+                        {
+                            "x": "10%", 
+                            "y": "80%", 
+                        }, 
+                    ]
                 });
             }
 
@@ -163,7 +179,7 @@ const CreateShape = (props) => {
         }
         
         // If DraggableVertice is moved, adjust verticeCoordinates and formula
-        if (name === "mousemove") {
+        if (name === "mousemove" || name === "touchmove") {
             
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -193,7 +209,8 @@ const CreateShape = (props) => {
         }
 
         // If delete button is pressed and passes a number that corresponds to the vertice, remove the corresponding verticeCoordinate and adjust formula
-        if (event.target.id.includes("deleteButton") && number !== undefined) {
+        if ((event.target.id.includes("deleteButton") 
+            || event.target.parentElement.id.includes("deleteButton")) && number !== undefined) {
 
             let newVerticeCoordinates = []; 
 
@@ -302,34 +319,28 @@ const CreateShape = (props) => {
         // Editing Shape
         if (props.edit) {
 
-            const editShape = await harperFetch({
-                operation: "sql", 
-                sql: `
-                    UPDATE tryshape.shapes
-                    SET
-                        name = '${shapeInformation.name}', 
-                        formula = '${shapeInformation.formula}', 
-                        vertices = '${shapeInformation.vertices}', 
-                        private = '${shapeInformation.private}', 
-                        edges = '${shapeInformation.edges}', 
-                        notes = '${shapeInformation.notes}', 
-                        type = '${shapeInformation.clipPathType}', 
-                        backgroundColor = '${shapeInformation.backgroundColor}'
-                    WHERE
-                        shape_id === '${props.shape.shape_id}'
-                `
+            const updateShapeResponse = await axios.post('/api/PUT/shape', {
+                shapeId: props.shape.shape_id,
+                name: shapeInformation.name, 
+                formula: shapeInformation.formula, 
+                vertices: shapeInformation.vertices, 
+                visibility: shapeInformation.private, 
+                edges: shapeInformation.edges, 
+                notes: shapeInformation.notes, 
+                type: shapeInformation.clipPathType, 
+                backgroundColor: shapeInformation.backgroundColor
             });
+            const editShape = updateShapeResponse.data;
+            console.log({editShape});
 
-            console.log(editShape);
-
-            if (editShape["update_hashes"].length > 0) {
+            if (editShape.data["update_hashes"].length > 0) {
                 props.handleClose();
                 toast.success(`Shape ${shapeInformation.name} edited successfully.`);
                 props.setShapeAction({
                     ...props.shapeAction, 
                     "action": "edit",
                     "payload": {
-                        "shape_id": editShape['update_hashes']
+                        "shape_id": editShape.data['update_hashes']
                     } 
                 });
             } else {
@@ -340,30 +351,43 @@ const CreateShape = (props) => {
         } else { 
 
             // Create the shape in the DB
-            const insertShape = await harperFetch({
-                operation: "sql",
-                sql: `INSERT into tryshape.shapes(backgroundColor, createdAt, createdBy, edges, email, formula, likes, name, notes, private, type, vertices) 
-                values('${shapeInformation.backgroundColor}', null, '${props.user.email}', ${shapeInformation.edges}, null, '${shapeInformation.formula}', 0, '${shapeInformation.name}', '${shapeInformation.notes}', ${shapeInformation.private}, '${shapeInformation.clipPathType}', ${shapeInformation.vertices})`,
+            const insertShapeResponse = await axios.post('/api/POST/shape', {
+                name: shapeInformation.name, 
+                formula: shapeInformation.formula, 
+                vertices: shapeInformation.vertices, 
+                visibility: shapeInformation.private, 
+                edges: shapeInformation.edges, 
+                notes: shapeInformation.notes, 
+                type: shapeInformation.clipPathType, 
+                backgroundColor: shapeInformation.backgroundColor,
+                createdBy: props.user.email,
+                likes: 0
             });
+            const insertShape = insertShapeResponse.data
 
-            console.log(insertShape);
+            console.log({insertShape});
 
             // Create the user in the db
-            if (insertShape['inserted_hashes'].length > 0) {
+            if (insertShape.data['inserted_hashes'].length > 0) {
                 // First check if the user exist
-                const result = await harperFetch({
-                    operation: "sql",
-                    sql: `SELECT count(*) from tryshape.users WHERE email='${props.user.email}'`,
-                });
-                const count = (result[0]['COUNT(*)']);
+                const userResponse = await axios.get("/api/GET/user", {
+                    params: {
+                      email: props.user.email
+                    }
+                  });
+                const result = userResponse.data;
+                const count = result.length;
                 console.log({count});
+
                 // If doesn't exist, create in db
                 if (count === 0) {
-                    const insertUser = await harperFetch({
-                        operation: "sql",
-                        sql: `INSERT into tryshape.users(email, name, photoURL) 
-                            values('${props.user.email}', '${props.user.displayName}', '${props.user.photoURL}')`,
+                    const insertUserResponse = await axios.post('/api/POST/user', {
+                        displayName: props.user.displayName, 
+                        email: props.user.email, 
+                        photoURL: props.user.photoURL
                     });
+                    const insertUser = insertUserResponse.data;
+                    console.log({insertUser});
                 } else {
                     console.log(`The user ${props.user.email} present in DB`);
                 }
@@ -378,7 +402,7 @@ const CreateShape = (props) => {
                     ...props.shapeAction, 
                     "action": "add",
                     "payload": {
-                        "shape_id": insertShape['inserted_hashes']
+                        "shape_id": insertShape.data['inserted_hashes']
                     } 
                 });
 

@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
+
+// axios
+import axios from "axios";
+
+// dynamic from next
 import dynamic from "next/dynamic";
-
-// harperDb fetch call
-import { harperFetch } from "../../utils/HarperFetch";
-
-// Dummy Shape Data
-// import { shapes } from "../../data/shapes";
 
 // loader
 import Loader from "react-loader-spinner";
@@ -33,36 +32,30 @@ const App = (props) => {
     let shapes = [];
 
     if(user.length === 0) {
-      // User is not logged In. Fetch all the public shapes
-      shapes = await harperFetch({
-        operation: "sql",
-        sql: `SELECT * 
-          FROM tryshape.shapes s 
-          INNER JOIN tryshape.users u 
-          ON s.createdBy=u.email 
-          WHERE s.private=false
-          ORDER BY s.likes DESC`,
+      // User is not logged In. Fetch all the public shapes 
+      const response = await axios.get("/api/GET/shapes", {
+        params: {
+          type: 'private'
+        }
       });
+      shapes = response.data;
     } else {
       // User is logged in. Let's fetch the private shape and other public shapes.
-      shapes = await harperFetch({
-        operation: "sql",
-        sql: `SELECT *
-          FROM tryshape.shapes s
-          INNER JOIN tryshape.users u 
-          ON s.createdBy=u.email 
-          WHERE s.private=false 
-          OR createdBy = '${user.email}'
-          ORDER BY s.likes DESC`,
+      const response = await axios.get("/api/GET/shapes", {
+        params: {
+          type: 'public-logged-in',
+          email: user.email
+        }
       });
+      shapes = response.data;
 
       // Fetch the shapes liked by the logged-in user
-      const likedShapes = await harperFetch({
-        operation: "sql",
-        sql: `SELECT *
-          FROM tryshape.likes 
-          WHERE email = '${user.email}'`,
+      const likedResponse = await axios.get("/api/GET/likes", {
+        params: {
+          email: user.email
+        }
       });
+      const likedShapes = likedResponse.data;
 
       // If there are liked shapes, take out the shape_id
       if (likedShapes.length > 0) {
