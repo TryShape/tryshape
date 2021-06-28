@@ -3,6 +3,9 @@ import React, { useRef } from "react";
 // react-draggable npm
 import Draggable from "react-draggable";
 
+// icon
+import { FiDelete } from "react-icons/fi";
+
 // Styled Component
 import styled from "styled-components";
 
@@ -56,14 +59,28 @@ const DraggableVertice = (props) => {
                             } else {
                                 props.setFocusNumber(-1);
                             }
-                        }} 
+                        }}
+                        onTouchStart={() => {
+                            if (show === false) {
+                                props.setFocusNumber(props.number);
+                            } else {
+                                props.setFocusNumber(-1);
+                            }
+                        }}
                         ref={target}
                     />
             </Draggable>
 
-            <Overlay target={target.current} show={show} placement="right">
+            <Overlay target={target.current} 
+                show={show} 
+                placement={x > 250 ? "left" : "right"}>
                 <Tooltip>
-                    <span id={"deleteButton" + props.number} onMouseUp={handleDelete} style={{ cursor: "pointer" }}>X</span>
+                <FiDelete
+                    size="24px"
+                    id={"deleteButton" + props.number}
+                    onMouseUp={handleDelete}
+                    style={{ cursor: "pointer" }}
+                    />
                 </Tooltip>
             </Overlay>
         </>

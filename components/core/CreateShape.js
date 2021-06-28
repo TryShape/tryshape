@@ -88,8 +88,6 @@ const CreateShape = (props) => {
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
     const handleChange = (event, data, number) => {
         
-        // console.log(event, data);
-        
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
 
@@ -131,7 +129,25 @@ const CreateShape = (props) => {
                     ...shapeInformation, 
                     "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
                     "vertices": 4, 
-                    "edges": 4, 
+                    "edges": 4,
+                    "verticeCoordinates" : [
+                        {
+                            "x": "10%", 
+                            "y": "10%", 
+                        }, 
+                        {
+                            "x": "90%", 
+                            "y": "10%", 
+                        }, 
+                        {
+                            "x": "90%", 
+                            "y": "90%", 
+                        }, 
+                        {
+                            "x": "10%", 
+                            "y": "80%", 
+                        }, 
+                    ]
                 });
             }
 
@@ -163,7 +179,7 @@ const CreateShape = (props) => {
         }
         
         // If DraggableVertice is moved, adjust verticeCoordinates and formula
-        if (name === "mousemove") {
+        if (name === "mousemove" || name === "touchmove") {
             
             const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
             const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -193,7 +209,8 @@ const CreateShape = (props) => {
         }
 
         // If delete button is pressed and passes a number that corresponds to the vertice, remove the corresponding verticeCoordinate and adjust formula
-        if (event.target.id.includes("deleteButton") && number !== undefined) {
+        if ((event.target.id.includes("deleteButton") 
+            || event.target.parentElement.id.includes("deleteButton")) && number !== undefined) {
 
             let newVerticeCoordinates = []; 
 
