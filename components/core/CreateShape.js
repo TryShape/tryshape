@@ -193,7 +193,7 @@ const CreateShape = (props) => {
         }
 
         // If delete button is pressed and passes a number that corresponds to the vertice, remove the corresponding verticeCoordinate and adjust formula
-        if (event.target.id.includes("deleteButton") && number !== undefined) {
+        if ((event.target.id.includes("deleteButton") || event.target.parentElement.id.includes("deleteButton")) && number !== undefined) {
 
             let newVerticeCoordinates = []; 
 

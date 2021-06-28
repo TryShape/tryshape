@@ -6,6 +6,9 @@ import Draggable from "react-draggable";
 // Styled Component
 import styled from "styled-components";
 
+// icon
+import { FiDelete } from "react-icons/fi";
+
 // Bootstrap
 import Overlay from "react-bootstrap/Overlay";
 import Tooltip from "react-bootstrap/Tooltip";
@@ -70,7 +73,12 @@ const DraggableVertice = (props) => {
 
             <Overlay target={target.current} show={show} placement="right">
                 <Tooltip>
-                    <span id={"deleteButton" + props.number} onMouseUp={handleDelete} style={{ cursor: "pointer" }}>X</span>
+                    <FiDelete
+                        size="24px"
+                        id={"deleteButton" + props.number}
+                        onMouseUp={handleDelete}
+                        style={{ cursor: "pointer" }}
+                    />
                 </Tooltip>
             </Overlay>
         </>
