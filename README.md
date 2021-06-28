@@ -49,7 +49,7 @@
 ## 🚀 Demo
 Here is a quick demo of the app. We hope you enjoy it.
 
-<INSERT_YOUTUBE_LINK>
+> [The Demo Link](https://www.youtube.com/watch?v=CB9xkhzkrYE)
 
 Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stronger.
 
