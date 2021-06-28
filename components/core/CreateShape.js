@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 
+// axios
+import axios from "axios";
+
 // Bootstrap
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -302,34 +305,28 @@ const CreateShape = (props) => {
         // Editing Shape
         if (props.edit) {
 
-            const editShape = await harperFetch({
-                operation: "sql", 
-                sql: `
-                    UPDATE tryshape.shapes
-                    SET
-                        name = '${shapeInformation.name}', 
-                        formula = '${shapeInformation.formula}', 
-                        vertices = '${shapeInformation.vertices}', 
-                        private = '${shapeInformation.private}', 
-                        edges = '${shapeInformation.edges}', 
-                        notes = '${shapeInformation.notes}', 
-                        type = '${shapeInformation.clipPathType}', 
-                        backgroundColor = '${shapeInformation.backgroundColor}'
-                    WHERE
-                        shape_id === '${props.shape.shape_id}'
-                `
+            const updateShapeResponse = await axios.post('/api/PUT/shape', {
+                shapeId: props.shape.shape_id,
+                name: shapeInformation.name, 
+                formula: shapeInformation.formula, 
+                vertices: shapeInformation.vertices, 
+                visibility: shapeInformation.private, 
+                edges: shapeInformation.edges, 
+                notes: shapeInformation.notes, 
+                type: shapeInformation.clipPathType, 
+                backgroundColor: shapeInformation.backgroundColor
             });
+            const editShape = updateShapeResponse.data;
+            console.log({editShape});
 
-            console.log(editShape);
-
-            if (editShape["update_hashes"].length > 0) {
+            if (editShape.data["update_hashes"].length > 0) {
                 props.handleClose();
                 toast.success(`Shape ${shapeInformation.name} edited successfully.`);
                 props.setShapeAction({
                     ...props.shapeAction, 
                     "action": "edit",
                     "payload": {
-                        "shape_id": editShape['update_hashes']
+                        "shape_id": editShape.data['update_hashes']
                     } 
                 });
             } else {

@@ -1,7 +1,36 @@
 
 export default async function handler(req, res) {
   
-  const { likes, shapeId } = req.body;
+  const { 
+    name, 
+    formula, 
+    vertices, 
+    visibility, 
+    edges, 
+    notes, 
+    type, 
+    backgroundColor, 
+    likes,
+    createdBy, 
+    shapeId } = req.body;
+
+
+  console.log({shapeId});  
+
+  const record = {};
+  record['shape_id'] = shapeId;
+  record['private'] = visibility;
+  record['name'] = name;
+  record['formula'] = formula;
+  record['vertices'] = vertices;
+  record['edges'] = edges;
+  record['notes'] = notes;
+  record['type'] = type;
+  record['backgroundColor'] = backgroundColor;
+  record['createdBy'] = createdBy;
+  record['likes'] = likes;
+  
+  console.log({record});
 
   const request = await fetch(process.env.NEXT_PUBLIC_DB_URL, {
     method: "POST",
@@ -14,10 +43,7 @@ export default async function handler(req, res) {
       schema: "tryshape",
       table: "shapes",
       records: [
-        {
-          shape_id: shapeId,
-          likes: likes,
-        },
+        record
       ],
     }),
   });
