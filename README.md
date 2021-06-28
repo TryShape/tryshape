@@ -178,7 +178,7 @@ If you find something is missing, `TryShape` is listening. Please create a featu
 ## 🤝 Contributing to `TryShape`
 Any kind of positive contributions are welcome! Please help us to grow by contributing to the project.
 
-If you wish to contribute, you can work on any features [listed here](https://github.com/TryShape/tryshape/tree/issue-51-update-readme#-upcoming-features) or create one on your own. After adding your code, please send us a Pull Request.
+If you wish to contribute, you can work on any features [listed here](https://github.com/TryShape/tryshape#-upcoming-features) or create one on your own. After adding your code, please send us a Pull Request.
 
 > Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
 
