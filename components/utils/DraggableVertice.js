@@ -57,6 +57,7 @@ const DraggableVertice = (props) => {
                                 props.setFocusNumber(-1);
                             }
                         }} 
+                        onTouchStart={() => {typeof window !== 'undefined' && window.alert("moved")}}
                         ref={target}
                     />
             </Draggable>
