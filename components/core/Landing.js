@@ -459,8 +459,8 @@ const Landing = ({ setOpen, user, setUser }) => {
                           SVG, PNG, and even as CSS.
                         </p>
                         <BannerBodyActions>
-                          <Link href="/app"><Button className="banner-action--primary"><FiPenTool/>Try Now</Button></Link>
-                          <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><Button variant="outline-secondary"><FiGithub />GitHub</Button></a>
+                          <Link href="/app" ><Button variant="primary"><FiPenTool/>Try Now</Button></Link>
+                          <a href="https://github.com/TryShape" target="_blank" className="btn btn-outline-secondary" rel="noopener noreferrer"><FiGithub />GitHub</a>
                         </BannerBodyActions>
                       </Col>
                     </Row>
