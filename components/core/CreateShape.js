@@ -249,10 +249,13 @@ const CreateShape = (props) => {
             let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
             formulaNumbers = formulaNumbers.split(","); 
             newVerticeCoordinates = formulaNumbers.map(x => {
-                let percentageArray = x.trim().split(" ");
+                let values = x.trim();
+                let xValue = values.substring(0, values.indexOf("%") + 1).trim();
+                let yValue = values.substring(values.indexOf("%") + 1).trim();
+
                 return {
-                    "x": percentageArray[0], 
-                    "y": percentageArray[1],
+                    "x": xValue, 
+                    "y": yValue,
                 }
             });
         }
