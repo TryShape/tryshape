@@ -47,7 +47,16 @@
 `TryShape` is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS.
 
 ## 🚀 Demo
-TBA
+Here is a quick demo of the app. We hope you enjoy it.
+
+<INSERT_YOUTUBE_LINK>
+
+Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stronger.
+
+## 💻 Use TryShape
+Please access TryShape using the URL:
+
+> https://tryshape.vercel.app/
 
 ## 🔥 Features
 `TryShape` comes with a bundle of features to give your creativity a shape. You can do the followings with TryShape,
@@ -184,7 +193,7 @@ If you wish to contribute, you can work on any features [listed here](https://gi
 
 ## 🙏 Support
 
-We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you go away.
+We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
 
 If you found the app helpful, consider supporting us with a coffee.
 
