@@ -88,7 +88,7 @@ const CreateShape = (props) => {
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
     const handleChange = (event, data, number) => {
         
-        // console.log(event, data);
+        console.log(event, data);
         
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;

@@ -71,7 +71,11 @@ const DraggableVertice = (props) => {
                     />
             </Draggable>
 
-            <Overlay target={target.current} show={show} placement="right">
+            <Overlay 
+                target={target.current} 
+                show={show} 
+                placement={x > 250 ? "left" : "right"}
+            >
                 <Tooltip>
                     <FiDelete
                         size="24px"
