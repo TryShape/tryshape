@@ -460,7 +460,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                         </p>
                         <BannerBodyActions>
                           <Link href="/app"><Button className="banner-action--primary"><FiPenTool/>Try Now</Button></Link>
-                          <Link href="/app"><Button variant="outline-secondary"><FiGithub />GitHub</Button></Link>
+                          <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><Button variant="outline-secondary"><FiGithub />GitHub</Button></a>
                         </BannerBodyActions>
                       </Col>
                     </Row>
@@ -557,11 +557,11 @@ const Landing = ({ setOpen, user, setUser }) => {
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
-                  <a href="https://github.com/TryShape" target="_blank"><FiGithub /></a>
-                  <a href="https://twitter.com/tapasadhikary" target="_blank"><FiTwitter /></a>
-                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank"><FiLinkedin /></a>
-                  <a href="https://www.youtube.com/c/TapasAdhikary/featured"><FiYoutube /></a>
-                  <a href="mailto:tapas.adhikary@gmail.com"><FiMail /></a>
+                  <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><FiGithub /></a>
+                  <a href="https://twitter.com/tapasadhikary" target="_blank" rel="noopener noreferrer"><FiTwitter /></a>
+                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank" rel="noopener noreferrer"><FiLinkedin /></a>
+                  <a href="https://www.youtube.com/c/TapasAdhikary/featured" rel="noopener noreferrer"><FiYoutube /></a>
+                  <a href="mailto:tapas.adhikary@gmail.com" rel="noopener noreferrer"><FiMail /></a>
                 </SocialLinks>
                 <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
               </Container>
