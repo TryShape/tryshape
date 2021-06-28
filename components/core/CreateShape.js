@@ -261,7 +261,7 @@ const CreateShape = (props) => {
             return {
             ...prevState, 
             "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-            "clipPathType": clipPathType === null ? prevState.clipPathType : clipPathType,
+            "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
             "vertices": edgeVerticeNumber, 
             "edges": edgeVerticeNumber, 
             "verticeCoordinates": newVerticeCoordinates, 
