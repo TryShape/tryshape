@@ -35,6 +35,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "saviomartin",
+      "name": "Savio Martin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61895712?v=4",
+      "profile": "https://savio.xyz/",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
