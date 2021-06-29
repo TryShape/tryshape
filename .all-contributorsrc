@@ -25,6 +25,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "williamzhu17",
+      "name": "William Zhu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77871333?v=4",
+      "profile": "https://github.com/williamzhu17",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
