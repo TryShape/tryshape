@@ -15,6 +15,16 @@
         "infra",
         "test"
       ]
+    },
+    {
+      "login": "nirmalkc",
+      "name": "Nirmal Kumar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6359059?v=4",
+      "profile": "https://github.com/nirmalkc",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
