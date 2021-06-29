@@ -37,7 +37,7 @@
     <a href="https://github.com/TryShape/tryshape/issues/new/choose">Request Feature</a>
 </p>
 
-## 👋 Introducing `TryShape`
+# 👋 Introducing `TryShape`
 <p align="center">
     <a href="https://tryshape.vercel.app" target="blank"/>
         <img src="./public/readme/landing.png" alt="landing" />
@@ -46,53 +46,56 @@
 
 `TryShape` is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS.
 
-## 🚀 Demo
+# 🚀 Demo
 Here is a quick demo of the app. We hope you enjoy it.
 
 > [The Demo Link](https://www.youtube.com/watch?v=CB9xkhzkrYE)
 
 Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stronger.
 
-## 💻 Use TryShape
+# 💻 Use TryShape
 Please access TryShape using the URL:
 
 > https://tryshape.vercel.app/
 
-## 🔥 Features
-`TryShape` comes with a bundle of features to give your creativity a shape. You can do the followings with TryShape,
+# 🔥 Features
+`TryShape` comes with a bundle of features already. You can do the followings with it,
 
-### ✅ Listing Shapes
-- List out shapes for you to pick and use.
-### ✅ Create Shapes
+## 🔢 Listing Shapes
+ - List out shapes for you to pick and use.
+
+## 🏗️ Create Shapes
 - Create any shapes using an intuitive editor.
 - Create Polygonal, Circular, Elliptical shapes without knowing the underlying complexities like CSS clip-path.
 - Add/Remove vertices, join them, drag-drop to position them to create a shape.
 - Provide your choice of colors, add the contextual information as notes while creating the shapes.
 - Are you an expert in CSS clip-path? Great, you can add a clip-path value directly and start from there.
 
-### ✅ Controlling the Visibility of Shapes
-- You can create a shape and share with the TryShape community by making it public.
+## 📢 Controlling the Visibility of Shapes
+- You can create a shape and share it with the TryShape community by making it public.
 - Do you want to keep your creativity private? No worries, that's possible too.
 
-### ✅ Like Shapes
-- Liked a shape and want to to add it to your shape collection? You can do that just with a click. Want to undo? That's supported as well.
+## 💘 Like Shapes
+- Liked a shape and want to add it to your shape collection? You can do that just with a click. Want to undo? That's supported as well.
 
-### ✅ Export Shapes
+## ✨ Export Shapes
 - Export the shapes to use in your application.
 - Export the shapes as PNG, JPEG, and SVG files.
-- Single-Click Copy of the undering CSS and clip-path proprty to use directly into your webapp.
+- Single-Click Copy of the underlying CSS and clip-path property to use directly into your web app.
 
-### ✅ Search Shapes
+## 🔍 Search Shapes
 - Search a shape with key-in search.
 
-### ✅ Sort Shapes
+## 🎿 Sort Shapes
 - Sort shapes by, most liked, recent, and oldest.
-### ✅ Authentication & Authorization
-- Features like export, like, create, edit shapes need you to autheticate with the app. You can use your Gmail or GitHub credntials to authenticate to the app. It is secured and powered by `Google Firebase`.
-### ✅ Responsive and Mobile Friendly
-- Use `TryShape` seamlessly from any devices.
 
-## 🏗️ How to Set up `TryShape` for Development?
+## 🔑 Authentication & Authorization
+- Features like export, like, create, edit shapes need you to authenticate with the app. You can use your Gmail or GitHub credentials to authenticate to the app. It is secured and powered by `Google Firebase`.
+
+## 📱 Responsive and mobile-friendly
+- Use `TryShape` seamlessly from any device.
+
+# 🏗️ How to Set up `TryShape` for Development?
 You can run TryShape locally with a few easy steps.
 
 1. Clone the repository
@@ -136,7 +139,7 @@ npm run dev # or, yarn dev
 
 That's All!!! Now open [localhost:3000](http://localhost:3000/) to see the app.
 
-## 🍔 Built With
+# 🍔 Built With
 - [Next JS](https://nextjs.org/): The coolest React-based framework on the planet
 - [Harper DB](https://harperdb.io/): A flexible Data Store
 - [react-icons](https://react-icons.github.io/react-icons/): One shop for all the icons
@@ -154,10 +157,10 @@ That's All!!! Now open [localhost:3000](http://localhost:3000/) to see the app.
 - [html-to-image](https://github.com/bubkoo/html-to-image#readme): Converts an HTML element to image
 - [Vercel](http://vercel.com/): Best for Hosting a Next.js app
 
-## 🛡️ License
+# 🛡️ License
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
 
-## 🦄 Upcoming Features
+# 🦄 Upcoming Features
 `TryShape` has all the potentials to grow further. Here are some of the upcoming features planned(not in any order),
 
 - ✔️ Add the ability to create shape using SVG elements to support Curvy Node adjustments.
@@ -176,7 +179,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 
 If you find something is missing, `TryShape` is listening. Please create a feature request [from here](https://github.com/TryShape/tryshape/issues/new/choose).
 
-## 🏃‍♀️ Deploy
+# 🏃‍♀️ Deploy
 
 <a href="https://vercel.com/new/project?template=https://github.com/TryShape/tryshape">
 <img src="https://vercel.com/button" height="37.5px" />
@@ -186,14 +189,14 @@ If you find something is missing, `TryShape` is listening. Please create a featu
 </a>
 
 
-## 🤝 Contributing to `TryShape`
-Any kind of positive contributions are welcome! Please help us to grow by contributing to the project.
+# 🤝 Contributing to `TryShape`
+Any kind of positive contribution is welcome! Please help us to grow by contributing to the project.
 
 If you wish to contribute, you can work on any features [listed here](https://github.com/TryShape/tryshape#-upcoming-features) or create one on your own. After adding your code, please send us a Pull Request.
 
 > Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
 
-## 🙏 Support
+# 🙏 Support
 
 We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
 
