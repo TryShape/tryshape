@@ -11,7 +11,9 @@
       "avatar_url": "https://avatars.githubusercontent.com/u/3633137?v=4",
       "profile": "https://tapasadhikary.com",
       "contributions": [
-        "code"
+        "code",
+        "infra",
+        "test"
       ]
     }
   ],
