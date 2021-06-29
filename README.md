@@ -6,6 +6,9 @@
     </a>
     
 <p/>
+<p align="center">
+<img src="./public/readme/tryshape-text-transparent.png" alt="name"/>
+<p/>
 
 <h4 align="center">Create, Export, Share, and Use any Shapes of your choice.</h4>
 
