@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 // Bootstrap
-import Container from 'react-bootstrap/Container'
+import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 // Styled Component
@@ -23,12 +23,19 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 import Switch from "react-switch";
 
 // icons
-import { FiCopy, FiDelete, FiDownload, FiEdit2, FiLock, FiTrash2 } from 'react-icons/fi';
+import {
+  FiCopy,
+  FiDelete,
+  FiDownload,
+  FiEdit2,
+  FiLock,
+  FiTrash2,
+} from "react-icons/fi";
 import { BiExport } from "react-icons/bi";
-import { BsFillHeartFill, BsHeart} from "react-icons/bs";
+import { BsFillHeartFill, BsHeart } from "react-icons/bs";
 
 // Export Shape
-import { ExportShape, CopyShapeSource, NoShapeFound } from '..';
+import { ExportShape, CopyShapeSource, NoShapeFound } from "..";
 
 // CreateShape
 import { CreateShape } from "..";
@@ -37,28 +44,32 @@ import { CreateShape } from "..";
 import { DeleteShape } from "..";
 
 // misc unitless
-import { getShapeFileName, getShapeId } from '../../utils/misc';
+import { getShapeFileName, getShapeId } from "../../utils/misc";
 
 // date-fns
 import { formatRelative } from "date-fns";
 
+// double tap
+import { useDoubleTap } from "use-double-tap";
+
 // Shape Listing Styled-Componentns
 const ShapeCards = styled.div`
-    padding: 2rem 0 2rem 0;
-    display: grid;
-    grid-template-columns: repeat(3, minmax(240px, 1fr));
-    grid-gap: 2rem;   
+  padding: 2rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(240px, 1fr));
+  grid-gap: 2rem;
 
-    @media (max-width: 991px) {
-      grid-template-columns: repeat(2, minmax(300px, 1fr));
-    }
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+  }
 
-    @media (max-width: 767px) {
-      grid-template-columns: repeat(1, 1fr);
-    }
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
 `;
 
 const ShapeCard = styled.div`
+  position: relative;
   border-radius: 0.6rem;
   background-color: var(--color-neutral-10);
   overflow: hidden;
@@ -94,7 +105,7 @@ const ShapeActionsSecondary = styled.div`
 const ShapeActions = styled.div`
   opacity: 0;
   background: rgba(var(--color-neutral-100-rgb), 0.5);
-  transition: all .3s ease-in-out;
+  transition: all 0.3s ease-in-out;
   position: absolute;
   top: 0;
   right: 0;
@@ -109,7 +120,7 @@ const ShapeName = styled.h4`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  grid-gap: .3rem;
+  grid-gap: 0.3rem;
   margin: 0 0 0.8rem 0;
   font-weight: var(--fw-bold);
   font-size: var(--fs-rg);
@@ -204,6 +215,14 @@ const ShapeCardSwitch = styled.div`
   margin: 5px auto auto 9px;
 `;
 
+const DoubleTapLike = styled.div`
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+`;
+
 const CopyIcon = styled(FiCopy)`
   cursor: pointer;
 `;
@@ -220,18 +239,16 @@ const LikeFilledIcon = styled(BsFillHeartFill)`
   cursor: pointer;
 `;
 
-const ShapeList = (
-  { 
-    setOpen, 
-    user, 
-    data, 
-    searchTerm,
-    setSearchTerm, 
-    sort, 
-    shapeAction, 
-    setShapeAction
-  }) => {
-
+const ShapeList = ({
+  setOpen,
+  user,
+  data,
+  searchTerm,
+  setSearchTerm,
+  sort,
+  shapeAction,
+  setShapeAction,
+}) => {
   const filterShape = (shapes, searchTerm) => {
     if (!searchTerm) {
       return shapes;
@@ -239,8 +256,8 @@ const ShapeList = (
     return shapes.filter((shape) => {
       const shapeName = shape.name.toLowerCase();
       return shapeName.includes(searchTerm.toLowerCase());
-    })
-  }
+    });
+  };
   // All shapes
   const [shapes, setShapes] = useState(data);
   // filtered shapes as state
@@ -262,20 +279,19 @@ const ShapeList = (
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [shapeToDelete, setShapeToDelete] = useState();
 
-  useEffect(() =>{
+  useEffect(() => {
     const copy = [...shapes];
-    if(sort === 'recent') {
+    if (sort === "recent") {
       copy.sort((a, b) => b.__createdtime__ - a.__createdtime__);
-    } else if(sort === 'popularity') {
+    } else if (sort === "popularity") {
       copy.sort((a, b) => b.likes - a.likes);
-    } else if(sort === 'oldest') {
+    } else if (sort === "oldest") {
       copy.sort((a, b) => a.__createdtime__ - b.__createdtime__);
     }
     setFilteredShape(filterShape(copy, searchTerm));
-  }, [searchTerm, shapes, sort]); 
+  }, [searchTerm, shapes, sort]);
 
   const handleSwicth = (shapeName) => {
-    
     let modifiedShapes = shapes.map((shape, index) => {
       if (shape.name === shapeName) {
         return {
@@ -299,7 +315,7 @@ const ShapeList = (
   /**
    * Method to execute when user clicks on the export shape
    */
-  const performExport = shape => {
+  const performExport = (shape) => {
     // Check if user logged-in
     if (user.length === 0) {
       // Show the login modal if user is not authenticated
@@ -310,31 +326,31 @@ const ShapeList = (
       // Show the export modal
       setShowExportModal(true);
     }
-  }
+  };
 
   /**
    * Method to execute when user clicks on the edit shape
    */
-  const performEdit = shape => {
+  const performEdit = (shape) => {
     // Set the shape details to edit
     setShapeToEdit(shape);
     // Show the export modal
     setShowEditModal(true);
-  }
+  };
 
   const closeEditModal = () => {
     setShowEditModal(false);
-  }
+  };
 
   /**
    * Method to execute when user clicks on the delte shape
    */
-   const performDelete = shape => {
+  const performDelete = (shape) => {
     // Set the shape details to edit
     setShapeToDelete(shape);
     // Show the export modal
     setShowDeleteModal(true);
-  }
+  };
 
   /**
    * Method to execute when user clicks on the likes
@@ -353,27 +369,27 @@ const ShapeList = (
       const likedResponse = await axios.get("/api/GET/likes", {
         params: {
           shapeId: shapeId,
-          email: user.email
-        }
+          email: user.email,
+        },
       });
       const isPresent = likedResponse.data;
-      console.log({isPresent});
+      console.log({ isPresent });
       // Get the latest likes count from db
       const shapeResponse = await axios.get("/api/GET/shape", {
         params: {
-          shapeId: shapeId
-        }
+          shapeId: shapeId,
+        },
       });
       const returnValue = shapeResponse.data;
-          
+
       if (isPresent.length === 0) {
         // If not present, add for like
-        const insertLikeResponse = await axios.post('/api/POST/like', {
+        const insertLikeResponse = await axios.post("/api/POST/like", {
           shapeId: shapeId,
-          email: user.email
+          email: user.email,
         });
         const insertLike = insertLikeResponse.data;
-        console.log({insertLike});
+        console.log({ insertLike });
 
         if (insertLike.data.inserted_hashes.length > 0) {
           // Update the count by 1
@@ -383,11 +399,11 @@ const ShapeList = (
         // If present, get the like id
         const likeId = isPresent[0].like_id;
         // delete to remove like
-        const deleteLikeResponse = await axios.post('/api/DELETE/like', {
-          likeId: likeId
+        const deleteLikeResponse = await axios.post("/api/DELETE/like", {
+          likeId: likeId,
         });
         const deleteLike = deleteLikeResponse.data;
-        console.log({deleteLike});
+        console.log({ deleteLike });
 
         if (deleteLike.data.deleted_hashes.length > 0) {
           // update the like count decrease by 1
@@ -396,153 +412,238 @@ const ShapeList = (
       }
 
       // Update the shape data with the updated count
-      const updateShapeResponse = await axios.post('/api/PUT/shape', {
+      const updateShapeResponse = await axios.post("/api/PUT/shape", {
         shapeId: shapeId,
-        likes: likes
+        likes: likes,
       });
       const updated = updateShapeResponse.data;
-      console.log({updated});
+      console.log({ updated });
 
       if (updated.data.update_hashes.length > 0) {
         // Update the shape data in the shapes array
         let modifiedShapes = shapes.map((shape, index) => {
-          if (shape['shape_id'] === shapeId) {
+          if (shape["shape_id"] === shapeId) {
             return {
               ...shape,
               liked: !shape.liked,
-              likes: likes
+              likes: likes,
             };
           }
           return shape;
         });
         setShapes(...[modifiedShapes]);
       } else {
-        toast.error('Not able to update the likes at this moment.');
+        toast.error("Not able to update the likes at this moment.");
       }
     }
   };
 
-  const canEditOrDelete = shape => {
+  const canEditOrDelete = (shape) => {
     return user.email === shape.createdBy;
-  }
-
-  
+  };
 
   return (
     <ShapeCardsContainer>
       <Container>
-       <ShapeCards>
-        { shapeToExport && <ExportShape 
-          show={ showExportModal } 
-          setShow={ setShowExportModal }
-          shape = { shapeToExport } /> }
+        <ShapeCards>
+          {shapeToExport && (
+            <ExportShape
+              show={showExportModal}
+              setShow={setShowExportModal}
+              shape={shapeToExport}
+            />
+          )}
 
-        { shapeToSourceCopy && <CopyShapeSource
-          show= {showCopySourceModal}
-          setShow={ setShapeToSourceCopy }
-          shape= { shapeToSourceCopy } />
-        }
+          {shapeToSourceCopy && (
+            <CopyShapeSource
+              show={showCopySourceModal}
+              setShow={setShapeToSourceCopy}
+              shape={shapeToSourceCopy}
+            />
+          )}
 
-        { shapeToEdit && <CreateShape
-          show= {showEditModal}
-          handleClose={ closeEditModal }
-          shape= { shapeToEdit }
-          shapeAction = { shapeAction }
-          setShapeAction = { setShapeAction }
-          edit={true} />
-        }
+          {shapeToEdit && (
+            <CreateShape
+              show={showEditModal}
+              handleClose={closeEditModal}
+              shape={shapeToEdit}
+              shapeAction={shapeAction}
+              setShapeAction={setShapeAction}
+              edit={true}
+            />
+          )}
 
-        { shapeToDelete && <DeleteShape
-          show= { showDeleteModal }
-          setShow={ setShowDeleteModal }
-          shape= { shapeToDelete }
-          shapeAction = { shapeAction }
-          setShapeAction = { setShapeAction } />
-        }
+          {shapeToDelete && (
+            <DeleteShape
+              show={showDeleteModal}
+              setShow={setShowDeleteModal}
+              shape={shapeToDelete}
+              shapeAction={shapeAction}
+              setShapeAction={setShapeAction}
+            />
+          )}
 
-        {
-          filteredShape.length === 0 ? 
-            <NoShapeFound 
-              shapeAction = { shapeAction } 
-              setShapeAction = { setShapeAction } 
-              user = { user }
-              setOpen = { setOpen }
-              setSearchTerm = { setSearchTerm }
-            /> : filteredShape.map((shape, index) => (
-          <React.Fragment key={index}>
-            <ShapeCard>
-              <ShapeCardBody>
-                <ShapeNameHeader>
-                  <ShapeName>{shape.name}{shape.private && <FiLock color='var(--color-neutral-50)' />}</ShapeName>
-                  <ShapeLikes><LikeFilledIcon size='16px' color='var(--color-neutral-40)'/><ShapeLikesCount>{shape.likes}</ShapeLikesCount></ShapeLikes>
-                </ShapeNameHeader>
-                <Shape
-                  width="240px"
-                  height="240px"
-                  name={shape.name}
-                  id={getShapeId(shape.name)}
-                  formula={shape.formula}
-                  backgroundColor= {shape.backgroundColor || "#eb3d86"}
-                  showShadow={shape.showAdvanced}
-                />
-                <ShapeActions className="shape-actions">
-                  <ShapeActionsPrimary>
-                  <span
-                    onClick={(event, shapeId) => performLike(event, shape['shape_id'])}>
-                    {
-                      shape.liked ? 
-                        (
-                          <Button title="Remove Like" variant="danger" className="btn-icon btn-icon--rounded">
-                            <LikeFilledIcon size={24} />
+          {filteredShape.length === 0 ? (
+            <NoShapeFound
+              shapeAction={shapeAction}
+              setShapeAction={setShapeAction}
+              user={user}
+              setOpen={setOpen}
+              setSearchTerm={setSearchTerm}
+            />
+          ) : (
+            filteredShape.map((shape, index) => {
+              const [isDoubleTaped, setIsDoubleTaped] = useState(false);
+
+              const bind = useDoubleTap((event) => {
+                // Your action here
+                performLike(event, shape["shape_id"]);
+
+                // showing ui changes
+                setIsDoubleTaped(true);
+                setTimeout(() => {
+                  setIsDoubleTaped(false);
+                }, 2000);
+              });
+
+              return (
+                <React.Fragment key={index}>
+                  <ShapeCard {...bind}>
+                    <ShapeCardBody>
+                      {isDoubleTaped && (
+                        <DoubleTapLike>
+                          <div id="pop">
+                            <LikeFilledIcon
+                              size="76px"
+                              color={!shape.liked ? "#F24A58" : "#fff"}
+                            />
+                          </div>
+                        </DoubleTapLike>
+                      )}
+                      <ShapeNameHeader>
+                        <ShapeName>
+                          {shape.name}
+                          {shape.private && (
+                            <FiLock color="var(--color-neutral-50)" />
+                          )}
+                        </ShapeName>
+                        <ShapeLikes>
+                          <LikeFilledIcon
+                            size="16px"
+                            color="var(--color-neutral-40)"
+                          />
+                          <ShapeLikesCount>{shape.likes}</ShapeLikesCount>
+                        </ShapeLikes>
+                      </ShapeNameHeader>
+                      <Shape
+                        width="240px"
+                        height="240px"
+                        name={shape.name}
+                        id={getShapeId(shape.name)}
+                        formula={shape.formula}
+                        backgroundColor={shape.backgroundColor || "#eb3d86"}
+                        showShadow={shape.showAdvanced}
+                      />
+                      <ShapeActions className="shape-actions">
+                        <ShapeActionsPrimary>
+                          <span
+                            onClick={(event, shapeId) =>
+                              performLike(event, shape["shape_id"])
+                            }
+                          >
+                            {shape.liked ? (
+                              <Button
+                                title="Remove Like"
+                                variant="danger"
+                                className="btn-icon btn-icon--rounded"
+                              >
+                                <LikeFilledIcon size={24} />
+                              </Button>
+                            ) : (
+                              <Button
+                                title="Add Like"
+                                variant="outline-secondary"
+                                className="btn-icon btn-icon--rounded"
+                              >
+                                <LikeIcon size={24} />
+                              </Button>
+                            )}
+                          </span>{" "}
+                          <Button
+                            title="Export Shape"
+                            variant="outline-secondary"
+                            onClick={() => performExport(shape)}
+                            className="btn-icon btn-icon--rounded"
+                          >
+                            <ExportIcon size={24} />
                           </Button>
-                        ) 
-                        :
-                        (
-                          <Button title="Add Like" variant="outline-secondary" className="btn-icon btn-icon--rounded">
-                            <LikeIcon size={24} />
+                          <Button
+                            title="Copy Source"
+                            variant="outline-secondary"
+                            onClick={() => performCopySource(shape)}
+                            className="btn-icon btn-icon--rounded"
+                          >
+                            <CopyIcon size={24} />
                           </Button>
-                        )
-                    }
-                    
-                  </span>{" "}
-                  <Button title="Export Shape" variant="outline-secondary" onClick={() => performExport(shape)} className="btn-icon btn-icon--rounded">
-                    <ExportIcon
-                      size={24} />
-                  </Button>
-                  <Button title="Copy Source" variant="outline-secondary" onClick={() => performCopySource(shape)} className="btn-icon btn-icon--rounded">
-                    <CopyIcon
-                      size={24} />
-                  </Button>
-                  </ShapeActionsPrimary>
-                  <ShapeActionsSecondary>
-                    {canEditOrDelete(shape) ? 
-                      <Button title="Edit Shape" size='sm' variant="outline-secondary" onClick={() => {performEdit(shape); console.log(shape)}}>
-                        <FiEdit2 />
-                        Edit
-                      </Button> : null
-                    }
-                    {canEditOrDelete(shape) ? 
-                      <Button title="Delete Shape" size='sm' variant="outline-secondary" onClick={() => {performDelete(shape); console.log(shape)}}>
-                        <FiTrash2 />
-                        Delete
-                      </Button> : null
-                    }
-                  </ShapeActionsSecondary>
-                </ShapeActions>
-              </ShapeCardBody>
-              <ShapeCardHeader>
-                <ShapeCredits>
-                  <ShapeCreditsThumb src={shape.photoURL} alt={shape.name1} />
-                  <ShapeCreditsOwner>
-                    <ShapeCreditsOwnerName>{shape.name1}</ShapeCreditsOwnerName>
-                    <ShapeCreditsDate>at {formatRelative(shape['__createdtime__'], new Date())}</ShapeCreditsDate>
-                  </ShapeCreditsOwner>
-                </ShapeCredits>
-              </ShapeCardHeader>
-            </ShapeCard>
-          </React.Fragment>
-        ))}
-      </ShapeCards>
+                        </ShapeActionsPrimary>
+                        <ShapeActionsSecondary>
+                          {canEditOrDelete(shape) ? (
+                            <Button
+                              title="Edit Shape"
+                              size="sm"
+                              variant="outline-secondary"
+                              onClick={() => {
+                                performEdit(shape);
+                                console.log(shape);
+                              }}
+                            >
+                              <FiEdit2 />
+                              Edit
+                            </Button>
+                          ) : null}
+                          {canEditOrDelete(shape) ? (
+                            <Button
+                              title="Delete Shape"
+                              size="sm"
+                              variant="outline-secondary"
+                              onClick={() => {
+                                performDelete(shape);
+                                console.log(shape);
+                              }}
+                            >
+                              <FiTrash2 />
+                              Delete
+                            </Button>
+                          ) : null}
+                        </ShapeActionsSecondary>
+                      </ShapeActions>
+                    </ShapeCardBody>
+                    <ShapeCardHeader>
+                      <ShapeCredits>
+                        <ShapeCreditsThumb
+                          src={shape.photoURL}
+                          alt={shape.name1}
+                        />
+                        <ShapeCreditsOwner>
+                          <ShapeCreditsOwnerName>
+                            {shape.name1}
+                          </ShapeCreditsOwnerName>
+                          <ShapeCreditsDate>
+                            at{" "}
+                            {formatRelative(
+                              shape["__createdtime__"],
+                              new Date()
+                            )}
+                          </ShapeCreditsDate>
+                        </ShapeCreditsOwner>
+                      </ShapeCredits>
+                    </ShapeCardHeader>
+                  </ShapeCard>
+                </React.Fragment>
+              );
+            })
+          )}
+        </ShapeCards>
       </Container>
     </ShapeCardsContainer>
   );
