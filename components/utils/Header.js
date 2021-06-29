@@ -241,7 +241,7 @@ const Header = ({
   };
 
   const tweet = () => {
-    const link = `https://twitter.com/intent/tweet?text=Check%20this%20amazing%20app%20https://tryshape.vercel.app/,%20created%20by%20@tapasadhikary%20and%20friends%0A%0A%23DEVCommunity%20%23100DaysOfCode%20%23tryshape`;
+    const link = `https://twitter.com/intent/tweet?text=👋%20Check%20this%20amazing%20app%20https://tryshape.vercel.app/,%20created%20by%20@tapasadhikary%20and%20friends%0A%0A%23DEVCommunity%20%23100DaysOfCode%20%23tryshape`;
     if(typeof window !== 'undefined') {
       window.open(
         link,
