@@ -428,7 +428,7 @@ const Landing = ({ setOpen, user, setUser }) => {
     return(
         <div>
             <BannerHeader fixed="top" expand="md">
-              <Navbar.Brand><Logo><div className="sr-only">TryShape</div></Logo></Navbar.Brand>
+              <Navbar.Brand><Logo><span className="sr-only">TryShape</span></Logo></Navbar.Brand>
               <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
               </Navbar.Toggle>
@@ -523,7 +523,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <FileSupportCards>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconSvg} />
+                        <img src={IconSvg} alt="Icon for SVG File Type" />
                       </div>
                       <h3 className="card-title">SVG</h3>
                       <p className="card-desc">
@@ -533,7 +533,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                     </FileSupportCardItem>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconPngJpg} />
+                        <img src={IconPngJpg} alt="Icon for PNG and JPG File Types"/>
                       </div>
                       <h3 className="card-title">PNG and JPEG</h3>
                       <p className="card-desc">
@@ -543,7 +543,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                     </FileSupportCardItem>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconCss} />
+                        <img src={IconCss} alt="Icon for CSS Snippets"/>
                       </div>
                       <h3 className="card-title">CSS Snippet</h3>
                       <p className="card-desc">
@@ -557,11 +557,11 @@ const Landing = ({ setOpen, user, setUser }) => {
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
-                  <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><FiGithub /></a>
-                  <a href="https://twitter.com/tapasadhikary" target="_blank" rel="noopener noreferrer"><FiTwitter /></a>
-                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank" rel="noopener noreferrer"><FiLinkedin /></a>
-                  <a href="https://www.youtube.com/c/TapasAdhikary/featured" rel="noopener noreferrer"><FiYoutube /></a>
-                  <a href="mailto:tapas.adhikary@gmail.com" rel="noopener noreferrer"><FiMail /></a>
+                  <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><FiGithub /><span className="sr-only">GitHub</span></a>
+                  <a href="https://twitter.com/tapasadhikary" target="_blank" rel="noopener noreferrer"><FiTwitter /><span className="sr-only">Twitter</span></a>
+                  <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank" rel="noopener noreferrer"><FiLinkedin /><span className="sr-only">Linkedin</span></a>
+                  <a href="https://www.youtube.com/c/TapasAdhikary/featured" rel="noopener noreferrer"><FiYoutube /><span className="sr-only">Youtube</span></a>
+                  <a href="mailto:tapas.adhikary@gmail.com" rel="noopener noreferrer"><FiMail /><span className="sr-only">Email</span></a>
                 </SocialLinks>
                 <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
               </Container>
