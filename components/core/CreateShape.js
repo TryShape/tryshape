@@ -297,13 +297,26 @@ const CreateShape = (props) => {
 
     // Returns an array that has a new verticeCoordinate
     const addNewVerticeCoordinates = (x ,y, number) => {
-        const xPercentage = Math.round((x / 280.0) * 100.0);
-        const yPercentage = Math.round((y / 280.0) * 100.0);
+
+        let xValue;
+        let yValue;
+
+        if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
+            xValue = Math.round((x / 280.0) * 100.0) + "%";
+        } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
+            xValue = Math.round(x) + "px";
+        }
+
+        if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
+            yValue = Math.round((y / 280.0) * 100.0) + "%";
+        } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
+            yValue = Math.round(y) + "px";
+        }
 
         let newVerticeCoordinates = shapeInformation.verticeCoordinates;
         newVerticeCoordinates[number] = {
-            "x": xPercentage + "%",
-            "y": yPercentage + "%"
+            "x": xValue,
+            "y": yValue
         }
 
         return newVerticeCoordinates;
