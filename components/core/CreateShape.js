@@ -250,8 +250,31 @@ const CreateShape = (props) => {
             formulaNumbers = formulaNumbers.split(","); 
             newVerticeCoordinates = formulaNumbers.map(x => {
                 let values = x.trim();
-                let xValue = values.substring(0, values.indexOf("%") + 1).trim();
-                let yValue = values.substring(values.indexOf("%") + 1).trim();
+                let xValue = "";
+                let yValue = "";
+
+                if (values.includes("%") && values.includes("px")) {
+
+                    let indexOfPX = values.indexOf("px");
+                    let indexOfPercentage = values.indexOf("%");
+
+                    if (indexOfPX < indexOfPercentage) {
+                        xValue = values.substring(0, values.indexOf("px") + 2).trim();
+                        yValue = values.substring(values.indexOf("px") + 2).trim();
+                    }
+
+                    if (indexOfPercentage < indexOfPX) {
+                        xValue = values.substring(0, values.indexOf("%") + 1).trim();
+                        yValue = values.substring(values.indexOf("%") + 1).trim();
+                    }
+
+                } else if (values.includes("%")) {
+                    xValue = values.substring(0, values.indexOf("%") + 1).trim();
+                    yValue = values.substring(values.indexOf("%") + 1).trim();
+                } else if (values.includes("px")) {
+                    xValue = values.substring(0, values.indexOf("px") + 2).trim();
+                    yValue = values.substring(values.indexOf("px") + 2).trim();
+                }
 
                 return {
                     "x": xValue, 

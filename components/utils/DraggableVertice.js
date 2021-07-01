@@ -25,9 +25,22 @@ const CircleVertice = styled.div`
 
 const DraggableVertice = (props) => {
 
-    // Calculates x and y coordinates based on verticeCoordinates percentages
-    let x = parseFloat(props.x) * 280.0 / 100.0;
-    let y = parseFloat(props.y) * 280.0 / 100.0; 
+    let x;
+    let y;
+
+    // Calculates x coordinates based on percentage or pixels
+    if (props.x.includes("%")) {
+        x = parseFloat(props.x) * 280.0 / 100.0;
+    } else if (props.x.includes("px")) {
+        x = parseFloat(props.x);
+    }
+
+    // Calulates y coordinates based on percentage or pixels
+    if (props.y.includes("%")) {
+        y = parseFloat(props.y) * 280.0 / 100.0; 
+    } else if (props.y.includes("px")) {
+        y = parseFloat(props.y);
+    }
 
     // Handles when to show the close button
     const show = props.focusNumber === props.number;
