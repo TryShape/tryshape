@@ -278,6 +278,14 @@ const CreateShape = (props) => {
                     yValue = values.substring(values.indexOf("px") + 2).trim();
                 }
 
+                if (!(xValue.includes("px") || xValue.includes("%")) || xValue.includes(" ")) {
+                    xValue = "0%";
+                }
+
+                if (!(yValue.includes("px") || yValue.includes("%")) || yValue === "") {
+                    yValue = "0%";
+                }
+
                 return {
                     "x": xValue, 
                     "y": yValue,
@@ -308,7 +316,7 @@ const CreateShape = (props) => {
             xValue = Math.round((x / 280.0) * 100.0) + "%";
             yValue = Math.round((y / 280.0) * 100.0) + "%";
         } else {
-            
+
             // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
             if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
                 xValue = Math.round((x / 280.0) * 100.0) + "%";
