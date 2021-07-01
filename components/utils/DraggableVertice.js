@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 
 // react-draggable npm
 import Draggable from "react-draggable";
@@ -25,25 +25,68 @@ const CircleVertice = styled.div`
 
 const DraggableVertice = (props) => {
 
-    let x;
-    let y;
+    const [showVertice, setShowVertice] = useState(true);
 
-    // Calculates x coordinates based on percentage or pixels
-    if (props.x.includes("%")) {
-        x = parseFloat(props.x) * 280.0 / 100.0;
-    } else if (props.x.includes("px")) {
-        x = parseFloat(props.x);
-    }
+    const [x, setX] = useState(0);
+    const [y, setY] = useState(0);
 
-    // Calulates y coordinates based on percentage or pixels
-    if (props.y.includes("%")) {
-        y = parseFloat(props.y) * 280.0 / 100.0; 
-    } else if (props.y.includes("px")) {
-        y = parseFloat(props.y);
-    }
+    useEffect(() => {
+
+        let xValue;
+        let yValue;
+
+        // Calculates x coordinates based on percentage or pixels
+        // Determines whether to show them or not depending on if it goes out of the border
+        if (props.x.includes("%")) {
+            setX(parseFloat(props.x) * 280.0 / 100.0);
+            xValue = parseFloat(props.x.substring(0, props.x.indexOf("%") + 1));
+
+            if (xValue > 100) {
+                setShowVertice(false);
+            } else {
+                setShowVertice(true);
+            }
+
+        } else if (props.x.includes("px")) {
+            setX(x = parseFloat(props.x));
+            xValue = parseFloat(props.x.substring(0, props.x.indexOf("px") + 2));
+
+            if (xValue > 280) {
+                setShowVertice(false);
+            } else {
+                setShowVertice(true);
+            }
+
+        }
+
+        // Calulates y coordinates based on percentage or pixels
+        if (props.y.includes("%")) {
+            setY(parseFloat(props.y) * 280.0 / 100.0);
+            yValue = parseFloat(props.y.substring(0, props.y.indexOf("%") + 1));
+
+            if (yValue > 100) {
+                setShowVertice(false);
+            } else {
+                setShowVertice(true);
+            }
+
+        } else if (props.y.includes("px")) {
+            setY(parseFloat(props.y));
+            yValue = parseFloat(props.y.substring(0, props.y.indexOf("px") + 2));
+
+            if (yValue > 280) {
+                setShowVertice(false);
+            } else {
+                setShowVertice(true);
+            }
+
+        }
+    }, [props])
+
+    
 
     // Handles when to show the close button
-    const show = props.focusNumber === props.number;
+    const showClose = props.focusNumber === props.number;
     const target = useRef(null);
 
     const handleDrag = (e, data) => {
@@ -57,45 +100,49 @@ const DraggableVertice = (props) => {
 
     return(
         <>
-            <Draggable 
-                bounds="parent" 
-                handle=".handle" 
-                position={{x: x, y: y}} 
-                grid={[2.8, 2.8]} 
-                onDrag={(e, data) => {handleDrag(e, data); props.setFocusNumber(-1)}}
-            >
-                    <CircleVertice 
-                        className="handle" 
-                        onClick={() => {
-                            if (show === false) {
-                                props.setFocusNumber(props.number);
-                            } else {
-                                props.setFocusNumber(-1);
-                            }
-                        }}
-                        onTouchStart={() => {
-                            if (show === false) {
-                                props.setFocusNumber(props.number);
-                            } else {
-                                props.setFocusNumber(-1);
-                            }
-                        }}
-                        ref={target}
-                    />
-            </Draggable>
+            {showVertice ? 
+                <>
+                    <Draggable 
+                        bounds="parent" 
+                        handle=".handle" 
+                        position={{x: x, y: y}} 
+                        grid={[2.8, 2.8]} 
+                        onDrag={(e, data) => {handleDrag(e, data); props.setFocusNumber(-1)}}
+                    >
+                            <CircleVertice 
+                                className="handle" 
+                                onClick={() => {
+                                    if (showClose === false) {
+                                        props.setFocusNumber(props.number);
+                                    } else {
+                                        props.setFocusNumber(-1);
+                                    }
+                                }}
+                                onTouchStart={() => {
+                                    if (showClose === false) {
+                                        props.setFocusNumber(props.number);
+                                    } else {
+                                        props.setFocusNumber(-1);
+                                    }
+                                }}
+                                ref={target}
+                            />
+                    </Draggable>
 
-            <Overlay target={target.current} 
-                show={show} 
-                placement={x > 250 ? "left" : "right"}>
-                <Tooltip>
-                <FiDelete
-                    size="24px"
-                    id={"deleteButton" + props.number}
-                    onMouseUp={handleDelete}
-                    style={{ cursor: "pointer" }}
-                    />
-                </Tooltip>
-            </Overlay>
+                    <Overlay target={target.current} 
+                        show={showClose} 
+                        placement={x > 250 ? "left" : "right"}>
+                        <Tooltip>
+                        <FiDelete
+                            size="24px"
+                            id={"deleteButton" + props.number}
+                            onMouseUp={handleDelete}
+                            style={{ cursor: "pointer" }}
+                            />
+                        </Tooltip>
+                    </Overlay>
+                </> : null
+            }
         </>
     );
     
