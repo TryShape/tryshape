@@ -253,6 +253,8 @@ const CreateShape = (props) => {
                 let xValue = "";
                 let yValue = "";
 
+                // If the formula includes both percentage and px
+                // Figure out which one comes first and use that index of find it
                 if (values.includes("%") && values.includes("px")) {
 
                     let indexOfPX = values.indexOf("px");
@@ -301,16 +303,25 @@ const CreateShape = (props) => {
         let xValue;
         let yValue;
 
-        if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
+        // If there is a new coordinate
+        if (shapeInformation.verticeCoordinates.length === number) {
             xValue = Math.round((x / 280.0) * 100.0) + "%";
-        } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
-            xValue = Math.round(x) + "px";
-        }
-
-        if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
             yValue = Math.round((y / 280.0) * 100.0) + "%";
-        } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
-            yValue = Math.round(y) + "px";
+        } else {
+            
+            // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
+            if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
+                xValue = Math.round((x / 280.0) * 100.0) + "%";
+            } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
+                xValue = Math.round(x) + "px";
+            }
+
+            // Determines whether previous y coordinate was in percentage or px and adjusts value to maintain same unit of measurement
+            if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
+                yValue = Math.round((y / 280.0) * 100.0) + "%";
+            } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
+                yValue = Math.round(y) + "px";
+            }
         }
 
         let newVerticeCoordinates = shapeInformation.verticeCoordinates;
