@@ -21,10 +21,10 @@
   /* Neutral */
   --color-neutral-10: #ffffff;
   --color-neutral-20: #f6f6f9;
-  --color-neutral-30: #E0E0E6;
-  --color-neutral-40: #B0AFB6;
-  --color-neutral-50: #8D8C95;
-  --color-neutral-60: #6A6973;
+  --color-neutral-30: #e0e0e6;
+  --color-neutral-40: #b0afb6;
+  --color-neutral-50: #8d8c95;
+  --color-neutral-60: #6a6973;
   --color-neutral-70: #474552;
   --color-neutral-80: #242230;
   --color-neutral-90: #040222;
@@ -32,7 +32,7 @@
 
   --color-neutral-10-rgb: 255, 255, 255;
   --color-neutral-100-rgb: 0, 0, 0;
-  
+
   /* Font Weight */
   --fw-light: 300;
   --fw-regular: 400;
@@ -42,7 +42,7 @@
   /* Font Sizes */
   --fs-xs: 0.6rem;
   --fs-sm: 0.8rem;
-  --fs-rg: 0.90rem;
+  --fs-rg: 0.9rem;
   --fs-md: 1.4rem;
   --fs-lg: 2rem;
   --fs-xl: 3rem;
@@ -56,7 +56,6 @@
   --lh-md: 1.8rem;
   --lh-lg: 2.4rem;
   --lh-xl: 3rem;
-  
 
   /* Responsive Breakpoints */
   --screen-sm-min: 768px;
@@ -67,7 +66,7 @@
 }
 
 /* Typography */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap");
 
 html,
 body {
@@ -102,15 +101,15 @@ img {
 }
 
 li {
-    list-style: none;
+  list-style: none;
 }
 
 code {
-    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-      monospace;
-    font-size: 87.5%;
-    color: #e83e8c;
-    word-wrap: break-word;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+  font-size: 87.5%;
+  color: #e83e8c;
+  word-wrap: break-word;
 }
 
 .section-title {
@@ -149,11 +148,11 @@ code {
 
 /* Buttons */
 .btn-primary {
-    padding: 0.8rem 1.4rem;
-    border: solid 1px var(--color-primary-accent);
-    background-color: var(--color-primary-accent);
-    font-weight: var(--fw-bold);
-    color: var(--color-neutral-90);
+  padding: 0.8rem 1.4rem;
+  border: solid 1px var(--color-primary-accent);
+  background-color: var(--color-primary-accent);
+  font-weight: var(--fw-bold);
+  color: var(--color-neutral-90);
 }
 
 .btn-primary:hover,
@@ -258,17 +257,17 @@ code {
   border: solid 1px var(--color-neutral-10);
   background-color: rgba(var(--color-neutral-10-rgb), 100%);
   color: var(--color-brand);
-  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .btn-outline-secondary:active,
 .btn-outline-secondary.focus {
-  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: rgba(var(--color-neutral-10-rgb), 100%) !important;
   color: var(--color-brand) !important;
 }
 
-.show>.btn-outline-secondary.dropdown-toggle {
+.show > .btn-outline-secondary.dropdown-toggle {
   background-color: rgba(var(--color-neutral-10-rgb), 10%) !important;
   color: var(--color-neutral-10) !important;
 }
@@ -287,22 +286,20 @@ code {
   border: solid 1px var(--color-neutral-70);
   background-color: rgba(var(--color-neutral-100-rgb), 5%);
   color: var(--color-neutral-70);
-  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
 }
 
 .btn-outline-dark:active {
-  box-shadow: 0 0 0 0 rgba(0,0,0,0);
+  box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
   background-color: rgba(var(--color-neutral-100-rgb), 100%) !important;
   color: var(--color-neutral-20) !important;
 }
-
 
 /* Button Group */
 .btn-group-toggle .btn {
   font-weight: var(--fw-normal);
   font-size: var(--fs-sm);
 }
-
 
 /* Button Sizes */
 .btn {
@@ -320,11 +317,9 @@ code {
   font-size: var(--fs-rg);
 }
 
-
 .btn svg {
   margin: -2px 0.6rem 0 0;
 }
-
 
 /* Modal Title */
 .modal-title {
@@ -373,7 +368,7 @@ code {
 }
 
 .dropdown-toggle::after {
-  margin-left: .8em;
+  margin-left: 0.8em;
 }
 
 .border-0 .dropdown-toggle {
@@ -401,4 +396,11 @@ code {
   height: 3rem;
   padding: 0.1rem 0.2rem;
 }
-
+#pop {
+  animation: pop 0.3s linear 1;
+}
+@keyframes pop {
+  50% {
+    transform: scale(1.5);
+  }
+}
