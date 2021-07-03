@@ -6,6 +6,7 @@ export { default as ExportShape } from "./core/ExportShape";
 export { default as CreateShape } from "./core/CreateShape";
 export { default as CopyShapeSource } from "./core/CopyShapeSource";
 export { default as DeleteShape } from "./core/DeleteShape";
+export { default as MetaTags } from "./core/MetaTags";
 
 // utils
 export { default as Header } from "./utils/Header";

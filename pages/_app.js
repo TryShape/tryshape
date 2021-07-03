@@ -11,7 +11,7 @@ import { Toaster } from "react-hot-toast";
 import { auth } from "../utils/firebase";
 
 // SignIn modal
-import { SignInModal } from '../components';
+import { SignInModal, MetaTags } from '../components';
 
 
 export default function App({ Component, pageProps }) {
@@ -34,8 +34,8 @@ export default function App({ Component, pageProps }) {
   });
 
   return (
-    
     <>
+      <MetaTags />
       <Toaster position="bottom-right" reverseOrder={false} />
       <Component {...pageProps} {...props} />
       <SignInModal open={open} setOpen={setOpen} />
