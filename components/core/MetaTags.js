@@ -10,7 +10,7 @@ const MetaTags = () => {
       />
       <meta name="theme-color" content="#645AD3" />
 
-      <title>TryShap - Create, Export, Share, and Use any Shapes of your choice.</title>
+      <title>TryShape - Create, Export, Share, and Use any Shapes of your choice.</title>
       <meta
         name="description"
         content="TryShape is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS."
@@ -26,7 +26,7 @@ const MetaTags = () => {
       {/* Primary Meta Tags */}
       <meta
         name="title"
-        content="TryShap - Create, Export, Share, and Use any Shapes of your choice."
+        content="TryShape - Create, Export, Share, and Use any Shapes of your choice."
       />
       <meta
         name="description"
@@ -38,7 +38,7 @@ const MetaTags = () => {
       <meta property="og:url" content="https://tryshape.now.sh/" />
       <meta
         property="og:title"
-        content="TryShap - Create, Export, Share, and Use any Shapes of your choice."
+        content="TryShape - Create, Export, Share, and Use any Shapes of your choice."
       />
       <meta
         property="og:description"
@@ -54,7 +54,7 @@ const MetaTags = () => {
       <meta property="twitter:url" content="https://tryshape.now.sh/" />
       <meta
         property="twitter:title"
-        content="TryShap - Create, Export, Share, and Use any Shapes of your choice."
+        content="TryShape - Create, Export, Share, and Use any Shapes of your choice."
       />
       <meta
         property="twitter:description"
