@@ -48,7 +48,7 @@ const DraggableVertice = (props) => {
             }
 
         } else if (props.x.includes("px")) {
-            setX(x = parseFloat(props.x));
+            setX(parseFloat(props.x));
             xValue = parseFloat(props.x.substring(0, props.x.indexOf("px") + 2));
 
             if (xValue > 280) {
