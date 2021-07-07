@@ -116,7 +116,7 @@ const ShapeActions = styled.div`
   justify-content: space-between;
 `;
 
-const ShapeName = styled.h4`
+const ShapeName = styled.h2`
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -163,7 +163,7 @@ const ShapeCreditsOwner = styled.div`
 const ShapeCreditsDate = styled.small`
   margin-top: 0.3rem;
   font-size: var(--fs-sm);
-  color: var(--color-neutral-50);
+  color: var(--color-neutral-60);
   line-height: 1;
 `;
 
