@@ -2628,6 +2628,11 @@ url@^0.11.0:
     punycode "1.3.2"
     querystring "0.2.0"
 
+use-double-tap@^1.3.3:
+  version "1.3.3"
+  resolved "https://registry.yarnpkg.com/use-double-tap/-/use-double-tap-1.3.3.tgz#96f1863f8fcc4d976b76181c6619d09ca950572f"
+  integrity sha512-2h7T1T5plYzkQzuugzAiXPUp04iPXB2Uk56RPR9o9tvOWYuXIVaBzU6RXPmT4Fc3VvjK/2p5RA9RxVJg+cOjIw==
+
 use-subscription@1.5.1:
   version "1.5.1"
   resolved "https://registry.yarnpkg.com/use-subscription/-/use-subscription-1.5.1.tgz#73501107f02fad84c6dd57965beb0b75c68c42d1"

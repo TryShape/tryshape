@@ -247,13 +247,49 @@ const CreateShape = (props) => {
 
         if (clipPathType === "polygon") {
             let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            formulaNumbers = formulaNumbers.split(", "); 
+            formulaNumbers = formulaNumbers.split(","); 
             newVerticeCoordinates = formulaNumbers.map(x => {
-            let percentageArray = x.split(" ");
-            return {
-                "x": percentageArray[0], 
-                "y": percentageArray[1],
-            }
+                let values = x.trim();
+                let xValue = "";
+                let yValue = "";
+
+                // If the formula includes both percentage and px
+                // Figure out which one comes first and use that index of find it
+                if (values.includes("%") && values.includes("px")) {
+
+                    let indexOfPX = values.indexOf("px");
+                    let indexOfPercentage = values.indexOf("%");
+
+                    if (indexOfPX < indexOfPercentage) {
+                        xValue = values.substring(0, values.indexOf("px") + 2).trim();
+                        yValue = values.substring(values.indexOf("px") + 2).trim();
+                    }
+
+                    if (indexOfPercentage < indexOfPX) {
+                        xValue = values.substring(0, values.indexOf("%") + 1).trim();
+                        yValue = values.substring(values.indexOf("%") + 1).trim();
+                    }
+
+                } else if (values.includes("%")) {
+                    xValue = values.substring(0, values.indexOf("%") + 1).trim();
+                    yValue = values.substring(values.indexOf("%") + 1).trim();
+                } else if (values.includes("px")) {
+                    xValue = values.substring(0, values.indexOf("px") + 2).trim();
+                    yValue = values.substring(values.indexOf("px") + 2).trim();
+                }
+
+                if (!(xValue.includes("px") || xValue.includes("%")) || xValue.includes(" ")) {
+                    xValue = "0%";
+                }
+
+                if (!(yValue.includes("px") || yValue.includes("%")) || yValue === "") {
+                    yValue = "0%";
+                }
+
+                return {
+                    "x": xValue, 
+                    "y": yValue,
+                }
             });
         }
 
@@ -261,7 +297,7 @@ const CreateShape = (props) => {
             return {
             ...prevState, 
             "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-            "clipPathType": clipPathType === null ? prevState.clipPathType : clipPathType,
+            "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
             "vertices": edgeVerticeNumber, 
             "edges": edgeVerticeNumber, 
             "verticeCoordinates": newVerticeCoordinates, 
@@ -271,13 +307,35 @@ const CreateShape = (props) => {
 
     // Returns an array that has a new verticeCoordinate
     const addNewVerticeCoordinates = (x ,y, number) => {
-        const xPercentage = Math.round((x / 280.0) * 100.0);
-        const yPercentage = Math.round((y / 280.0) * 100.0);
+
+        let xValue;
+        let yValue;
+
+        // If there is a new coordinate
+        if (shapeInformation.verticeCoordinates.length === number) {
+            xValue = Math.round((x / 280.0) * 100.0) + "%";
+            yValue = Math.round((y / 280.0) * 100.0) + "%";
+        } else {
+
+            // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
+            if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
+                xValue = Math.round((x / 280.0) * 100.0) + "%";
+            } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
+                xValue = Math.round(x) + "px";
+            }
+
+            // Determines whether previous y coordinate was in percentage or px and adjusts value to maintain same unit of measurement
+            if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
+                yValue = Math.round((y / 280.0) * 100.0) + "%";
+            } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
+                yValue = Math.round(y) + "px";
+            }
+        }
 
         let newVerticeCoordinates = shapeInformation.verticeCoordinates;
         newVerticeCoordinates[number] = {
-            "x": xPercentage + "%",
-            "y": yPercentage + "%"
+            "x": xValue,
+            "y": yValue
         }
 
         return newVerticeCoordinates;

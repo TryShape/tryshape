@@ -1,5 +1,7 @@
 
-
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 <p align="center">
     <a href="https://tryshape.vercel.app/" target="_blank">
         <img src="./public/readme/TryShape-GitHub-icon-only.png" alt="logo" width="125"/>
@@ -215,3 +217,26 @@ If you found the app helpful, consider supporting us with a coffee.
 A ⭐️ to <b>TryShape</b> is to build its triceps 💪 stronger.
 </h3>
 
+
+## Contributors ✨
+
+Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+
+<!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
+<!-- prettier-ignore-start -->
+<!-- markdownlint-disable -->
+<table>
+  <tr>
+    <td align="center"><a href="https://tapasadhikary.com"><img src="https://avatars.githubusercontent.com/u/3633137?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Tapas Adhikary</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=atapas" title="Code">💻</a> <a href="#infra-atapas" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="https://github.com/TryShape/tryshape/commits?author=atapas" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/nirmalkc"><img src="https://avatars.githubusercontent.com/u/6359059?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nirmal Kumar</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=nirmalkc" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=nirmalkc" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/williamzhu17"><img src="https://avatars.githubusercontent.com/u/77871333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>William Zhu</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=williamzhu17" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=williamzhu17" title="Code">💻</a></td>
+    <td align="center"><a href="https://savio.xyz/"><img src="https://avatars.githubusercontent.com/u/61895712?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Savio Martin</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=saviomartin" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=saviomartin" title="Code">💻</a></td>
+  </tr>
+</table>
+
+<!-- markdownlint-restore -->
+<!-- prettier-ignore-end -->
+
+<!-- ALL-CONTRIBUTORS-LIST:END -->
+
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!

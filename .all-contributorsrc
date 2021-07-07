@@ -1,0 +1,56 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "atapas",
+      "name": "Tapas Adhikary",
+      "avatar_url": "https://avatars.githubusercontent.com/u/3633137?v=4",
+      "profile": "https://tapasadhikary.com",
+      "contributions": [
+        "code",
+        "infra",
+        "test"
+      ]
+    },
+    {
+      "login": "nirmalkc",
+      "name": "Nirmal Kumar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6359059?v=4",
+      "profile": "https://github.com/nirmalkc",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    },
+    {
+      "login": "williamzhu17",
+      "name": "William Zhu",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77871333?v=4",
+      "profile": "https://github.com/williamzhu17",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    },
+    {
+      "login": "saviomartin",
+      "name": "Savio Martin",
+      "avatar_url": "https://avatars.githubusercontent.com/u/61895712?v=4",
+      "profile": "https://savio.xyz/",
+      "contributions": [
+        "test",
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "tryshape",
+  "projectOwner": "TryShape",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
