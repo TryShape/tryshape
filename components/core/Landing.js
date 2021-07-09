@@ -11,6 +11,9 @@ import { Header } from '..'
 
 // Images
 import BannerBg from '../../public/images/bg-banner.png';
+import DottedBg from '../../public/images/bg-dotted.png';
+import AbstractBg1 from '../../public/images/bg-abstract-1.png';
+import AbstractBg2 from '../../public/images/bg-abstract-2.png';
 import ImgLogo from '../../public/images/img-logo.svg';
 import IconPngJpg from '../../public/images/icon-png-jpg.svg';
 import IconSvg from '../../public/images/icon-svg.svg';
@@ -29,6 +32,8 @@ import {
   FiGithub, 
   FiYoutube } from "react-icons/fi";
 
+import { BsFillHeartFill, BsHeart } from "react-icons/bs";
+
 // link
 import Link from "next/link";
 
@@ -45,7 +50,6 @@ const LandingBanner = styled.section`
     background-color: var(--color-brand);
     background: rgb(93,33,210);
     background: linear-gradient(180deg, rgba(93,33,210,1) 0%, rgba(175,33,210,1) 100%);
-    // background-image: url(${BannerBg});
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -234,6 +238,14 @@ const ActionBar = styled.div`
 
 const SectionAbout = styled.section`
     padding: 6rem 0;
+    background-image: url(${AbstractBg1});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (max-width: 1400px) {
+      background-size: contain;
+    }
 `;
 
 const SectionTitle = styled.div`
@@ -242,14 +254,143 @@ const SectionTitle = styled.div`
 `;
 
 const SectionFileTypes = styled.section`
-    padding: 6rem 0;
-    // background-color: var(--color-neutral-20);
-    background-color: rgba(var(--color-brand-rgb), 0.024);
+    padding: 6rem 0 8rem 0;
+    background-image: url(${DottedBg});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 
 const SectionContact = styled.section`
     padding: 6rem 0;
     background-color: var(--color-neutral-10);
+`;
+
+const SectionTrendingShapes = styled.section`
+    padding: 6rem 0;
+    background-color: rgba(var(--color-brand-rgb), 0.024);
+    background-image: url(${AbstractBg2});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (max-width: 1400px) {
+      background-size: contain;
+    }
+`;
+
+const ShapeCardList = styled.div`
+  padding: 2rem 0 2rem 0;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  grid-gap: 2rem;
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, minmax(300px, 1fr));
+  }
+
+  @media (max-width: 767px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+`;
+
+const ShapeCard = styled.div`
+  position: relative;
+  border-radius: 0.6rem;
+  background-color: var(--color-neutral-10);
+  overflow: hidden;
+  box-shadow: 3px 10px 18px 0 rgb(111 118 138 / 6%);
+
+  &:hover {
+    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 26%);
+
+    .shape-actions {
+      opacity: 1;
+    }
+  }
+`;
+
+const ShapeCardBody = styled.div`
+  position: relative;
+  padding: 1rem 1.4rem;
+`;
+
+const ShapeCardHeader = styled.div`
+  margin: 0;
+  padding: 0 1.4rem 1.2rem 1.4rem;
+`;
+
+const ShapeName = styled.h2`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  grid-gap: 0.3rem;
+  margin: 0 0 0.8rem 0;
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-rg);
+  color: var(--color-neutral-100);
+`;
+
+const ShapeNameHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
+
+const ShapeLikes = styled.div`
+  display: flex;
+  align-items: center;
+  height: 1.6rem;
+
+  svg {
+    margin-right: 0.3rem;
+  }
+`;
+
+const ShapeLikesCount = styled.div`
+  font-size: var(--fs-sm);
+  color: var(--color-neutral-60);
+`;
+
+const LikeIcon = styled(BsHeart)`
+  cursor: pointer;
+`;
+
+const LikeFilledIcon = styled(BsFillHeartFill)`
+  cursor: pointer;
+`;
+
+const ShapeCredits = styled.div`
+  display: flex;
+  align-items: center;
+  border-top: solid 1px var(--color-neutral-20);
+  padding-top: 1rem;
+`;
+
+const ShapeCreditsOwner = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-weight: var(--fs-md);
+`;
+
+const ShapeCreditsDate = styled.small`
+  margin-top: 0.3rem;
+  font-size: var(--fs-sm);
+  color: var(--color-neutral-60);
+  line-height: 1;
+`;
+
+const ShapeCreditsOwnerName = styled.div`
+  font-size: var(--fs-sm);
+  font-weight: var(--fw-semibold);
+  color: var(--color-neutral-60);
+  line-height: 1;
+`;
+
+const ShapeCreditsThumb = styled.img`
+  border-radius: 50%;
+  height: 32px;
+  width: 32px;
+  margin-right: 0.7rem;
 `;
 
 const SectionContactCredits = styled.p`
@@ -383,7 +524,7 @@ const FileSupportCardItem = styled.div`
     background: var(--color-neutral-10);
     border-radius: 1rem;
     padding: 3.2rem 2.8rem;
-    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
+    box-shadow: 3px 33px 81px 0 rgb(180 180 200 / 26%);
 
 
     .card-icon {
@@ -554,6 +695,265 @@ const Landing = ({ setOpen, user, setUser }) => {
                   </FileSupportCards>
               </Container>
             </SectionFileTypes>
+            <SectionTrendingShapes>
+              <Container>
+                <SectionTitle>
+                    <h2 className="section-title text-center">Trending Shapes This Month</h2>
+                  </SectionTitle>
+                  <ShapeCardList>
+                    <ShapeCard>
+                      <ShapeCardBody>
+                        <ShapeNameHeader>
+                          <ShapeName>
+                            Shape Name
+                          </ShapeName>
+                          <ShapeLikes>
+                            <LikeFilledIcon
+                              size="16px"
+                              color="var(--color-neutral-40)"
+                            />
+                            <ShapeLikesCount>
+                              {/* {shape.likes} */}
+                              25
+                            </ShapeLikesCount>
+                          </ShapeLikes>
+                        </ShapeNameHeader>
+                        {/* <Shape
+                          width="240px"
+                          height="240px"
+                          name={shape.name}
+                          id={getShapeId(shape.name)}
+                          formula={shape.formula}
+                          backgroundColor={shape.backgroundColor || "#eb3d86"}
+                          showShadow={shape.showAdvanced}
+                        /> */}
+                      </ShapeCardBody>
+                      <ShapeCardHeader>
+                        <ShapeCredits>
+                          {/* <ShapeCreditsThumb
+                            src={shape.photoURL}
+                            alt={shape.name1}
+                          /> */}
+                          <ShapeCreditsOwner>
+                            <ShapeCreditsOwnerName>
+                              {/* {shape.name1} */}
+                              Owner Name
+                            </ShapeCreditsOwnerName>
+                            <ShapeCreditsDate>
+                              {/* at{" "}
+                              {formatRelative(
+                                shape["__createdtime__"],
+                                new Date()
+                              )} */}
+                              at last Wednesday
+                            </ShapeCreditsDate>
+                          </ShapeCreditsOwner>
+                        </ShapeCredits>
+                      </ShapeCardHeader>
+                    </ShapeCard>
+                    <ShapeCard>
+                      <ShapeCardBody>
+                        <ShapeNameHeader>
+                          <ShapeName>
+                            Shape Name
+                          </ShapeName>
+                          <ShapeLikes>
+                            <LikeFilledIcon
+                              size="16px"
+                              color="var(--color-neutral-40)"
+                            />
+                            <ShapeLikesCount>
+                              {/* {shape.likes} */}
+                              25
+                            </ShapeLikesCount>
+                          </ShapeLikes>
+                        </ShapeNameHeader>
+                        {/* <Shape
+                          width="240px"
+                          height="240px"
+                          name={shape.name}
+                          id={getShapeId(shape.name)}
+                          formula={shape.formula}
+                          backgroundColor={shape.backgroundColor || "#eb3d86"}
+                          showShadow={shape.showAdvanced}
+                        /> */}
+                      </ShapeCardBody>
+                      <ShapeCardHeader>
+                        <ShapeCredits>
+                          {/* <ShapeCreditsThumb
+                            src={shape.photoURL}
+                            alt={shape.name1}
+                          /> */}
+                          <ShapeCreditsOwner>
+                            <ShapeCreditsOwnerName>
+                              {/* {shape.name1} */}
+                              Owner Name
+                            </ShapeCreditsOwnerName>
+                            <ShapeCreditsDate>
+                              {/* at{" "}
+                              {formatRelative(
+                                shape["__createdtime__"],
+                                new Date()
+                              )} */}
+                              at last Wednesday
+                            </ShapeCreditsDate>
+                          </ShapeCreditsOwner>
+                        </ShapeCredits>
+                      </ShapeCardHeader>
+                    </ShapeCard>
+                    <ShapeCard>
+                      <ShapeCardBody>
+                        <ShapeNameHeader>
+                          <ShapeName>
+                            Shape Name
+                          </ShapeName>
+                          <ShapeLikes>
+                            <LikeFilledIcon
+                              size="16px"
+                              color="var(--color-neutral-40)"
+                            />
+                            <ShapeLikesCount>
+                              {/* {shape.likes} */}
+                              25
+                            </ShapeLikesCount>
+                          </ShapeLikes>
+                        </ShapeNameHeader>
+                        {/* <Shape
+                          width="240px"
+                          height="240px"
+                          name={shape.name}
+                          id={getShapeId(shape.name)}
+                          formula={shape.formula}
+                          backgroundColor={shape.backgroundColor || "#eb3d86"}
+                          showShadow={shape.showAdvanced}
+                        /> */}
+                      </ShapeCardBody>
+                      <ShapeCardHeader>
+                        <ShapeCredits>
+                          {/* <ShapeCreditsThumb
+                            src={shape.photoURL}
+                            alt={shape.name1}
+                          /> */}
+                          <ShapeCreditsOwner>
+                            <ShapeCreditsOwnerName>
+                              {/* {shape.name1} */}
+                              Owner Name
+                            </ShapeCreditsOwnerName>
+                            <ShapeCreditsDate>
+                              {/* at{" "}
+                              {formatRelative(
+                                shape["__createdtime__"],
+                                new Date()
+                              )} */}
+                              at last Wednesday
+                            </ShapeCreditsDate>
+                          </ShapeCreditsOwner>
+                        </ShapeCredits>
+                      </ShapeCardHeader>
+                    </ShapeCard>
+                    <ShapeCard>
+                      <ShapeCardBody>
+                        <ShapeNameHeader>
+                          <ShapeName>
+                            Shape Name
+                          </ShapeName>
+                          <ShapeLikes>
+                            <LikeFilledIcon
+                              size="16px"
+                              color="var(--color-neutral-40)"
+                            />
+                            <ShapeLikesCount>
+                              {/* {shape.likes} */}
+                              25
+                            </ShapeLikesCount>
+                          </ShapeLikes>
+                        </ShapeNameHeader>
+                        {/* <Shape
+                          width="240px"
+                          height="240px"
+                          name={shape.name}
+                          id={getShapeId(shape.name)}
+                          formula={shape.formula}
+                          backgroundColor={shape.backgroundColor || "#eb3d86"}
+                          showShadow={shape.showAdvanced}
+                        /> */}
+                      </ShapeCardBody>
+                      <ShapeCardHeader>
+                        <ShapeCredits>
+                          {/* <ShapeCreditsThumb
+                            src={shape.photoURL}
+                            alt={shape.name1}
+                          /> */}
+                          <ShapeCreditsOwner>
+                            <ShapeCreditsOwnerName>
+                              {/* {shape.name1} */}
+                              Owner Name
+                            </ShapeCreditsOwnerName>
+                            <ShapeCreditsDate>
+                              {/* at{" "}
+                              {formatRelative(
+                                shape["__createdtime__"],
+                                new Date()
+                              )} */}
+                              at last Wednesday
+                            </ShapeCreditsDate>
+                          </ShapeCreditsOwner>
+                        </ShapeCredits>
+                      </ShapeCardHeader>
+                    </ShapeCard>
+                    <ShapeCard>
+                      <ShapeCardBody>
+                        <ShapeNameHeader>
+                          <ShapeName>
+                            Shape Name
+                          </ShapeName>
+                          <ShapeLikes>
+                            <LikeFilledIcon
+                              size="16px"
+                              color="var(--color-neutral-40)"
+                            />
+                            <ShapeLikesCount>
+                              {/* {shape.likes} */}
+                              25
+                            </ShapeLikesCount>
+                          </ShapeLikes>
+                        </ShapeNameHeader>
+                        {/* <Shape
+                          width="240px"
+                          height="240px"
+                          name={shape.name}
+                          id={getShapeId(shape.name)}
+                          formula={shape.formula}
+                          backgroundColor={shape.backgroundColor || "#eb3d86"}
+                          showShadow={shape.showAdvanced}
+                        /> */}
+                      </ShapeCardBody>
+                      <ShapeCardHeader>
+                        <ShapeCredits>
+                          {/* <ShapeCreditsThumb
+                            src={shape.photoURL}
+                            alt={shape.name1}
+                          /> */}
+                          <ShapeCreditsOwner>
+                            <ShapeCreditsOwnerName>
+                              {/* {shape.name1} */}
+                              Owner Name
+                            </ShapeCreditsOwnerName>
+                            <ShapeCreditsDate>
+                              {/* at{" "}
+                              {formatRelative(
+                                shape["__createdtime__"],
+                                new Date()
+                              )} */}
+                              at last Wednesday
+                            </ShapeCreditsDate>
+                          </ShapeCreditsOwner>
+                        </ShapeCredits>
+                      </ShapeCardHeader>
+                    </ShapeCard>
+                  </ShapeCardList>
+              </Container>
+            </SectionTrendingShapes>
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
