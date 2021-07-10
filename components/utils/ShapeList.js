@@ -249,6 +249,30 @@ const ShapeList = ({
   shapeAction,
   setShapeAction,
 }) => {
+  // Double Tab Shape
+  const [isDoubleTaped, setIsDoubleTaped] = useState({});
+
+  const bindShapesWithDoubleTab = (shapes) => {
+    const modifiedShapes = shapes.map((shape, index) => {
+      const bind = useDoubleTap((event) => {
+        setIsDoubleTaped({
+          ...isDoubleTaped, 
+          [shape.shape_id]: true,
+        });
+        setTimeout(() => {
+          setIsDoubleTaped({
+            ...isDoubleTaped, 
+            [shape.shape_id]: false,
+          });
+        }, 2000);
+        performLike(event, shape["shape_id"]);
+      });
+      shape['double-tap-bind'] = bind;
+      return shape;
+    });
+    return modifiedShapes;
+  }
+
   const filterShape = (shapes, searchTerm) => {
     if (!searchTerm) {
       return shapes;
@@ -261,7 +285,7 @@ const ShapeList = ({
   // All shapes
   const [shapes, setShapes] = useState(data);
   // filtered shapes as state
-  const [filteredShape, setFilteredShape] = useState(shapes);
+  const [filteredShape, setFilteredShape] = useState(bindShapesWithDoubleTab(shapes));
 
   // All about export shape states
   const [showExportModal, setShowExportModal] = useState(false);
@@ -278,10 +302,6 @@ const ShapeList = ({
   // All about editing private shapes
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [shapeToDelete, setShapeToDelete] = useState();
-
-  // Double Tab Shape
-  const [isDoubleTaped, setIsDoubleTaped] = useState(false);
-
 
   useEffect(() => {
     const copy = [...shapes];
@@ -497,22 +517,18 @@ const ShapeList = ({
             />
           ) : (
             filteredShape.map((shape, index) => {
-              /*const bind = useDoubleTap((event) => {
-                // Your action here
-                performLike(event, shape["shape_id"]);
-
-                // showing ui changes
-                //setIsDoubleTaped(true);
-                setTimeout(() => {
-                  setIsDoubleTaped(false);
-                }, 2000);
-              });*/
-
+              /*setTimeout(() => {
+                if (isDoubleTaped[shape.id]) {
+                  setIsDoubleTaped({
+                    [shape.id]: false
+                  });
+                }
+              }, 2000);*/
               return (
                 <React.Fragment key={index}>
-                  <ShapeCard>
+                  <ShapeCard {...shape['double-tap-bind']}>
                     <ShapeCardBody>
-                      {isDoubleTaped && (
+                      {isDoubleTaped[shape.shape_id] && (
                         <DoubleTapLike>
                           <div id="pop">
                             <LikeFilledIcon
