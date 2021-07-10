@@ -517,13 +517,6 @@ const ShapeList = ({
             />
           ) : (
             filteredShape.map((shape, index) => {
-              /*setTimeout(() => {
-                if (isDoubleTaped[shape.id]) {
-                  setIsDoubleTaped({
-                    [shape.id]: false
-                  });
-                }
-              }, 2000);*/
               return (
                 <React.Fragment key={index}>
                   <ShapeCard {...shape['double-tap-bind']}>
