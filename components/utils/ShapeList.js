@@ -279,6 +279,10 @@ const ShapeList = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [shapeToDelete, setShapeToDelete] = useState();
 
+  // Double Tab Shape
+  const [isDoubleTaped, setIsDoubleTaped] = useState(false);
+
+
   useEffect(() => {
     const copy = [...shapes];
     if (sort === "recent") {
@@ -493,22 +497,20 @@ const ShapeList = ({
             />
           ) : (
             filteredShape.map((shape, index) => {
-              const [isDoubleTaped, setIsDoubleTaped] = useState(false);
-
-              const bind = useDoubleTap((event) => {
+              /*const bind = useDoubleTap((event) => {
                 // Your action here
                 performLike(event, shape["shape_id"]);
 
                 // showing ui changes
-                setIsDoubleTaped(true);
+                //setIsDoubleTaped(true);
                 setTimeout(() => {
                   setIsDoubleTaped(false);
                 }, 2000);
-              });
+              });*/
 
               return (
                 <React.Fragment key={index}>
-                  <ShapeCard {...bind}>
+                  <ShapeCard>
                     <ShapeCardBody>
                       {isDoubleTaped && (
                         <DoubleTapLike>
