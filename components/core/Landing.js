@@ -577,6 +577,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                 <Navigation>
                   <a data-scroll href="#keyfeatures">Key Features</a>
                   <a data-scroll href="#filesupport">File Support</a>
+                  <a data-scroll href="#trendingShapes">Trending Shapes</a>
                   <a data-scroll href="#contact">Contact</a>
                 </Navigation>
                 <ActionBar>
@@ -695,10 +696,10 @@ const Landing = ({ setOpen, user, setUser }) => {
                   </FileSupportCards>
               </Container>
             </SectionFileTypes>
-            <SectionTrendingShapes>
+            <SectionTrendingShapes id="trendingShapes">
               <Container>
                 <SectionTitle>
-                    <h2 className="section-title text-center">Trending Shapes This Month</h2>
+                    <h2 className="section-title text-center">Trending Shapes</h2>
                   </SectionTitle>
                   <ShapeCardList>
                     <ShapeCard>
@@ -901,57 +902,14 @@ const Landing = ({ setOpen, user, setUser }) => {
                         </ShapeCredits>
                       </ShapeCardHeader>
                     </ShapeCard>
-                    <ShapeCard>
-                      <ShapeCardBody>
-                        <ShapeNameHeader>
-                          <ShapeName>
-                            Shape Name
-                          </ShapeName>
-                          <ShapeLikes>
-                            <LikeFilledIcon
-                              size="16px"
-                              color="var(--color-neutral-40)"
-                            />
-                            <ShapeLikesCount>
-                              {/* {shape.likes} */}
-                              25
-                            </ShapeLikesCount>
-                          </ShapeLikes>
-                        </ShapeNameHeader>
-                        {/* <Shape
-                          width="240px"
-                          height="240px"
-                          name={shape.name}
-                          id={getShapeId(shape.name)}
-                          formula={shape.formula}
-                          backgroundColor={shape.backgroundColor || "#eb3d86"}
-                          showShadow={shape.showAdvanced}
-                        /> */}
-                      </ShapeCardBody>
-                      <ShapeCardHeader>
-                        <ShapeCredits>
-                          {/* <ShapeCreditsThumb
-                            src={shape.photoURL}
-                            alt={shape.name1}
-                          /> */}
-                          <ShapeCreditsOwner>
-                            <ShapeCreditsOwnerName>
-                              {/* {shape.name1} */}
-                              Owner Name
-                            </ShapeCreditsOwnerName>
-                            <ShapeCreditsDate>
-                              {/* at{" "}
-                              {formatRelative(
-                                shape["__createdtime__"],
-                                new Date()
-                              )} */}
-                              at last Wednesday
-                            </ShapeCreditsDate>
-                          </ShapeCreditsOwner>
-                        </ShapeCredits>
-                      </ShapeCardHeader>
-                    </ShapeCard>
                   </ShapeCardList>
+                  <div className="d-flex justify-content-center mt-4">
+                    <Link href="/app">
+                        <Button variant="primary">
+                            <FiSearch />Browse Now
+                        </Button>
+                    </Link>
+                  </div>
               </Container>
             </SectionTrendingShapes>
             <SectionContact id="contact">
