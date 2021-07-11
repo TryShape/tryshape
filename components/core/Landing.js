@@ -620,8 +620,8 @@ const Landing = ({ setOpen, user, setUser }) => {
               </ShapeLikes>
             </ShapeNameHeader>
             <Shape
-              width="240px"
-              height="240px"
+              width="220px"
+              height="220px"
               name={shape.name}
               id={getShapeId(shape.name)}
               formula={shape.formula}
