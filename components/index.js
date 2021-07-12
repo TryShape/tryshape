@@ -16,3 +16,4 @@ export { default as ShapeForm } from "./utils/ShapeForm";
 export { default as ShapePreview } from "./utils/ShapePreview";
 export { default as DraggableVertice } from "./utils/DraggableVertice";
 export { default as NoShapeFound } from './utils/NoShapeFound';
+export { default as TrendingShapes } from "./utils/TrendingShapes";

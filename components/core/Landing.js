@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 
-// Header
-import { Header } from '..'
+// Trending Shapes
+import { TrendingShapes } from "..";
 
 // dynamic from Next.js
 import dynamic from "next/dynamic";
@@ -28,7 +28,6 @@ import { formatRelative } from "date-fns";
 import BannerBg from '../../public/images/bg-banner.png';
 import DottedBg from '../../public/images/bg-dotted.png';
 import AbstractBg1 from '../../public/images/bg-abstract-1.png';
-import AbstractBg2 from '../../public/images/bg-abstract-2.png';
 import ImgLogo from '../../public/images/img-logo.svg';
 import IconPngJpg from '../../public/images/icon-png-jpg.svg';
 import IconSvg from '../../public/images/icon-svg.svg';
@@ -281,34 +280,6 @@ const SectionContact = styled.section`
     background-color: var(--color-neutral-10);
 `;
 
-const SectionTrendingShapes = styled.section`
-    padding: 6rem 0;
-    background-color: rgba(var(--color-brand-rgb), 0.024);
-    background-image: url(${AbstractBg2});
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    @media (max-width: 1400px) {
-      background-size: contain;
-    }
-`;
-
-const ShapeCardList = styled.div`
-  padding: 2rem 0 2rem 0;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(220px, 1fr));
-  grid-gap: 2rem;
-
-  @media (max-width: 991px) {
-    grid-template-columns: repeat(2, minmax(300px, 1fr));
-  }
-
-  @media (max-width: 767px) {
-    grid-template-columns: repeat(1, 1fr);
-  }
-`;
-
 const ShapeCard = styled.div`
   position: relative;
   border-radius: 0.6rem;
@@ -364,10 +335,6 @@ const ShapeLikes = styled.div`
 const ShapeLikesCount = styled.div`
   font-size: var(--fs-sm);
   color: var(--color-neutral-60);
-`;
-
-const LikeIcon = styled(BsHeart)`
-  cursor: pointer;
 `;
 
 const LikeFilledIcon = styled(BsFillHeartFill)`
@@ -787,26 +754,9 @@ const Landing = ({ setOpen, user, setUser }) => {
                   </FileSupportCards>
               </Container>
             </SectionFileTypes>
-            <SectionTrendingShapes id="trendingShapes">
-              <Container>
-                <SectionTitle>
-                    <h2 className="section-title text-center">Trending Shapes</h2>
-                  </SectionTitle>
-                  <ShapeCardList>
-                    {loading ? null : 
-                      data
-                    }
-                  </ShapeCardList>
+            
+            <TrendingShapes user={user} />
 
-                  <div className="d-flex justify-content-center mt-4">
-                    <Link href="/app">
-                        <Button variant="primary">
-                            <FiSearch />Browse Now
-                        </Button>
-                    </Link>
-                  </div>
-              </Container>
-            </SectionTrendingShapes>
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>
