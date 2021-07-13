@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -11,18 +11,6 @@ import { TrendingShapes } from "..";
 
 // dynamic from Next.js
 import dynamic from "next/dynamic";
-
-// Clip-Path
-const Shape = dynamic(import("react-clip-path"), { ssr: false });
-
-// axios
-import axios from "axios";
-
-// misc unitless
-import { getShapeFileName, getShapeId } from "../../utils/misc";
-
-// date-fns
-import { formatRelative } from "date-fns";
 
 // Images
 import BannerBg from '../../public/images/bg-banner.png';
@@ -45,8 +33,6 @@ import {
   FiMail, 
   FiGithub, 
   FiYoutube } from "react-icons/fi";
-
-import { BsFillHeartFill, BsHeart } from "react-icons/bs";
 
 // link
 import Link from "next/link";
@@ -280,101 +266,6 @@ const SectionContact = styled.section`
     background-color: var(--color-neutral-10);
 `;
 
-const ShapeCard = styled.div`
-  position: relative;
-  border-radius: 0.6rem;
-  background-color: var(--color-neutral-10);
-  overflow: hidden;
-  box-shadow: 3px 10px 18px 0 rgb(111 118 138 / 6%);
-
-  &:hover {
-    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 26%);
-
-    .shape-actions {
-      opacity: 1;
-    }
-  }
-`;
-
-const ShapeCardBody = styled.div`
-  position: relative;
-  padding: 1rem 1.4rem;
-`;
-
-const ShapeCardHeader = styled.div`
-  margin: 0;
-  padding: 0 1.4rem 1.2rem 1.4rem;
-`;
-
-const ShapeName = styled.h2`
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  grid-gap: 0.3rem;
-  margin: 0 0 0.8rem 0;
-  font-weight: var(--fw-bold);
-  font-size: var(--fs-rg);
-  color: var(--color-neutral-100);
-`;
-
-const ShapeNameHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-`;
-
-const ShapeLikes = styled.div`
-  display: flex;
-  align-items: center;
-  height: 1.6rem;
-
-  svg {
-    margin-right: 0.3rem;
-  }
-`;
-
-const ShapeLikesCount = styled.div`
-  font-size: var(--fs-sm);
-  color: var(--color-neutral-60);
-`;
-
-const LikeFilledIcon = styled(BsFillHeartFill)`
-  cursor: pointer;
-`;
-
-const ShapeCredits = styled.div`
-  display: flex;
-  align-items: center;
-  border-top: solid 1px var(--color-neutral-20);
-  padding-top: 1rem;
-`;
-
-const ShapeCreditsOwner = styled.div`
-  display: flex;
-  flex-direction: column;
-  font-weight: var(--fs-md);
-`;
-
-const ShapeCreditsDate = styled.small`
-  margin-top: 0.3rem;
-  font-size: var(--fs-sm);
-  color: var(--color-neutral-60);
-  line-height: 1;
-`;
-
-const ShapeCreditsOwnerName = styled.div`
-  font-size: var(--fs-sm);
-  font-weight: var(--fw-semibold);
-  color: var(--color-neutral-60);
-  line-height: 1;
-`;
-
-const ShapeCreditsThumb = styled.img`
-  border-radius: 50%;
-  height: 32px;
-  width: 32px;
-  margin-right: 0.7rem;
-`;
-
 const SectionContactCredits = styled.p`
     margin: 1rem 0;
     color: var(--color-neutral-80);
@@ -547,83 +438,6 @@ const FileSupportCardItem = styled.div`
 `;
 
 const Landing = ({ setOpen, user, setUser }) => {
-    
-  const [data, setData] = useState([]); // shapes
-  const [loading, setLoading] = useState(true); // shapes loading
-
-  useEffect(async () => {
-    setData([]);
-    setLoading(true);
-    let shapes = [];
-
-    const response = await axios.get("/api/GET/shapes", {
-      params: {
-        type: 'private'
-      }
-    });
-
-    shapes = response.data; 
-    
-    let topFourShapes = [];
-
-    for (let i = 0; i < 4; i++) {
-      let shape = shapes[i];
-
-      topFourShapes.push(
-        <ShapeCard>
-          <ShapeCardBody>
-            <ShapeNameHeader>
-              <ShapeName>
-                {shape.name}
-              </ShapeName>
-              <ShapeLikes>
-                <LikeFilledIcon
-                  size="16px"
-                  color="var(--color-neutral-40)"
-                />
-                <ShapeLikesCount>
-                  {shape.likes}
-                </ShapeLikesCount>
-              </ShapeLikes>
-            </ShapeNameHeader>
-            <Shape
-              width="220px"
-              height="220px"
-              name={shape.name}
-              id={getShapeId(shape.name)}
-              formula={shape.formula}
-              backgroundColor={shape.backgroundColor || "#eb3d86"}
-              showShadow={shape.showAdvanced}
-            />
-          </ShapeCardBody>
-          <ShapeCardHeader>
-            <ShapeCredits>
-              <ShapeCreditsThumb
-                src={shape.photoURL}
-                alt={shape.name1}
-              />
-              <ShapeCreditsOwner>
-                <ShapeCreditsOwnerName>
-                  {shape.name1}
-                </ShapeCreditsOwnerName>
-                <ShapeCreditsDate>
-                  at{" "}
-                  {formatRelative(
-                    shape["__createdtime__"],
-                    new Date()
-                  )}
-                </ShapeCreditsDate>
-              </ShapeCreditsOwner>
-            </ShapeCredits>
-          </ShapeCardHeader>
-        </ShapeCard>
-      );
-    }
-
-    await setData(topFourShapes);
-    setLoading(false);
-  }, [user]);
-
     return(
         <div>
             <BannerHeader fixed="top" expand="md">
