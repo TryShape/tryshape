@@ -249,6 +249,30 @@ const ShapeList = ({
   shapeAction,
   setShapeAction,
 }) => {
+  // Double Tab Shape
+  const [isDoubleTaped, setIsDoubleTaped] = useState({});
+
+  const bindShapesWithDoubleTab = (shapes) => {
+    const modifiedShapes = shapes.map((shape, index) => {
+      const bind = useDoubleTap((event) => {
+        setIsDoubleTaped({
+          ...isDoubleTaped, 
+          [shape.shape_id]: true,
+        });
+        setTimeout(() => {
+          setIsDoubleTaped({
+            ...isDoubleTaped, 
+            [shape.shape_id]: false,
+          });
+        }, 2000);
+        performLike(event, shape["shape_id"]);
+      });
+      shape['double-tap-bind'] = bind;
+      return shape;
+    });
+    return modifiedShapes;
+  }
+
   const filterShape = (shapes, searchTerm) => {
     if (!searchTerm) {
       return shapes;
@@ -261,7 +285,7 @@ const ShapeList = ({
   // All shapes
   const [shapes, setShapes] = useState(data);
   // filtered shapes as state
-  const [filteredShape, setFilteredShape] = useState(shapes);
+  const [filteredShape, setFilteredShape] = useState(bindShapesWithDoubleTab(shapes));
 
   // All about export shape states
   const [showExportModal, setShowExportModal] = useState(false);
@@ -493,24 +517,11 @@ const ShapeList = ({
             />
           ) : (
             filteredShape.map((shape, index) => {
-              const [isDoubleTaped, setIsDoubleTaped] = useState(false);
-
-              const bind = useDoubleTap((event) => {
-                // Your action here
-                performLike(event, shape["shape_id"]);
-
-                // showing ui changes
-                setIsDoubleTaped(true);
-                setTimeout(() => {
-                  setIsDoubleTaped(false);
-                }, 2000);
-              });
-
               return (
                 <React.Fragment key={index}>
-                  <ShapeCard {...bind}>
+                  <ShapeCard {...shape['double-tap-bind']}>
                     <ShapeCardBody>
-                      {isDoubleTaped && (
+                      {isDoubleTaped[shape.shape_id] && (
                         <DoubleTapLike>
                           <div id="pop">
                             <LikeFilledIcon
