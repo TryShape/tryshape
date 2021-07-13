@@ -1,6 +1,6 @@
 
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <p align="center">
     <a href="https://tryshape.vercel.app/" target="_blank">
@@ -231,6 +231,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://github.com/nirmalkc"><img src="https://avatars.githubusercontent.com/u/6359059?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nirmal Kumar</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=nirmalkc" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=nirmalkc" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/williamzhu17"><img src="https://avatars.githubusercontent.com/u/77871333?v=4?s=100" width="100px;" alt=""/><br /><sub><b>William Zhu</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=williamzhu17" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=williamzhu17" title="Code">💻</a></td>
     <td align="center"><a href="https://savio.xyz/"><img src="https://avatars.githubusercontent.com/u/61895712?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Savio Martin</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/commits?author=saviomartin" title="Tests">⚠️</a> <a href="https://github.com/TryShape/tryshape/commits?author=saviomartin" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.sangamone.com"><img src="https://avatars.githubusercontent.com/u/7517545?v=4?s=100" width="100px;" alt=""/><br /><sub><b>ckuthyar</b></sub></a><br /><a href="https://github.com/TryShape/tryshape/issues?q=author%3Ackuthyar" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
