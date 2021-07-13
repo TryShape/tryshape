@@ -458,7 +458,7 @@ const Landing = ({ setOpen, user, setUser }) => {
       });
 
       let data = response.data;
-      let topFourShapes = data.slice(0, 8);
+      let topFourShapes = data.slice(0, 4);
       setShapeData(topFourShapes);
       setLoaded(true);
     }, []);
