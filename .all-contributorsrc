@@ -45,6 +45,15 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "ckuthyar",
+      "name": "ckuthyar",
+      "avatar_url": "https://avatars.githubusercontent.com/u/7517545?v=4",
+      "profile": "http://www.sangamone.com",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
