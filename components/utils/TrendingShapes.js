@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
@@ -16,12 +16,6 @@ import dynamic from "next/dynamic";
 
 // Clip-Path
 const Shape = dynamic(import("react-clip-path"), { ssr: false });
-
-// axios
-import axios from "axios";
-
-// loader
-import Loader from "react-loader-spinner";
 
 // misc unitless
 import { getShapeFileName, getShapeId } from "../../utils/misc";
@@ -163,26 +157,7 @@ const ShapeCreditsDate = styled.small`
   line-height: 1;
 `;
 
-const TrendingShapes = () => {
-  // shapes
-  const [shapeData, setShapeData] = useState([]);
-
-  // shapes loading
-  const [loading, setLoading] = useState(true);
-
-  useEffect(async () => {
-    const response = await axios.get("/api/GET/shapes", {
-      params: {
-        type: "public",
-      },
-    });
-
-    let data = response.data;
-    let topFourShapes = data.slice(0, 8);
-    setShapeData(topFourShapes);
-    setLoading(false);
-  }, []);
-
+const TrendingShapes = ({ shapeData }) => {
   return (
     <>
       <SectionTrendingShapes id="trendingShapes">
@@ -191,61 +166,45 @@ const TrendingShapes = () => {
             <h2 className="section-title text-center">Trending Shapes</h2>
           </SectionTitle>
           <ShapeCardList>
-            {loading
-              ? (<Loader
-                  style={{transform: 'translate(-50%, -50%)'}}
-                  type="Circles"
-                  color="rgba(var(--color-brand-rgb), 0.6)"
-                  height={200}
-                  width={200}
-                />)
-              : (
-                shapeData.map((shape, index) => (
-                  <ShapeCard key={index}>
-                    <ShapeCardBody>
-                      <ShapeNameHeader>
-                        <ShapeName>{shape.name}</ShapeName>
-                        <ShapeLikes>
-                          <LikeFilledIcon
-                            size="16px"
-                            color="var(--color-neutral-40)"
-                          />
-                          <ShapeLikesCount>{shape.likes}</ShapeLikesCount>
-                        </ShapeLikes>
-                      </ShapeNameHeader>
-                      <Shape
-                        width="200px"
-                        height="200px"
-                        name={shape.name}
-                        id={getShapeId(shape.name)}
-                        formula={shape.formula}
-                        backgroundColor={shape.backgroundColor || "#eb3d86"}
-                        showShadow={shape.showAdvanced}
+            {shapeData.map((shape, index) => (
+              <ShapeCard key={index}>
+                <ShapeCardBody>
+                  <ShapeNameHeader>
+                    <ShapeName>{shape.name}</ShapeName>
+                    <ShapeLikes>
+                      <LikeFilledIcon
+                        size="16px"
+                        color="var(--color-neutral-40)"
                       />
-                    </ShapeCardBody>
-                    <ShapeCardHeader>
-                      <ShapeCredits>
-                        <ShapeCreditsThumb
-                          src={shape.photoURL}
-                          alt={shape.name1}
-                        />
-                        <ShapeCreditsOwner>
-                          <ShapeCreditsOwnerName>
-                            {shape.name1}
-                          </ShapeCreditsOwnerName>
-                          <ShapeCreditsDate>
-                            at{" "}
-                            {formatRelative(
-                              shape["__createdtime__"],
-                              new Date()
-                            )}
-                          </ShapeCreditsDate>
-                        </ShapeCreditsOwner>
-                      </ShapeCredits>
-                    </ShapeCardHeader>
-                  </ShapeCard>
-                ))
-                )}
+                      <ShapeLikesCount>{shape.likes}</ShapeLikesCount>
+                    </ShapeLikes>
+                  </ShapeNameHeader>
+                  <Shape
+                    width="200px"
+                    height="200px"
+                    name={shape.name}
+                    id={getShapeId(shape.name)}
+                    formula={shape.formula}
+                    backgroundColor={shape.backgroundColor || "#eb3d86"}
+                    showShadow={shape.showAdvanced}
+                  />
+                </ShapeCardBody>
+                <ShapeCardHeader>
+                  <ShapeCredits>
+                    <ShapeCreditsThumb src={shape.photoURL} alt={shape.name1} />
+                    <ShapeCreditsOwner>
+                      <ShapeCreditsOwnerName>
+                        {shape.name1}
+                      </ShapeCreditsOwnerName>
+                      <ShapeCreditsDate>
+                        at{" "}
+                        {formatRelative(shape["__createdtime__"], new Date())}
+                      </ShapeCreditsDate>
+                    </ShapeCreditsOwner>
+                  </ShapeCredits>
+                </ShapeCardHeader>
+              </ShapeCard>
+            ))}
           </ShapeCardList>
 
           <div className="d-flex justify-content-center mt-4">

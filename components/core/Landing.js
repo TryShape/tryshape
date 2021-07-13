@@ -1,10 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
+
+// axios
+import axios from "axios";
+
+// loader
+import Loader from "react-loader-spinner";
 
 // Trending Shapes
 import { TrendingShapes } from "..";
@@ -438,6 +444,25 @@ const FileSupportCardItem = styled.div`
 `;
 
 const Landing = ({ setOpen, user, setUser }) => {
+    // shapes
+    const [shapeData, setShapeData] = useState([]);
+
+    // shapes loading
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(async () => {
+      const response = await axios.get("/api/GET/shapes", {
+        params: {
+          type: "public",
+        },
+      });
+
+      let data = response.data;
+      let topFourShapes = data.slice(0, 8);
+      setShapeData(topFourShapes);
+      setLoaded(true);
+    }, []);
+
     return(
         <div>
             <BannerHeader fixed="top" expand="md">
@@ -449,7 +474,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                 <Navigation>
                   <a data-scroll href="#keyfeatures">Key Features</a>
                   <a data-scroll href="#filesupport">File Support</a>
-                  <a data-scroll href="#trendingShapes">Trending Shapes</a>
+                  {shapeData.length > 0 && <a data-scroll href="#trendingShapes">Trending Shapes</a>}
                   <a data-scroll href="#contact">Contact</a>
                 </Navigation>
                 <ActionBar>
@@ -569,7 +594,17 @@ const Landing = ({ setOpen, user, setUser }) => {
               </Container>
             </SectionFileTypes>
             
-            <TrendingShapes />
+            { 
+              loaded 
+                ? (shapeData.length > 0 && <TrendingShapes shapeData= { shapeData }/>) 
+                : (<Loader
+                  style={{transform: 'translate(-50%, -50%)'}}
+                  type="Circles"
+                  color="rgba(var(--color-brand-rgb), 0.6)"
+                  height={200}
+                  width={200}
+                  />)
+            }
 
             <SectionContact id="contact">
               <Container>
