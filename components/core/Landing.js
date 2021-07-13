@@ -569,7 +569,7 @@ const Landing = ({ setOpen, user, setUser }) => {
               </Container>
             </SectionFileTypes>
             
-            <TrendingShapes user={user} />
+            <TrendingShapes />
 
             <SectionContact id="contact">
               <Container>

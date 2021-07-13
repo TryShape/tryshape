@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 
-import Container from 'react-bootstrap/Container';
-import Button from 'react-bootstrap/Button';
+import Container from "react-bootstrap/Container";
+import Button from "react-bootstrap/Button";
 
 // icon
 import { FiSearch } from "react-icons/fi";
@@ -20,6 +20,9 @@ const Shape = dynamic(import("react-clip-path"), { ssr: false });
 // axios
 import axios from "axios";
 
+// loader
+import Loader from "react-loader-spinner";
+
 // misc unitless
 import { getShapeFileName, getShapeId } from "../../utils/misc";
 
@@ -30,24 +33,24 @@ import { formatRelative } from "date-fns";
 import styled from "styled-components";
 
 // images
-import AbstractBg2 from '../../public/images/bg-abstract-2.png';
+import AbstractBg2 from "../../public/images/bg-abstract-2.png";
 
 const SectionTrendingShapes = styled.section`
-    padding: 6rem 0;
-    background-color: rgba(var(--color-brand-rgb), 0.024);
-    background-image: url(${AbstractBg2});
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  padding: 6rem 0;
+  background-color: rgba(var(--color-brand-rgb), 0.024);
+  background-image: url(${AbstractBg2});
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
 
-    @media (max-width: 1400px) {
-      background-size: contain;
-    }
+  @media (max-width: 1400px) {
+    background-size: contain;
+  }
 `;
 
 const SectionTitle = styled.div`
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
 `;
 
 const ShapeCardList = styled.div`
@@ -160,111 +163,103 @@ const ShapeCreditsDate = styled.small`
   line-height: 1;
 `;
 
-const TrendingShapes = ({ user }) => {
+const TrendingShapes = () => {
+  // shapes
+  const [shapeData, setShapeData] = useState([]);
 
-    // shapes
-    const [shapeData, setShapeData] = useState([]);
-    
-    // shapes loading
-    const [loading, setLoading] = useState(true);
+  // shapes loading
+  const [loading, setLoading] = useState(true);
 
-    useEffect(async () => {
-        setShapeData([]);
-        setLoading(true);
-        let shapes = [];
+  useEffect(async () => {
+    const response = await axios.get("/api/GET/shapes", {
+      params: {
+        type: "private",
+      },
+    });
 
-        const response = await axios.get("/api/GET/shapes", {
-            params: {
-            type: 'private'
-            }
-        });
+    let data = response.data;
+    let topFourShapes = data.slice(0, 4);
+    setShapeData(topFourShapes);
+    setLoading(false);
+  }, []);
 
-        shapes = response.data; 
+  return (
+    <>
+      <SectionTrendingShapes id="trendingShapes">
+        <Container>
+          <SectionTitle>
+            <h2 className="section-title text-center">Trending Shapes</h2>
+          </SectionTitle>
+          <ShapeCardList>
+            {loading
+              ? (<Loader
+                  style={{transform: 'translate(-50%, -50%)'}}
+                  type="Circles"
+                  color="rgba(var(--color-brand-rgb), 0.6)"
+                  height={200}
+                  width={200}
+                />)
+              : (
+                shapeData.map((shape, index) => (
+                  <ShapeCard key={index}>
+                    <ShapeCardBody>
+                      <ShapeNameHeader>
+                        <ShapeName>{shape.name}</ShapeName>
+                        <ShapeLikes>
+                          <LikeFilledIcon
+                            size="16px"
+                            color="var(--color-neutral-40)"
+                          />
+                          <ShapeLikesCount>{shape.likes}</ShapeLikesCount>
+                        </ShapeLikes>
+                      </ShapeNameHeader>
+                      <Shape
+                        width="200px"
+                        height="200px"
+                        name={shape.name}
+                        id={getShapeId(shape.name)}
+                        formula={shape.formula}
+                        backgroundColor={shape.backgroundColor || "#eb3d86"}
+                        showShadow={shape.showAdvanced}
+                      />
+                    </ShapeCardBody>
+                    <ShapeCardHeader>
+                      <ShapeCredits>
+                        <ShapeCreditsThumb
+                          src={shape.photoURL}
+                          alt={shape.name1}
+                        />
+                        <ShapeCreditsOwner>
+                          <ShapeCreditsOwnerName>
+                            {shape.name1}
+                          </ShapeCreditsOwnerName>
+                          <ShapeCreditsDate>
+                            at{" "}
+                            {formatRelative(
+                              shape["__createdtime__"],
+                              new Date()
+                            )}
+                          </ShapeCreditsDate>
+                        </ShapeCreditsOwner>
+                      </ShapeCredits>
+                    </ShapeCardHeader>
+                  </ShapeCard>
+                ))
+                )}
+          </ShapeCardList>
 
-        let topFourShapes = [];
-
-        for (let i = 0; i < 4; i++) {
-            let shape = shapes[i];
-
-            topFourShapes.push(
-            <ShapeCard>
-                <ShapeCardBody>
-                <ShapeNameHeader>
-                    <ShapeName>
-                    {shape.name}
-                    </ShapeName>
-                    <ShapeLikes>
-                    <LikeFilledIcon
-                        size="16px"
-                        color="var(--color-neutral-40)"
-                    />
-                    <ShapeLikesCount>
-                        {shape.likes}
-                    </ShapeLikesCount>
-                    </ShapeLikes>
-                </ShapeNameHeader>
-                <Shape
-                    width="220px"
-                    height="220px"
-                    name={shape.name}
-                    id={getShapeId(shape.name)}
-                    formula={shape.formula}
-                    backgroundColor={shape.backgroundColor || "#eb3d86"}
-                    showShadow={shape.showAdvanced}
-                />
-                </ShapeCardBody>
-                <ShapeCardHeader>
-                <ShapeCredits>
-                    <ShapeCreditsThumb
-                    src={shape.photoURL}
-                    alt={shape.name1}
-                    />
-                    <ShapeCreditsOwner>
-                    <ShapeCreditsOwnerName>
-                        {shape.name1}
-                    </ShapeCreditsOwnerName>
-                    <ShapeCreditsDate>
-                        at{" "}
-                        {formatRelative(
-                        shape["__createdtime__"],
-                        new Date()
-                        )}
-                    </ShapeCreditsDate>
-                    </ShapeCreditsOwner>
-                </ShapeCredits>
-                </ShapeCardHeader>
-            </ShapeCard>
-            );
-        }
-
-        await setShapeData(topFourShapes);
-        setLoading(false);
-    }, [user]);
-
-    return(
-        <>
-        <SectionTrendingShapes id="trendingShapes">
-            <Container>
-                <SectionTitle>
-                    <h2 className="section-title text-center">Trending Shapes</h2>
-                </SectionTitle>
-                <ShapeCardList>
-                    {loading ? null : 
-                        shapeData
-                    }
-                </ShapeCardList>
-
-                <div className="d-flex justify-content-center mt-4">
-                    <Link href="/app">
-                        <Button variant="primary">
-                            <FiSearch />Browse Now
-                        </Button>
-                    </Link>
-                </div>
-            </Container>
-        </SectionTrendingShapes>
-        </>
-    );
-}
+          <div className="d-flex justify-content-center mt-4">
+            <Link href="/app">
+              <Button variant="primary">
+                <FiSearch />
+                Browse Now
+              </Button>
+            </Link>
+          </div>
+        </Container>
+      </SectionTrendingShapes>
+    </>
+  );
+};
 
 export default TrendingShapes;
