@@ -173,12 +173,12 @@ const TrendingShapes = () => {
   useEffect(async () => {
     const response = await axios.get("/api/GET/shapes", {
       params: {
-        type: "private",
+        type: "public",
       },
     });
 
     let data = response.data;
-    let topFourShapes = data.slice(0, 4);
+    let topFourShapes = data.slice(0, 8);
     setShapeData(topFourShapes);
     setLoading(false);
   }, []);
