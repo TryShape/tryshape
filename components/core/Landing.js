@@ -466,7 +466,11 @@ const Landing = ({ setOpen, user, setUser }) => {
     return(
         <div>
             <BannerHeader fixed="top" expand="md">
-              <Navbar.Brand><Logo><span className="sr-only">TryShape</span></Logo></Navbar.Brand>
+              <Navbar.Brand>
+                <Link href="/">
+                  <Logo><span className="sr-only">TryShape</span></Logo>
+                </Link>
+              </Navbar.Brand>
               <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
               </Navbar.Toggle>
@@ -596,14 +600,18 @@ const Landing = ({ setOpen, user, setUser }) => {
             
             { 
               loaded 
-                ? (shapeData.length > 0 && <TrendingShapes shapeData= { shapeData }/>) 
-                : (<Loader
-                  style={{transform: 'translate(-50%, -50%)'}}
-                  type="Circles"
-                  color="rgba(var(--color-brand-rgb), 0.6)"
-                  height={200}
-                  width={200}
-                  />)
+                ? (
+                    shapeData.length > 0 && <TrendingShapes shapeData= { shapeData }/>
+                  ) 
+                : (
+                    <Loader
+                      style={{transform: 'translate(-50%, -50%)'}}
+                      type="Circles"
+                      color="rgba(var(--color-brand-rgb), 0.6)"
+                      height={200}
+                      width={200}
+                    />
+                  )
             }
 
             <SectionContact id="contact">

@@ -1,11 +1,11 @@
 import React from "react";
 
+// bootstrap
 import Container from "react-bootstrap/Container";
 import Button from "react-bootstrap/Button";
 
 // icon
 import { FiSearch } from "react-icons/fi";
-
 import { BsFillHeartFill, BsHeart } from "react-icons/bs";
 
 // link
