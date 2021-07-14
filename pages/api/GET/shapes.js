@@ -6,10 +6,14 @@ export default async function handler(req, res) {
         sql = `SELECT * 
             FROM tryshape.shapes s 
             INNER JOIN tryshape.users u ON s.createdBy=u.email 
-            WHERE s.private=false 
+            WHERE s.private=true 
             ORDER BY s.likes DESC`;
     } else if(type === 'public') {
-        sql = `SELECT * FROM tryshape.shapes`;
+        sql = `SELECT * 
+            FROM tryshape.shapes s 
+            INNER JOIN tryshape.users u ON s.createdBy=u.email 
+            WHERE s.private=false 
+            ORDER BY s.likes DESC`;
     } else if(type === 'public-logged-in') {
         sql = `SELECT *
             FROM tryshape.shapes s
@@ -18,6 +22,9 @@ export default async function handler(req, res) {
             WHERE s.private=false 
             OR createdBy = '${email}'
             ORDER BY s.likes DESC`;
+    } else if(type === 'all') {
+      sql = `SELECT * 
+            FROM tryshape.shapes`;
     }
 
     const request = await fetch(process.env.NEXT_PUBLIC_DB_URL, {

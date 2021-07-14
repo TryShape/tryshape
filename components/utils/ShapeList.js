@@ -181,21 +181,6 @@ const ShapeCreditsThumb = styled.img`
   margin-right: 0.7rem;
 `;
 
-const Playground = styled.div`
-  width: 100%;
-`;
-
-const ShapeDetails = styled.ul`
-  background-color: #ebebeb;
-  border-radius: 4px;
-  padding: 10px;
-  width: 100%;
-`;
-
-const ShapeDetailsItems = styled.li`
-  word-wrap: break-word;
-`;
-
 const ShapeCardsContainer = styled.div`
   background-color: var(--color-neutral-20);
 `;
@@ -208,11 +193,6 @@ const ShapeCardBody = styled.div`
 const ShapeCardHeader = styled.div`
   margin: 0;
   padding: 0 1.4rem 1.2rem 1.4rem;
-`;
-
-const ShapeCardSwitch = styled.div`
-  display: none;
-  margin: 5px auto auto 9px;
 `;
 
 const DoubleTapLike = styled.div`

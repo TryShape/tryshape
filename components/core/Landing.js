@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -6,11 +6,22 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Navbar from 'react-bootstrap/Navbar';
 
-// Header
-import { Header } from '..'
+// axios
+import axios from "axios";
+
+// loader
+import Loader from "react-loader-spinner";
+
+// Trending Shapes
+import { TrendingShapes } from "..";
+
+// dynamic from Next.js
+import dynamic from "next/dynamic";
 
 // Images
 import BannerBg from '../../public/images/bg-banner.png';
+import DottedBg from '../../public/images/bg-dotted.png';
+import AbstractBg1 from '../../public/images/bg-abstract-1.png';
 import ImgLogo from '../../public/images/img-logo.svg';
 import IconPngJpg from '../../public/images/icon-png-jpg.svg';
 import IconSvg from '../../public/images/icon-svg.svg';
@@ -45,7 +56,6 @@ const LandingBanner = styled.section`
     background-color: var(--color-brand);
     background: rgb(93,33,210);
     background: linear-gradient(180deg, rgba(93,33,210,1) 0%, rgba(175,33,210,1) 100%);
-    // background-image: url(${BannerBg});
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -234,6 +244,14 @@ const ActionBar = styled.div`
 
 const SectionAbout = styled.section`
     padding: 6rem 0;
+    background-image: url(${AbstractBg1});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    @media (max-width: 1400px) {
+      background-size: contain;
+    }
 `;
 
 const SectionTitle = styled.div`
@@ -242,9 +260,11 @@ const SectionTitle = styled.div`
 `;
 
 const SectionFileTypes = styled.section`
-    padding: 6rem 0;
-    // background-color: var(--color-neutral-20);
-    background-color: rgba(var(--color-brand-rgb), 0.024);
+    padding: 6rem 0 8rem 0;
+    background-image: url(${DottedBg});
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
 `;
 
 const SectionContact = styled.section`
@@ -383,7 +403,7 @@ const FileSupportCardItem = styled.div`
     background: var(--color-neutral-10);
     border-radius: 1rem;
     padding: 3.2rem 2.8rem;
-    box-shadow: 3px 33px 81px 0 rgb(111 118 138 / 16%);
+    box-shadow: 3px 33px 81px 0 rgb(180 180 200 / 26%);
 
 
     .card-icon {
@@ -424,11 +444,33 @@ const FileSupportCardItem = styled.div`
 `;
 
 const Landing = ({ setOpen, user, setUser }) => {
-    
+    // shapes
+    const [shapeData, setShapeData] = useState([]);
+
+    // shapes loading
+    const [loaded, setLoaded] = useState(false);
+
+    useEffect(async () => {
+      const response = await axios.get("/api/GET/shapes", {
+        params: {
+          type: "public",
+        },
+      });
+
+      let data = response.data;
+      let topFourShapes = data.slice(0, 4);
+      setShapeData(topFourShapes);
+      setLoaded(true);
+    }, []);
+
     return(
         <div>
             <BannerHeader fixed="top" expand="md">
-              <Navbar.Brand><Logo><span className="sr-only">TryShape</span></Logo></Navbar.Brand>
+              <Navbar.Brand>
+                <Link href="/">
+                  <Logo><span className="sr-only">TryShape</span></Logo>
+                </Link>
+              </Navbar.Brand>
               <Navbar.Toggle>
                   <FiMenu color="var(--color-neutral-10" size="24px"/>
               </Navbar.Toggle>
@@ -436,6 +478,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                 <Navigation>
                   <a data-scroll href="#keyfeatures">Key Features</a>
                   <a data-scroll href="#filesupport">File Support</a>
+                  {shapeData.length > 0 && <a data-scroll href="#trendingShapes">Trending Shapes</a>}
                   <a data-scroll href="#contact">Contact</a>
                 </Navigation>
                 <ActionBar>
@@ -554,6 +597,23 @@ const Landing = ({ setOpen, user, setUser }) => {
                   </FileSupportCards>
               </Container>
             </SectionFileTypes>
+            
+            { 
+              loaded 
+                ? (
+                    shapeData.length > 0 && <TrendingShapes shapeData= { shapeData }/>
+                  ) 
+                : (
+                    <Loader
+                      style={{transform: 'translate(-50%, -50%)'}}
+                      type="Circles"
+                      color="rgba(var(--color-brand-rgb), 0.6)"
+                      height={200}
+                      width={200}
+                    />
+                  )
+            }
+
             <SectionContact id="contact">
               <Container>
                 <SocialLinks>

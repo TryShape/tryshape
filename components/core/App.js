@@ -35,7 +35,7 @@ const App = (props) => {
       // User is not logged In. Fetch all the public shapes 
       const response = await axios.get("/api/GET/shapes", {
         params: {
-          type: 'private'
+          type: 'public'
         }
       });
       shapes = response.data;

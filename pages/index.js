@@ -6,11 +6,7 @@ const index = (props) => {
   console.log(user);
   return (
     <main>
-      { 
-        user.length === 0 ? 
-          (<Landing {...props} />) : 
-          (<App {...props} />) 
-      }
+      <Landing {...props} />
     </main>
   );
 };
