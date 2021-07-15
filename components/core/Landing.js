@@ -38,7 +38,8 @@ import {
   FiSearch, 
   FiMail, 
   FiGithub, 
-  FiYoutube } from "react-icons/fi";
+  FiYoutube,
+  FiStar } from "react-icons/fi";
 
 // link
 import Link from "next/link";
@@ -516,11 +517,11 @@ const Landing = ({ setOpen, user, setUser }) => {
                         <BannerBodyActions>
                           <Link href="/app" ><Button variant="primary"><FiPenTool/>Try Now</Button></Link>
                           <a 
-                            href="https://github.com/TryShape" 
+                            href="https://github.com/TryShape/tryshape" 
                             target="_blank" 
                             className="btn btn-outline-secondary" 
                             rel="noopener noreferrer">
-                            <FiGithub style={{marginRight: '0.25rem'}} /> GitHub Stars <span>{githubStars}</span>
+                            <FiGithub style={{marginRight: '0.25rem'}} /> GitHub | <FiStar style={{margin: '-5px 0.2rem 0 0'}}/><span>{githubStars}</span>
                           </a>
                         </BannerBodyActions>
                       </Col>
