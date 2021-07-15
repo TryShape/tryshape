@@ -450,7 +450,11 @@ const Landing = ({ setOpen, user, setUser }) => {
     // shapes loading
     const [loaded, setLoaded] = useState(false);
 
+    // github star count
+    const [githubStars, setGithubStars] = useState(0);
+
     useEffect(async () => {
+      fetchGithubStarCount();
       const response = await axios.get("/api/GET/shapes", {
         params: {
           type: "public",
@@ -462,6 +466,14 @@ const Landing = ({ setOpen, user, setUser }) => {
       setShapeData(topFourShapes);
       setLoaded(true);
     }, []);
+
+    const fetchGithubStarCount = async () => {
+      const response = await axios.get("https://api.github.com/repos/TryShape/tryshape");
+      const { stargazers_count } = response.data;
+      console.log(stargazers_count);
+      setGithubStars(stargazers_count);
+    };
+
 
     return(
         <div>
@@ -503,7 +515,13 @@ const Landing = ({ setOpen, user, setUser }) => {
                         </p>
                         <BannerBodyActions>
                           <Link href="/app" ><Button variant="primary"><FiPenTool/>Try Now</Button></Link>
-                          <a href="https://github.com/TryShape" target="_blank" className="btn btn-outline-secondary" rel="noopener noreferrer"><FiGithub />GitHub</a>
+                          <a 
+                            href="https://github.com/TryShape" 
+                            target="_blank" 
+                            className="btn btn-outline-secondary" 
+                            rel="noopener noreferrer">
+                            <FiGithub style={{marginRight: '0.25rem'}} /> GitHub Stars <span>{githubStars}</span>
+                          </a>
                         </BannerBodyActions>
                       </Col>
                     </Row>
