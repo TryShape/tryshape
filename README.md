@@ -58,6 +58,10 @@ Here is a quick demo of the app. We hope you enjoy it.
 
 Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stronger.
 
+### Many Thanks to all the `Stargazers` who has supported this project with stars(⭐)
+
+[![Stargazers repo roster for @TryShape/tryshape](https://reporoster.com/stars/TryShape/tryshape)](https://github.com/TryShape/tryshape/stargazers)
+
 # 💻 Use TryShape
 Please access TryShape using the URL:
 
