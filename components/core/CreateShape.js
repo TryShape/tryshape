@@ -369,14 +369,19 @@ const CreateShape = (props) => {
                     "x": coordinateValue[0], 
                     "y": coordinateValue[1], 
                 }
-            ]
+            ];
+        }
 
+        if (clipPathType === "circle") {
             newWidth = formula.slice(formula.indexOf("(") + 1, formula.indexOf(" at")); 
-
         }
 
         if (clipPathType === "ellipse") {
+
+
             let formulaValues = formula.split("%"); 
+
+            newWidth = formulaValues[0].slice(formulaValues[0].indexOf("(") + 1) + "%";
 
             newHeight = formulaValues[1].trim() + "%";
         }
