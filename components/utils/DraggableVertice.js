@@ -129,18 +129,23 @@ const DraggableVertice = (props) => {
                             />
                     </Draggable>
 
-                    <Overlay target={target.current} 
-                        show={showClose} 
-                        placement={x > 250 ? "left" : "right"}>
-                        <Tooltip>
-                        <FiDelete
-                            size="24px"
-                            id={"deleteButton" + props.number}
-                            onMouseUp={handleDelete}
-                            style={{ cursor: "pointer" }}
-                            />
-                        </Tooltip>
-                    </Overlay>
+                    {props.clipPathType === "polygon" ?
+                        <Overlay target={target.current} 
+                            show={showClose} 
+                            placement={x > 250 ? "left" : "right"}>
+                            <Tooltip>
+                            <FiDelete
+                                size="24px"
+                                id={"deleteButton" + props.number}
+                                onMouseUp={handleDelete}
+                                style={{ cursor: "pointer" }}
+                                />
+                            </Tooltip>
+                        </Overlay>
+                        : null
+                    }
+
+                    
                 </> : null
             }
         </>

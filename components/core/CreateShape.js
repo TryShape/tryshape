@@ -46,7 +46,9 @@ const CreateShape = (props) => {
                 "x": "10%", 
                 "y": "80%", 
             }, 
-        ]
+        ], 
+        "width" : "0%", 
+        "height" : "0%", 
     }
 
     // shapeInformation holds all information about the shape
@@ -90,12 +92,12 @@ const CreateShape = (props) => {
         
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
-
-        // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
+        
+        // Handles name changes
         if (name === "name") {
             setShapeInformation({
-            ...shapeInformation, 
-            "name": value, 
+                ...shapeInformation, 
+                "name": value, 
             });
             return;
         }
@@ -156,6 +158,14 @@ const CreateShape = (props) => {
                     ...shapeInformation, 
                     "type": "circle", 
                     "formula": "circle(50% at 50% 50%)",
+                    "verticeCoordinates" : [
+                        {
+                            "x": "50%", 
+                            "y": "50%", 
+                        }
+                    ], 
+                    "width" : "50%", 
+                    "height" : "50%", 
                 });
             }
 
@@ -164,6 +174,14 @@ const CreateShape = (props) => {
                     ...shapeInformation, 
                     "type": "ellipse", 
                     "formula": "ellipse(25% 40% at 50% 50%)",
+                    "verticeCoordinates" : [
+                        {
+                            "x": "50%", 
+                            "y": "50%", 
+                        }
+                    ], 
+                    "width" : "25%", 
+                    "height" : "40%", 
                 });
             }
 
@@ -350,11 +368,27 @@ const CreateShape = (props) => {
             return newFormula + ")";
         }
 
-        for (let i = 0; i < newVerticeCoordinates.length; i++) {
-            let newX = newVerticeCoordinates[i].x; 
-            let newY = newVerticeCoordinates[i].y;
+        if (shapeInformation.clipPathType === "polygon") {
+            for (let i = 0; i < newVerticeCoordinates.length; i++) {
+                let newX = newVerticeCoordinates[i].x; 
+                let newY = newVerticeCoordinates[i].y;
+    
+                i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
+            }
+        }
 
-            i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
+        if (shapeInformation.clipPathType === "circle") {
+            let newX = newVerticeCoordinates[0].x; 
+            let newY = newVerticeCoordinates[0].y;
+
+            newFormula = newFormula + shapeInformation.width + " at " + newX + " " + newY + ")";
+        }
+
+        if (shapeInformation.clipPathType === "ellipse") {
+            let newX = newVerticeCoordinates[0].x; 
+            let newY = newVerticeCoordinates[0].y;
+
+            newFormula = newFormula + shapeInformation.width + " " + shapeInformation.height + " at " + newX + " " + newY + ")";
         }
 
         return newFormula;

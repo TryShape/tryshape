@@ -53,7 +53,7 @@ const ShapePreview = (props) => {
     useEffect(() => {
         const array = []; 
     
-        for (let i = 0; i < props.shapeInformation.vertices; i++) {
+        for (let i = 0; i < props.shapeInformation.verticeCoordinates.length; i++) {
 
             if (props.shapeInformation.verticeCoordinates[i] === undefined) {
                 return;
@@ -68,6 +68,7 @@ const ShapePreview = (props) => {
                 handleChange={props.handleChange}
                 focusNumber={focusNumber}
                 setFocusNumber={setFocusNumber}
+                clipPathType={props.shapeInformation.clipPathType}
             />
           );
         }
