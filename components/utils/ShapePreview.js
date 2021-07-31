@@ -57,6 +57,7 @@ const ShapePreview = (props) => {
     useEffect(() => {
         const array = []; 
         setWidthCoordinate();
+        setHeightCoordinate();
     
         for (let i = 0; i < props.shapeInformation.verticeCoordinates.length; i++) {
 
