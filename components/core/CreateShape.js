@@ -311,6 +311,18 @@ const CreateShape = (props) => {
             });
         }
 
+        if (clipPathType === "circle" || "ellipse") {
+            let coordinateValue = formula.slice(formula.indexOf("at") + 3, formula.indexOf(")")); 
+            coordinateValue = coordinateValue.split(" ");
+
+            newVerticeCoordinates = [
+                {
+                    "x": coordinateValue[0], 
+                    "y": coordinateValue[1], 
+                }
+            ]
+        }
+
         setShapeInformation(prevState => {
             return {
             ...prevState, 
