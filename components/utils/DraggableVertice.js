@@ -81,20 +81,18 @@ const DraggableVertice = (props) => {
             }
 
         }
-    }, [props])
-
-    
+    }, [props]);
 
     // Handles when to show the close button
     const showClose = props.focusNumber === props.number;
     const target = useRef(null);
 
     const handleDrag = (e, data) => {
-        props.handleChange(e, data, props.number);
+        props.handleChange(e, data, props.number, props.type);
     }
 
     const handleDelete = (e) => {
-        props.handleChange(e, null, props.number);
+        props.handleChange(e, null, props.number, props.type);
         props.setFocusNumber(-1);
     }
 
@@ -103,6 +101,7 @@ const DraggableVertice = (props) => {
             {showVertice ? 
                 <>
                     <Draggable 
+                        axis={props.type === "width" ? "x" : "none"}
                         bounds="parent" 
                         handle=".handle" 
                         position={{x: x, y: y}} 

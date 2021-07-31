@@ -45,6 +45,10 @@ const ShapePreview = (props) => {
     // Holds an array of DraggableVertices
     const [vertices, setVertices] = useState([]);
 
+    const [heightCoordinate, setHeightCoordinate] = useState(); 
+
+    const [widthCoordinate, setWidthCoordinate] = useState();
+
     // Set to a number that determines which DraggableVertice has its tooltip showing
     // This way, only one vertice can show its close button at a time
     const [focusNumber, setFocusNumber] = useState(-1);
@@ -73,6 +77,31 @@ const ShapePreview = (props) => {
           );
         }
         setVertices(array);
+
+        if (props.shapeInformation.clipPathType === "circle") {
+
+            let x = props.shapeInformation.verticeCoordinates[0].x; 
+            let width = props.shapeInformation.width;
+
+            x = parseInt(x.slice(0, x.indexOf("%")));
+            width = parseInt(width.slice(0, width.indexOf("%")));
+
+            x = (x + width) + "%";
+
+            setWidthCoordinate(
+                <DraggableVertice 
+                    number = {1}
+                    type="width"
+                    x={x}
+                    y={props.shapeInformation.verticeCoordinates[0].y}
+                    handleChange={props.handleChange}
+                    focusNumber={focusNumber}
+                    setFocusNumber={setFocusNumber}
+                    clipPathType={props.shapeInformation.clipPathType}
+                />
+            );
+        }
+
       }, [props.shapeInformation, focusNumber]);
 
     return(
@@ -82,6 +111,7 @@ const ShapePreview = (props) => {
                     { props.shapeInformation.showShadow && <Shadow backgroundColor={props.shapeInformation.backgroundColor} id="shapeShadow" /> }
                     <Component formula={props.shapeInformation.formula} backgroundColor={props.shapeInformation.backgroundColor} id="clippedShape" />
                     {vertices}
+                    {widthCoordinate}
                 </Box>
 
                 <Form style={{padding: '7px', textAlign: 'center'}}>

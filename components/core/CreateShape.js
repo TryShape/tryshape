@@ -88,7 +88,7 @@ const CreateShape = (props) => {
     }, [props.show]);
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
-    const handleChange = (event, data, number) => {
+    const handleChange = (event, data, number, type) => {
         
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
@@ -198,15 +198,35 @@ const CreateShape = (props) => {
         
         // If DraggableVertice is moved, adjust verticeCoordinates and formula
         if (name === "mousemove" || name === "touchmove") {
-            
-            const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
-            const newFormula = generateNewFormula(newVerticeCoordinates);
 
-            setShapeInformation({
-                ...shapeInformation, 
-                "verticeCoordinates": newVerticeCoordinates, 
-                "formula": newFormula, 
-            });
+            if (type === "width") {
+                let center = shapeInformation.verticeCoordinates[0].x; 
+                let width = Math.round((data.x / 280.0) * 100.0);
+
+                center = parseInt(center.slice(0, center.indexOf("%")));
+
+                let radius = (width - center) + "%"; 
+                let absoluteValueRadius = Math.abs(width - center) + "%";
+
+                let newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")"; 
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "width": radius, 
+                    "formula": newFormula, 
+                }); 
+                return; 
+            } else {
+                const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
+                const newFormula = generateNewFormula(newVerticeCoordinates);
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "verticeCoordinates": newVerticeCoordinates, 
+                    "formula": newFormula, 
+                });
+            }
+
             return;
         }
         
