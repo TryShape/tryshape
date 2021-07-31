@@ -223,9 +223,26 @@ const CreateShape = (props) => {
                     "width": radius, 
                     "formula": newFormula, 
                 }); 
+            } else if (type === "height") {
+                let center = shapeInformation.verticeCoordinates[0].y; 
+                let height = Math.round((data.y / 280.0) * 100.0);
 
-                return; 
-                
+                center = parseInt(center.slice(0, center.indexOf("%")));
+
+                let radius = (height - center) + "%"; 
+                let absoluteValueRadius = Math.abs(height - center) + "%";
+
+                let newFormula; 
+
+                if (shapeInformation.clipPathType === "ellipse") {
+                    newFormula = shapeInformation.clipPathType + "(" + shapeInformation.width + " " + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")";
+                }
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "height": radius, 
+                    "formula": newFormula, 
+                }); 
             } else {
                 const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
                 const newFormula = generateNewFormula(newVerticeCoordinates);
@@ -293,6 +310,7 @@ const CreateShape = (props) => {
     const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
         let newVerticeCoordinates = [];
         let newWidth; 
+        let newHeight; 
 
         if (clipPathType === "polygon") {
             let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
@@ -357,6 +375,12 @@ const CreateShape = (props) => {
 
         }
 
+        if (clipPathType === "ellipse") {
+            let formulaValues = formula.split("%"); 
+
+            newHeight = formulaValues[1].trim() + "%";
+        }
+
         setShapeInformation(prevState => {
             return {
                 ...prevState, 
@@ -366,6 +390,7 @@ const CreateShape = (props) => {
                 "edges": edgeVerticeNumber, 
                 "verticeCoordinates": newVerticeCoordinates, 
                 "width" : newWidth !== undefined ? newWidth : prevState.width, 
+                "height" : newHeight !== undefined ? newHeight : prevState.height, 
             }
         });
     }

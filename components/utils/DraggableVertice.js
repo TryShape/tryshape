@@ -101,7 +101,7 @@ const DraggableVertice = (props) => {
             {showVertice ? 
                 <>
                     <Draggable 
-                        axis={props.type === "width" ? "x" : "none"}
+                        axis={props.type === "width" ? "x" : props.type === "height" ? "y" : "none"}
                         bounds="parent" 
                         handle=".handle" 
                         position={{x: x, y: y}} 

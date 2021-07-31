@@ -103,6 +103,31 @@ const ShapePreview = (props) => {
             );
         }
 
+        if (props.shapeInformation.clipPathType === "ellipse") {
+
+            let y = props.shapeInformation.verticeCoordinates[0].y; 
+            let height = props.shapeInformation.height;
+
+            y = parseInt(y.slice(0, y.indexOf("%")));
+            height = parseInt(height.slice(0, height.indexOf("%")));
+
+            y = (y + height) + "%";
+
+            setHeightCoordinate(
+                <DraggableVertice 
+                    number = {2}
+                    type="height"
+                    x={props.shapeInformation.verticeCoordinates[0].x}
+                    y={y}
+                    handleChange={props.handleChange}
+                    focusNumber={focusNumber}
+                    setFocusNumber={setFocusNumber}
+                    clipPathType={props.shapeInformation.clipPathType}
+                />
+            );
+
+        }
+
       }, [props.shapeInformation, focusNumber]);
 
     return(
@@ -113,6 +138,7 @@ const ShapePreview = (props) => {
                     <Component formula={props.shapeInformation.formula} backgroundColor={props.shapeInformation.backgroundColor} id="clippedShape" />
                     {vertices}
                     {widthCoordinate}
+                    {heightCoordinate}
                 </Box>
 
                 <Form style={{padding: '7px', textAlign: 'center'}}>
