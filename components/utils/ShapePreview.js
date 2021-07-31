@@ -79,7 +79,7 @@ const ShapePreview = (props) => {
         }
         setVertices(array);
 
-        if (props.shapeInformation.clipPathType === "circle") {
+        if (props.shapeInformation.clipPathType === "circle" || "ellipse") {
 
             let x = props.shapeInformation.verticeCoordinates[0].x; 
             let width = props.shapeInformation.width;

@@ -210,14 +210,22 @@ const CreateShape = (props) => {
                 let radius = (width - center) + "%"; 
                 let absoluteValueRadius = Math.abs(width - center) + "%";
 
-                let newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")"; 
+                let newFormula; 
+
+                if (shapeInformation.clipPathType === "circle") {
+                    newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")"; 
+                } else if (shapeInformation.clipPathType === "ellipse") {
+                    newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " " + shapeInformation.height + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")";
+                }
 
                 setShapeInformation({
                     ...shapeInformation, 
                     "width": radius, 
                     "formula": newFormula, 
                 }); 
+
                 return; 
+                
             } else {
                 const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
                 const newFormula = generateNewFormula(newVerticeCoordinates);
