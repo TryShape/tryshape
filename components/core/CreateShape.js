@@ -149,7 +149,9 @@ const CreateShape = (props) => {
                             "x": "10%", 
                             "y": "80%", 
                         }, 
-                    ]
+                    ], 
+                    "width" : "0%", 
+                    "height" : "0%", 
                 });
             }
 
@@ -282,6 +284,7 @@ const CreateShape = (props) => {
     // Ensures that the parentheses remain
     const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
         let newVerticeCoordinates = [];
+        let newWidth; 
 
         if (clipPathType === "polygon") {
             let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
@@ -341,16 +344,20 @@ const CreateShape = (props) => {
                     "y": coordinateValue[1], 
                 }
             ]
+
+            newWidth = formula.slice(formula.indexOf("(") + 1, formula.indexOf(" at")); 
+
         }
 
         setShapeInformation(prevState => {
             return {
-            ...prevState, 
-            "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-            "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
-            "vertices": edgeVerticeNumber, 
-            "edges": edgeVerticeNumber, 
-            "verticeCoordinates": newVerticeCoordinates, 
+                ...prevState, 
+                "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
+                "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
+                "vertices": edgeVerticeNumber, 
+                "edges": edgeVerticeNumber, 
+                "verticeCoordinates": newVerticeCoordinates, 
+                "width" : newWidth !== undefined ? newWidth : prevState.width, 
             }
         });
     }

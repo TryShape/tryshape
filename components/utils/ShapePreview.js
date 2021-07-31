@@ -56,6 +56,7 @@ const ShapePreview = (props) => {
     // Creation of DraggableVertices depending on shapeInformation values
     useEffect(() => {
         const array = []; 
+        setWidthCoordinate();
     
         for (let i = 0; i < props.shapeInformation.verticeCoordinates.length; i++) {
 
