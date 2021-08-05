@@ -209,13 +209,14 @@ const CreateShape = (props) => {
 
                 let radius = (width - center) + "%"; 
                 let absoluteValueRadius = Math.abs(width - center) + "%";
+                let absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
 
                 let newFormula; 
 
                 if (shapeInformation.clipPathType === "circle") {
-                    newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")"; 
+                    newFormula = `${shapeInformation.clipPathType}(${absoluteValueRadius} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
                 } else if (shapeInformation.clipPathType === "ellipse") {
-                    newFormula = shapeInformation.clipPathType + "(" + absoluteValueRadius + " " + shapeInformation.height + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")";
+                    newFormula = `${shapeInformation.clipPathType}(${absoluteValueRadius} ${absoluteValueHeight} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
                 }
 
                 setShapeInformation({
@@ -231,11 +232,12 @@ const CreateShape = (props) => {
 
                 let radius = (height - center) + "%"; 
                 let absoluteValueRadius = Math.abs(height - center) + "%";
+                let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
 
                 let newFormula; 
 
                 if (shapeInformation.clipPathType === "ellipse") {
-                    newFormula = shapeInformation.clipPathType + "(" + shapeInformation.width + " " + absoluteValueRadius + " at " + shapeInformation.verticeCoordinates[0].x + " " + shapeInformation.verticeCoordinates[0].y + ")";
+                    newFormula = `${shapeInformation.clipPathType}(${absoluteValueWidth} ${absoluteValueRadius} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
                 }
 
                 setShapeInformation({
@@ -449,8 +451,10 @@ const CreateShape = (props) => {
             for (let i = 0; i < newVerticeCoordinates.length; i++) {
                 let newX = newVerticeCoordinates[i].x; 
                 let newY = newVerticeCoordinates[i].y;
-    
-                i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
+
+                i === newVerticeCoordinates.length - 1 ? 
+                    newFormula = `${newFormula + newX} ${newY})` : 
+                    newFormula = `${newFormula + newX} ${newY}, `;
             }
         }
 
@@ -458,14 +462,19 @@ const CreateShape = (props) => {
             let newX = newVerticeCoordinates[0].x; 
             let newY = newVerticeCoordinates[0].y;
 
-            newFormula = newFormula + shapeInformation.width + " at " + newX + " " + newY + ")";
+            let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+
+            newFormula = `${newFormula + absoluteValueWidth} at ${newX} ${newY})`;
         }
 
         if (shapeInformation.clipPathType === "ellipse") {
             let newX = newVerticeCoordinates[0].x; 
             let newY = newVerticeCoordinates[0].y;
 
-            newFormula = newFormula + shapeInformation.width + " " + shapeInformation.height + " at " + newX + " " + newY + ")";
+            let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+            let absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
+
+            newFormula = `${newFormula + absoluteValueWidth} ${absoluteValueHeight} at ${newX} ${newY})`;
         }
 
         return newFormula;
