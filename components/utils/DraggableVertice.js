@@ -38,7 +38,9 @@ const DraggableVertice = (props) => {
         // Calculates x coordinates based on percentage or pixels
         // Determines whether to show them or not depending on if it goes out of the border
         if (props.x.includes("%")) {
+
             setX(parseFloat(props.x) * 280.0 / 100.0);
+
             xValue = parseFloat(props.x.substring(0, props.x.indexOf("%") + 1));
 
             if (xValue > 100) {
@@ -61,7 +63,9 @@ const DraggableVertice = (props) => {
 
         // Calulates y coordinates based on percentage or pixels
         if (props.y.includes("%")) {
+
             setY(parseFloat(props.y) * 280.0 / 100.0);
+
             yValue = parseFloat(props.y.substring(0, props.y.indexOf("%") + 1));
 
             if (yValue > 100) {

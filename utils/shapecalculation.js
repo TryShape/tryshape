@@ -6,20 +6,20 @@ export const generateNewVerticeCoordinates = (x ,y, number, shapeInformation) =>
 
     // If there is a new coordinate
     if (shapeInformation.verticeCoordinates.length === number) {
-        xValue = Math.round((x / 280.0) * 100.0) + "%";
-        yValue = Math.round((y / 280.0) * 100.0) + "%";
+        xValue = pixelToPercentage(x).percentage;
+        yValue = pixelToPercentage(y).percentage;
     } else {
 
         // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
         if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
-            xValue = Math.round((x / 280.0) * 100.0) + "%";
+            xValue = pixelToPercentage(x).percentage;
         } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
             xValue = Math.round(x) + "px";
         }
 
         // Determines whether previous y coordinate was in percentage or px and adjusts value to maintain same unit of measurement
         if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
-            yValue = Math.round((y / 280.0) * 100.0) + "%";
+            yValue = pixelToPercentage(y).percentage;
         } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
             yValue = Math.round(y) + "px";
         }
@@ -130,6 +130,7 @@ export const handleFormulaChange = (formula, edgeVerticeNumber, setShapeInformat
     });
 }
 
+// Takes Two Coordinate Values and Separates Them to X and Y in an Object
 const separateXYValueIntoObject = values => {
 
     let xValue;
@@ -172,6 +173,7 @@ const separateXYValueIntoObject = values => {
     };
 }
 
+// Takes the Center Coordinate of Ellipse or Circle and Calculates Distance From Height/Width Vertice From Center
 export const calculateHeightWidthValue = (coordinate, radius) => {
     let coordinateInteger;
     let radiusInteger;
@@ -180,15 +182,91 @@ export const calculateHeightWidthValue = (coordinate, radius) => {
         coordinateInteger = parseInt(coordinate.slice(0, coordinate.indexOf("%")));
     } else if (coordinate.includes("px")) {
         coordinateInteger = parseInt(coordinate.slice(0, coordinate.indexOf("px")));
-        coordinateInteger = Math.round((coordinateInteger / 280.0) * 100.0);
+        coordinateInteger = pixelToPercentage(coordinateInteger).value;
     }
 
     if (radius.includes("%")) {
         radiusInteger = parseInt(radius.slice(0, radius.indexOf("%")));
     } else if (radius.includes("px")) {
         radiusInteger = parseInt(radius.slice(0, radius.indexOf("px")));
-        radiusInteger = Math.round((radiusInteger / 280.0) * 100.0);
+        radiusInteger = pixelToPercentage(radiusInteger).value;
     }
 
     return (coordinateInteger + radiusInteger) + "%";
+}
+
+// Calculates New Formula Values When Height or Width Vertices are Moved
+export const calculateRadiusAndFormulaFromMovement = (centerCoordinate, axisValue, otherAxisValue, movementData) => {
+
+    let center = centerCoordinate;
+
+    let centerPercentageValue;
+    let centerPixelValue;
+    let radiusHolder;
+    let radius;
+    let absoluteValueRadius;
+    let absoluteValueAxis;
+
+    // Calculates Value of Axis Not Being Moved
+    if (otherAxisValue.includes("%")) {
+        absoluteValueAxis = Math.abs(otherAxisValue.slice(0, otherAxisValue.indexOf("%"))) + "%";
+    } else if (otherAxisValue.includes("px")) {
+        absoluteValueAxis = Math.abs(otherAxisValue.slice(0, otherAxisValue.indexOf("px"))) + "px";
+    }
+
+    // Calculates Value Of Center
+    if (center.includes("%")) {
+        center = parseInt(center.slice(0, center.indexOf("%")));
+        centerPercentageValue = center;
+        centerPixelValue = percentageToPixel(center).value;
+    } else if (center.includes("px")) {
+        center = parseInt(center.slice(0, center.indexOf("px")));
+        centerPercentageValue = pixelToPercentage(center).value;
+        centerPixelValue = center;
+    }
+
+    // Calculates Value of Axis Being Moved
+    if (axisValue.includes("%")) {
+        radiusHolder = pixelToPercentage(movementData).value;
+        radius = (radiusHolder - centerPercentageValue) + "%";
+        absoluteValueRadius = Math.abs(radiusHolder - centerPercentageValue) + "%";
+    } else if (axisValue.includes("px")) {
+        radiusHolder = Math.round(movementData);
+        radius = (radiusHolder - centerPixelValue) + "px";
+        absoluteValueRadius = Math.abs(radiusHolder - centerPixelValue) + "px";
+    }
+
+    return {
+        "absoluteValueRadius": absoluteValueRadius,
+        "absoluteValueAxis": absoluteValueAxis, 
+        "radius": radius, 
+    };
+}
+
+export const percentageToPixel = (value) => {
+
+    let holder = value.toString();
+
+    if (holder.includes("%")) {
+        holder = parseFloat(value.slice(0, value.indexOf("%")));
+    }
+
+    return {
+        "value": Math.round((value / 100.0) * 280.0), 
+        "percentage": Math.round((value / 100.0) * 280.0) + "px",
+    }
+}
+
+export const pixelToPercentage = (value) => {
+
+    let holder = value.toString();
+
+    if (holder.includes("px")) {
+        holder = parseFloat(value.slice(0, value.indexOf("px")));
+    }
+
+    return {
+        "value": Math.round((value / 280.0) * 100.0), 
+        "percentage": Math.round((value / 280.0) * 100.0) + "%",
+    }
 }
