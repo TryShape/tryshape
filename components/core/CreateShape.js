@@ -16,6 +16,9 @@ import { ShapeForm, ShapePreview } from "..";
 // Toast
 import toast from "react-hot-toast";
 
+// shapecalculation functions
+import { generateNewVerticeCoordinates, generateNewFormula, handleFormulaChange } from "../../utils/shapecalculation.js";
+
 const CreateShape = (props) => {
 
     // Store the default state as a variable so resetting form is easier
@@ -109,15 +112,15 @@ const CreateShape = (props) => {
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
             if (value === "") {
-                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber);
+                handleFormulaChange(`${shapeInformation.clipPathType}()`, edgeVerticeNumber, setShapeInformation);
             } else if (value.includes("polygon")) {
-                handleFormulaChange(value, edgeVerticeNumber, "polygon");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "polygon");
             } else if (value.includes("circle")) {
-                handleFormulaChange(value, edgeVerticeNumber, "circle");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "circle");
             } else if (value.includes("ellipse")) {
-                handleFormulaChange(value, edgeVerticeNumber, "ellipse");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "ellipse");
             } else {
-                handleFormulaChange(value, edgeVerticeNumber);
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation);
             }
             return;
 
@@ -202,14 +205,39 @@ const CreateShape = (props) => {
         if (name === "mousemove" || name === "touchmove") {
 
             if (type === "width") {
-                let center = shapeInformation.verticeCoordinates[0].x; 
-                let width = Math.round((data.x / 280.0) * 100.0);
+                let center = shapeInformation.verticeCoordinates[0].x;
+                let centerPercentageValue;
+                let centerPixelValue;
+                let width;
+                let radius;
+                let absoluteValueRadius;
+                let absoluteValueHeight;
 
-                center = parseInt(center.slice(0, center.indexOf("%")));
+                if (shapeInformation.height.includes("%")) {
+                    absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
+                } else if (shapeInformation.height.includes("px")) {
+                    absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("px"))) + "px";
+                }
 
-                let radius = (width - center) + "%"; 
-                let absoluteValueRadius = Math.abs(width - center) + "%";
-                let absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
+                if (center.includes("%")) {
+                    center = parseInt(center.slice(0, center.indexOf("%")));
+                    centerPercentageValue = center;
+                    centerPixelValue = Math.round((center / 100.0) * 280.0);
+                } else if (center.includes("px")) {
+                    center = parseInt(center.slice(0, center.indexOf("px")));
+                    centerPercentageValue = Math.round((center / 280.0) * 100.0);
+                    centerPixelValue = center;
+                }
+
+                if (shapeInformation.width.includes("%")) {
+                    width = Math.round((data.x / 280.0) * 100.0);
+                    radius = (width - centerPercentageValue) + "%";
+                    absoluteValueRadius = Math.abs(width - centerPercentageValue) + "%";
+                } else if (shapeInformation.width.includes("px")) {
+                    width = Math.round(data.x);
+                    radius = (width - centerPixelValue) + "px";
+                    absoluteValueRadius = Math.abs(width - centerPixelValue) + "px";
+                }
 
                 let newFormula; 
 
@@ -225,14 +253,54 @@ const CreateShape = (props) => {
                     "formula": newFormula, 
                 }); 
             } else if (type === "height") {
-                let center = shapeInformation.verticeCoordinates[0].y; 
-                let height = Math.round((data.y / 280.0) * 100.0);
+                // let center = shapeInformation.verticeCoordinates[0].y; 
+                // let height = Math.round((data.y / 280.0) * 100.0);
 
-                center = parseInt(center.slice(0, center.indexOf("%")));
+                // center = parseInt(center.slice(0, center.indexOf("%")));
 
-                let radius = (height - center) + "%"; 
-                let absoluteValueRadius = Math.abs(height - center) + "%";
-                let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+                // let radius = (height - center) + "%"; 
+                // let absoluteValueRadius = Math.abs(height - center) + "%";
+                // let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+
+                // let newFormula; 
+
+                // if (shapeInformation.clipPathType === "ellipse") {
+                //     newFormula = `${shapeInformation.clipPathType}(${absoluteValueWidth} ${absoluteValueRadius} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
+                // }
+
+                let center = shapeInformation.verticeCoordinates[0].y;
+                let centerPercentageValue;
+                let centerPixelValue;
+                let height;
+                let radius;
+                let absoluteValueRadius;
+                let absoluteValueWidth;
+
+                if (shapeInformation.width.includes("%")) {
+                    absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+                } else if (shapeInformation.height.includes("px")) {
+                    absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("px"))) + "px";
+                }
+
+                if (center.includes("%")) {
+                    center = parseInt(center.slice(0, center.indexOf("%")));
+                    centerPercentageValue = center;
+                    centerPixelValue = Math.round((center / 100.0) * 280.0);
+                } else if (center.includes("px")) {
+                    center = parseInt(center.slice(0, center.indexOf("px")));
+                    centerPercentageValue = Math.round((center / 280.0) * 100.0);
+                    centerPixelValue = center;
+                }
+
+                if (shapeInformation.height.includes("%")) {
+                    height = Math.round((data.y / 280.0) * 100.0);
+                    radius = (height - centerPercentageValue) + "%";
+                    absoluteValueRadius = Math.abs(height - centerPercentageValue) + "%";
+                } else if (shapeInformation.height.includes("px")) {
+                    height = Math.round(data.y);
+                    radius = (height - centerPixelValue) + "px";
+                    absoluteValueRadius = Math.abs(height - centerPixelValue) + "px";
+                }
 
                 let newFormula; 
 
@@ -246,8 +314,8 @@ const CreateShape = (props) => {
                     "formula": newFormula, 
                 }); 
             } else {
-                const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
-                const newFormula = generateNewFormula(newVerticeCoordinates);
+                const newVerticeCoordinates = generateNewVerticeCoordinates(data.x, data.y, number, shapeInformation);
+                const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
 
                 setShapeInformation({
                     ...shapeInformation, 
@@ -262,8 +330,8 @@ const CreateShape = (props) => {
         // If preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
         if ((event.target.id === "shapeShadow" || event.target.id === "clippedShape") && name === "click" && shapeInformation.clipPathType === "polygon") {
 
-            const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
-            const newFormula = generateNewFormula(newVerticeCoordinates);
+            const newVerticeCoordinates = generateNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length, shapeInformation);
+            const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
 
             setShapeInformation({
                 ...shapeInformation, 
@@ -287,7 +355,7 @@ const CreateShape = (props) => {
                 }
             }
 
-            const newFormula = generateNewFormula(newVerticeCoordinates);
+            const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
 
             setShapeInformation({
                 ...shapeInformation, 
@@ -304,180 +372,6 @@ const CreateShape = (props) => {
             ...shapeInformation, 
             [name]: value,
         });
-    }
-
-    // Called when there is a change in the textbox for formula in the form
-    // Adjusts verticeCoordinates, vertices, and edges accordingly
-    // Ensures that the parentheses remain
-    const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
-        let newVerticeCoordinates = [];
-        let newWidth; 
-        let newHeight; 
-
-        if (clipPathType === "polygon") {
-            let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            formulaNumbers = formulaNumbers.split(","); 
-            newVerticeCoordinates = formulaNumbers.map(x => {
-                let values = x.trim();
-                let xValue = "";
-                let yValue = "";
-
-                // If the formula includes both percentage and px
-                // Figure out which one comes first and use that index of find it
-                if (values.includes("%") && values.includes("px")) {
-
-                    let indexOfPX = values.indexOf("px");
-                    let indexOfPercentage = values.indexOf("%");
-
-                    if (indexOfPX < indexOfPercentage) {
-                        xValue = values.substring(0, values.indexOf("px") + 2).trim();
-                        yValue = values.substring(values.indexOf("px") + 2).trim();
-                    }
-
-                    if (indexOfPercentage < indexOfPX) {
-                        xValue = values.substring(0, values.indexOf("%") + 1).trim();
-                        yValue = values.substring(values.indexOf("%") + 1).trim();
-                    }
-
-                } else if (values.includes("%")) {
-                    xValue = values.substring(0, values.indexOf("%") + 1).trim();
-                    yValue = values.substring(values.indexOf("%") + 1).trim();
-                } else if (values.includes("px")) {
-                    xValue = values.substring(0, values.indexOf("px") + 2).trim();
-                    yValue = values.substring(values.indexOf("px") + 2).trim();
-                }
-
-                if (!(xValue.includes("px") || xValue.includes("%")) || xValue.includes(" ")) {
-                    xValue = "0%";
-                }
-
-                if (!(yValue.includes("px") || yValue.includes("%")) || yValue === "") {
-                    yValue = "0%";
-                }
-
-                return {
-                    "x": xValue, 
-                    "y": yValue,
-                }
-            });
-        }
-
-        if (clipPathType === "circle" || "ellipse") {
-            let coordinateValue = formula.slice(formula.indexOf("at") + 3, formula.indexOf(")")); 
-            coordinateValue = coordinateValue.split(" ");
-
-            newVerticeCoordinates = [
-                {
-                    "x": coordinateValue[0], 
-                    "y": coordinateValue[1], 
-                }
-            ];
-        }
-
-        if (clipPathType === "circle") {
-            newWidth = formula.slice(formula.indexOf("(") + 1, formula.indexOf(" at")); 
-        }
-
-        if (clipPathType === "ellipse") {
-
-
-            let formulaValues = formula.split("%"); 
-
-            newWidth = formulaValues[0].slice(formulaValues[0].indexOf("(") + 1) + "%";
-
-            newHeight = formulaValues[1].trim() + "%";
-        }
-
-        setShapeInformation(prevState => {
-            return {
-                ...prevState, 
-                "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-                "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
-                "vertices": edgeVerticeNumber, 
-                "edges": edgeVerticeNumber, 
-                "verticeCoordinates": newVerticeCoordinates, 
-                "width" : newWidth !== undefined ? newWidth : prevState.width, 
-                "height" : newHeight !== undefined ? newHeight : prevState.height, 
-            }
-        });
-    }
-
-    // Returns an array that has a new verticeCoordinate
-    const addNewVerticeCoordinates = (x ,y, number) => {
-
-        let xValue;
-        let yValue;
-
-        // If there is a new coordinate
-        if (shapeInformation.verticeCoordinates.length === number) {
-            xValue = Math.round((x / 280.0) * 100.0) + "%";
-            yValue = Math.round((y / 280.0) * 100.0) + "%";
-        } else {
-
-            // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
-            if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
-                xValue = Math.round((x / 280.0) * 100.0) + "%";
-            } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
-                xValue = Math.round(x) + "px";
-            }
-
-            // Determines whether previous y coordinate was in percentage or px and adjusts value to maintain same unit of measurement
-            if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
-                yValue = Math.round((y / 280.0) * 100.0) + "%";
-            } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
-                yValue = Math.round(y) + "px";
-            }
-        }
-
-        let newVerticeCoordinates = shapeInformation.verticeCoordinates;
-        newVerticeCoordinates[number] = {
-            "x": xValue,
-            "y": yValue
-        }
-
-        return newVerticeCoordinates;
-    }
-
-    // Returns a generated formula string from a verticeCoordinate array
-    const generateNewFormula = (newVerticeCoordinates) => {
-
-        let newFormula = shapeInformation.clipPathType + "(";
-
-        if (newVerticeCoordinates.length === 0) {
-            return newFormula + ")";
-        }
-
-        if (shapeInformation.clipPathType === "polygon") {
-            for (let i = 0; i < newVerticeCoordinates.length; i++) {
-                let newX = newVerticeCoordinates[i].x; 
-                let newY = newVerticeCoordinates[i].y;
-
-                i === newVerticeCoordinates.length - 1 ? 
-                    newFormula = `${newFormula + newX} ${newY})` : 
-                    newFormula = `${newFormula + newX} ${newY}, `;
-            }
-        }
-
-        if (shapeInformation.clipPathType === "circle") {
-            let newX = newVerticeCoordinates[0].x; 
-            let newY = newVerticeCoordinates[0].y;
-
-            let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
-
-            newFormula = `${newFormula + absoluteValueWidth} at ${newX} ${newY})`;
-        }
-
-        if (shapeInformation.clipPathType === "ellipse") {
-            let newX = newVerticeCoordinates[0].x; 
-            let newY = newVerticeCoordinates[0].y;
-
-            let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
-            let absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
-
-            newFormula = `${newFormula + absoluteValueWidth} ${absoluteValueHeight} at ${newX} ${newY})`;
-        }
-
-        return newFormula;
     }
 
     // Form Validation

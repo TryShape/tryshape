@@ -9,6 +9,9 @@ import Form from "react-bootstrap/Form";
 // Draggablevertice Component
 import { DraggableVertice } from "..";
 
+// shapecalculation functions
+import { calculateHeightWidthValue } from "../../utils/shapecalculation";
+
 const Playground = styled.div`
   width: 100%;
 `;
@@ -82,13 +85,7 @@ const ShapePreview = (props) => {
 
         if (props.shapeInformation.clipPathType === "circle" || props.shapeInformation.clipPathType === "ellipse") {
 
-            let x = props.shapeInformation.verticeCoordinates[0].x; 
-            let width = props.shapeInformation.width;
-
-            x = parseInt(x.slice(0, x.indexOf("%")));
-            width = parseInt(width.slice(0, width.indexOf("%")));
-
-            x = (x + width) + "%";
+            let x = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].x, props.shapeInformation.width);
 
             setWidthCoordinate(
                 <DraggableVertice 
@@ -106,13 +103,7 @@ const ShapePreview = (props) => {
 
         if (props.shapeInformation.clipPathType === "ellipse") {
 
-            let y = props.shapeInformation.verticeCoordinates[0].y; 
-            let height = props.shapeInformation.height;
-
-            y = parseInt(y.slice(0, y.indexOf("%")));
-            height = parseInt(height.slice(0, height.indexOf("%")));
-
-            y = (y + height) + "%";
+            let y = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].y, props.shapeInformation.height);
 
             setHeightCoordinate(
                 <DraggableVertice 
