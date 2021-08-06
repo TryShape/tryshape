@@ -243,7 +243,7 @@ export const calculateRadiusAndFormulaFromMovement = (centerCoordinate, axisValu
     };
 }
 
-export const percentageToPixel = (value) => {
+const percentageToPixel = (value) => {
 
     let holder = value.toString();
 
@@ -257,7 +257,7 @@ export const percentageToPixel = (value) => {
     }
 }
 
-export const pixelToPercentage = (value) => {
+const pixelToPercentage = (value) => {
 
     let holder = value.toString();
 

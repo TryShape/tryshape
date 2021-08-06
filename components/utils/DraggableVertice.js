@@ -32,11 +32,11 @@ const DraggableVertice = (props) => {
 
     useEffect(() => {
 
+        setShowVertice(true);
         let xValue;
         let yValue;
 
         // Calculates x coordinates based on percentage or pixels
-        // Determines whether to show them or not depending on if it goes out of the border
         if (props.x.includes("%")) {
 
             setX(parseFloat(props.x) * 280.0 / 100.0);
@@ -45,8 +45,6 @@ const DraggableVertice = (props) => {
 
             if (xValue > 100) {
                 setShowVertice(false);
-            } else {
-                setShowVertice(true);
             }
 
         } else if (props.x.includes("px")) {
@@ -55,8 +53,6 @@ const DraggableVertice = (props) => {
 
             if (xValue > 280) {
                 setShowVertice(false);
-            } else {
-                setShowVertice(true);
             }
 
         }
@@ -70,8 +66,6 @@ const DraggableVertice = (props) => {
 
             if (yValue > 100) {
                 setShowVertice(false);
-            } else {
-                setShowVertice(true);
             }
 
         } else if (props.y.includes("px")) {
@@ -80,11 +74,14 @@ const DraggableVertice = (props) => {
 
             if (yValue > 280) {
                 setShowVertice(false);
-            } else {
-                setShowVertice(true);
             }
 
         }
+
+        if (xValue < 0 || yValue < 0) {
+            setShowVertice(false);
+        }
+
     }, [props]);
 
     // Handles when to show the close button
