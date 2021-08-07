@@ -15,9 +15,6 @@ import Loader from "react-loader-spinner";
 // Trending Shapes
 import { TrendingShapes } from "..";
 
-// dynamic from Next.js
-import dynamic from "next/dynamic";
-
 // Images
 import BannerBg from '../../public/images/bg-banner.png';
 import DottedBg from '../../public/images/bg-dotted.png';
