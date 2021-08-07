@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 // axios
 import axios from "axios";
 
-// dynamic from next
-import dynamic from "next/dynamic";
-
 // loader
 import Loader from "react-loader-spinner";
 
@@ -75,7 +72,7 @@ const App = (props) => {
     }
 
     // Add the showAdvanced property
-    shapes.map((shape, index) => {
+    shapes.map((shape) => {
       shape.showAdvanced = false;
       return shape;
     });

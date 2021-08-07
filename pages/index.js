@@ -1,5 +1,5 @@
 import React from "react";
-import { App, Landing } from "../components";
+import { Landing } from "../components";
 
 const index = (props) => {
   const { user } = props;
