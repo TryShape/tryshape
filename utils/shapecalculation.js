@@ -146,7 +146,7 @@ export const handleFormulaChange = (formula, edgeVerticeNumber, setShapeInformat
 }
 
 // Takes Two Coordinate Values and Separates Them to X and Y in an Object
-const separateXYValueIntoObject = values => {
+export const separateXYValueIntoObject = values => {
 
     let xValue;
     let yValue;
