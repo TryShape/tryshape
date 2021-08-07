@@ -243,6 +243,7 @@ export const calculateRadiusAndFormulaFromMovement = (centerCoordinate, axisValu
     };
 }
 
+// Takes a Percentage Value and Turns It Into a Pixels Values
 const percentageToPixel = (value) => {
 
     let holder = value.toString();
@@ -257,6 +258,7 @@ const percentageToPixel = (value) => {
     }
 }
 
+// Takes a Pixel Value and Turns It Into a Percentage Value
 const pixelToPercentage = (value) => {
 
     let holder = value.toString();
