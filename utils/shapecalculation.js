@@ -58,7 +58,15 @@ export const generateNewFormula = (newVerticeCoordinates, shapeInformation) => {
         let newX = newVerticeCoordinates[0].x; 
         let newY = newVerticeCoordinates[0].y;
 
-        let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+        let absoluteValueWidth;
+
+        if (shapeInformation.width.includes("%")) {
+            absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+        }
+
+        if (shapeInformation.width.includes("px")) {
+            absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("px"))) + "px";
+        }
 
         newFormula = `${newFormula + absoluteValueWidth} at ${newX} ${newY})`;
     }
@@ -67,8 +75,15 @@ export const generateNewFormula = (newVerticeCoordinates, shapeInformation) => {
         let newX = newVerticeCoordinates[0].x; 
         let newY = newVerticeCoordinates[0].y;
 
-        let absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
-        let absoluteValueHeight = Math.abs(shapeInformation.height.slice(0, shapeInformation.height.indexOf("%"))) + "%";
+        let absoluteValueWidth;
+
+        if (shapeInformation.width.includes("%")) {
+            absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("%"))) + "%";
+        }
+
+        if (shapeInformation.width.includes("px")) {
+            absoluteValueWidth = Math.abs(shapeInformation.width.slice(0, shapeInformation.width.indexOf("px"))) + "px";
+        }
 
         newFormula = `${newFormula + absoluteValueWidth} ${absoluteValueHeight} at ${newX} ${newY})`;
     }
