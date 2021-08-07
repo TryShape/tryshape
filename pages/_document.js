@@ -2,6 +2,8 @@ import Document, { Html, Head, Main, NextScript } from 'next/document';
 // Import styled components ServerStyleSheet
 import { ServerStyleSheet } from 'styled-components';
 
+import { useRouter } from "next/router";
+
 export default class MyDocument extends Document {
   static getInitialProps({ renderPage }) {
     // Step 1: Create an instance of ServerStyleSheet
@@ -24,7 +26,7 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* Step 5: Output the styles in the head  */}
-          <link rel="canonical" href="https://tryshape.vercel.app/" />
+          <link rel="canonical" href={site + useRouter().pathname} />
           {this.props.styleTags}
         </Head>
         <body>
