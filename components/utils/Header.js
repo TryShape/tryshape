@@ -205,7 +205,6 @@ const LoginBarBefore = styled.div`
 `;
 
 
-
 const Header = ({ 
   setOpen, 
   user, 
@@ -218,7 +217,6 @@ const Header = ({
   setShapeAction
 }) => {
   
-  const [searchterm, setSearchterm] = useState('');
   // Controls when CreateShape Modal Shows
   const [showCreateShape, setShowCreateShape] = useState(false);
 

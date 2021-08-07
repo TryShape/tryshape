@@ -28,7 +28,7 @@ const ShapeContainer = styled.section`
 import toast from "react-hot-toast";
 
 // html-to-image
-import { toPng, toJpeg, toSvg, toCanvas } from "html-to-image";
+import { toPng, toJpeg, toSvg } from "html-to-image";
 
 // downloadjs
 import download from "downloadjs";

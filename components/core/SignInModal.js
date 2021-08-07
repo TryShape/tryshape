@@ -1,7 +1,7 @@
 import React from "react";
 
 // icons
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaGithub } from "react-icons/fa";
 import { FcGoogle } from "react-icons/fc";
 
 // Button

@@ -26,8 +26,8 @@ export default class MyDocument extends Document {
       <Html lang="en">
         <Head>
           {/* Step 5: Output the styles in the head  */}
-          <link rel="canonical" href="https://tryshape.vercel.app/" />
           {this.props.styleTags}
+          <link rel="canonical" href="https://tryshape.vercel.app/" />
         </Head>
         <body>
           <Main />
