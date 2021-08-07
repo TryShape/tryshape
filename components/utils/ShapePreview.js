@@ -83,41 +83,43 @@ const ShapePreview = (props) => {
         }
         setVertices(array);
 
-        if (props.shapeInformation.clipPathType === "circle" || props.shapeInformation.clipPathType === "ellipse") {
+        if (props.shapeInformation.verticeCoordinates.length > 0) {
+            if (props.shapeInformation.clipPathType === "circle" || props.shapeInformation.clipPathType === "ellipse") {
 
-            let x = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].x, props.shapeInformation.width);
-
-            setWidthCoordinate(
-                <DraggableVertice 
-                    number = {1}
-                    type="width"
-                    x={x}
-                    y={props.shapeInformation.verticeCoordinates[0].y}
-                    handleChange={props.handleChange}
-                    focusNumber={focusNumber}
-                    setFocusNumber={setFocusNumber}
-                    clipPathType={props.shapeInformation.clipPathType}
-                />
-            );
-        }
-
-        if (props.shapeInformation.clipPathType === "ellipse") {
-
-            let y = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].y, props.shapeInformation.height);
-
-            setHeightCoordinate(
-                <DraggableVertice 
-                    number = {2}
-                    type="height"
-                    x={props.shapeInformation.verticeCoordinates[0].x}
-                    y={y}
-                    handleChange={props.handleChange}
-                    focusNumber={focusNumber}
-                    setFocusNumber={setFocusNumber}
-                    clipPathType={props.shapeInformation.clipPathType}
-                />
-            );
-
+                let x = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].x, props.shapeInformation.width);
+    
+                setWidthCoordinate(
+                    <DraggableVertice 
+                        number = {1}
+                        type="width"
+                        x={x}
+                        y={props.shapeInformation.verticeCoordinates[0].y}
+                        handleChange={props.handleChange}
+                        focusNumber={focusNumber}
+                        setFocusNumber={setFocusNumber}
+                        clipPathType={props.shapeInformation.clipPathType}
+                    />
+                );
+            }
+    
+            if (props.shapeInformation.clipPathType === "ellipse") {
+    
+                let y = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].y, props.shapeInformation.height);
+    
+                setHeightCoordinate(
+                    <DraggableVertice 
+                        number = {2}
+                        type="height"
+                        x={props.shapeInformation.verticeCoordinates[0].x}
+                        y={y}
+                        handleChange={props.handleChange}
+                        focusNumber={focusNumber}
+                        setFocusNumber={setFocusNumber}
+                        clipPathType={props.shapeInformation.clipPathType}
+                    />
+                );
+    
+            }
         }
 
       }, [props.shapeInformation, focusNumber]);

@@ -41,33 +41,37 @@ const CreateShape = (props) => {
         if (props.edit) {
             let formula = props.shape.formula; 
             let slicedFormula = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            let newVerticeCoordinates;
-            let width;
-            let height;
+            let newVerticeCoordinates = [];
+            let width = "0%";
+            let height = "0%";
 
-            if (props.shape.type === "polygon") {
-                newVerticeCoordinates = slicedFormula.split(",");
-                newVerticeCoordinates = newVerticeCoordinates.map((value) => {
-                    return separateXYValueIntoObject(value.trim());
-                });
-            }
+            if (!formula.includes("()")) {
 
-            if (props.shape.type === "circle") {
-                let splitFormula = slicedFormula.split("at");
+                if (props.shape.type === "polygon") {
+                    newVerticeCoordinates = slicedFormula.split(",");
+                    newVerticeCoordinates = newVerticeCoordinates.map((value) => {
+                        return separateXYValueIntoObject(value.trim());
+                    });
+                }
+    
+                if (props.shape.type === "circle" && formula.includes("at")) {
+                    let splitFormula = slicedFormula.split("at");
+    
+                    width = splitFormula[0].trim();
+    
+                    newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
+                }
+    
+                if (props.shape.type === "ellipse" && formula.includes("at")) {
+                    let splitFormula = slicedFormula.split("at");
+                    let widthHeightValues = separateXYValueIntoObject(splitFormula[0].trim());
+    
+                    width = widthHeightValues[0];
+                    height = widthHeightValues[1];
+    
+                    newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
+                }
 
-                width = splitFormula[0].trim();
-
-                newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
-            }
-
-            if (props.shape.type === "ellipse") {
-                let splitFormula = slicedFormula.split("at");
-                let widthHeightValues = separateXYValueIntoObject(splitFormula[0].trim());
-
-                width = widthHeightValues[0];
-                height = widthHeightValues[1];
-
-                newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
             }
     
             setShapeInformation({
@@ -81,8 +85,8 @@ const CreateShape = (props) => {
                 "clipPathType": props.shape.type,
                 "backgroundColor": props.shape.backgroundColor, 
                 "verticeCoordinates" : newVerticeCoordinates, 
-                "width": width === undefined ? "0%" : width, 
-                "height": height === undefined ? "0%" : height, 
+                "width": width, 
+                "height": height, 
             });
         }
 
