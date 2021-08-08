@@ -56,10 +56,10 @@ const App = (props) => {
 
       // If there are liked shapes, take out the shape_id
       if (likedShapes.length > 0) {
-        let likedShapeIds = likedShapes.map((liked, index) => {
+        let likedShapeIds = likedShapes.map((liked) => {
           return liked['shape_id'];
         })
-        shapes.map((shape, index) => {
+        shapes.map((shape) => {
          
             if (likedShapeIds.includes(shape['shape_id'])) {
               shape['liked'] = true;

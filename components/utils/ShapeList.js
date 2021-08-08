@@ -608,11 +608,11 @@ const ShapeList = ({
                       <ShapeCredits>
                         <ShapeCreditsThumb
                           src={shape.photoURL}
-                          alt={shape.name1}
+                          alt={shape.name1 === undefined ? "Unknown User" : shape.name1}
                         />
                         <ShapeCreditsOwner>
                           <ShapeCreditsOwnerName>
-                            {shape.name1}
+                            {shape.name1 === undefined ? "Unknown User" : shape.name1}
                           </ShapeCreditsOwnerName>
                           <ShapeCreditsDate>
                             at{" "}
