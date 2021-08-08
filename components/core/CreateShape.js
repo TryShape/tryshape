@@ -16,38 +16,19 @@ import { ShapeForm, ShapePreview } from "..";
 // Toast
 import toast from "react-hot-toast";
 
-const CreateShape = (props) => {
+// shapecalculation functions
+import { 
+    generateNewVerticeCoordinates, 
+    generateNewFormula, 
+    handleFormulaChange, 
+    calculateRadiusAndFormulaFromMovement, 
+    separateXYValueIntoObject, 
+} from "../../utils/shapecalculation.js";
 
-    // Store the default state as a variable so resetting form is easier
-    const initialState = {
-        "name": "", 
-        "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)",
-        "vertices": 4,
-        "private": false,
-        "edges": 4, 
-        "notes": "", 
-        "clipPathType": "polygon",
-        "showShadow": true, 
-        "backgroundColor": "#d61284", 
-        "verticeCoordinates" : [
-            {
-                "x": "10%", 
-                "y": "10%", 
-            }, 
-            {
-                "x": "90%", 
-                "y": "10%", 
-            }, 
-            {
-                "x": "90%", 
-                "y": "90%", 
-            }, 
-            {
-                "x": "10%", 
-                "y": "80%", 
-            }, 
-        ]
-    }
+// shapecalculation data
+import { initialState, polygonInitialState, circleInitialState, ellipseInitialState } from "../../utils/shapeInitialData.js";
+
+const CreateShape = (props) => {
 
     // shapeInformation holds all information about the shape
     const [shapeInformation, setShapeInformation] = useState({
@@ -60,14 +41,38 @@ const CreateShape = (props) => {
         if (props.edit) {
             let formula = props.shape.formula; 
             let slicedFormula = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            let newVerticeCoordinates = slicedFormula.split(", ");
-            newVerticeCoordinates = newVerticeCoordinates.map((value) => {
-                let coordinates = value.split(" ");
-                return {
-                    "x": coordinates[0],
-                    "y": coordinates[1],
+            let newVerticeCoordinates = [];
+            let width = "0%";
+            let height = "0%";
+
+            if (!formula.includes("()")) {
+
+                if (props.shape.type === "polygon") {
+                    newVerticeCoordinates = slicedFormula.split(",");
+                    newVerticeCoordinates = newVerticeCoordinates.map((value) => {
+                        return separateXYValueIntoObject(value.trim());
+                    });
                 }
-            });
+    
+                if (props.shape.type === "circle" && formula.includes("at")) {
+                    let splitFormula = slicedFormula.split("at");
+    
+                    width = splitFormula[0].trim();
+    
+                    newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
+                }
+    
+                if (props.shape.type === "ellipse" && formula.includes("at")) {
+                    let splitFormula = slicedFormula.split("at");
+                    let widthHeightValues = separateXYValueIntoObject(splitFormula[0].trim());
+    
+                    width = widthHeightValues[0];
+                    height = widthHeightValues[1];
+    
+                    newVerticeCoordinates = [separateXYValueIntoObject(splitFormula[1].trim())];
+                }
+
+            }
     
             setShapeInformation({
                 ...shapeInformation, 
@@ -80,22 +85,24 @@ const CreateShape = (props) => {
                 "clipPathType": props.shape.type,
                 "backgroundColor": props.shape.backgroundColor, 
                 "verticeCoordinates" : newVerticeCoordinates, 
+                "width": width, 
+                "height": height, 
             });
         }
 
     }, [props.show]);
 
     // Changes shapeInformation when something in ShapeForm or ShapePreview is altered
-    const handleChange = (event, data, number) => {
+    const handleChange = (event, data, number, type) => {
         
         const name = event.target.name || event.type;
         const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
-
-        // If Clip-Path formula value is changed, it makes sure that the parentheses stay there and also alters the verticeCoordinates value
+        
+        // Handles name changes
         if (name === "name") {
             setShapeInformation({
-            ...shapeInformation, 
-            "name": value, 
+                ...shapeInformation, 
+                "name": value, 
             });
             return;
         }
@@ -107,15 +114,15 @@ const CreateShape = (props) => {
 
             // If user deletes all, set formula to the Clip-Path type with an empty set of parentheses
             if (value === "") {
-                handleFormulaChange(shapeInformation.clipPathType + "()", edgeVerticeNumber);
+                handleFormulaChange(`${shapeInformation.clipPathType}()`, edgeVerticeNumber, setShapeInformation);
             } else if (value.includes("polygon")) {
-                handleFormulaChange(value, edgeVerticeNumber, "polygon");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "polygon");
             } else if (value.includes("circle")) {
-                handleFormulaChange(value, edgeVerticeNumber, "circle");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "circle");
             } else if (value.includes("ellipse")) {
-                handleFormulaChange(value, edgeVerticeNumber, "ellipse");
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation, "ellipse");
             } else {
-                handleFormulaChange(value, edgeVerticeNumber);
+                handleFormulaChange(value, edgeVerticeNumber, setShapeInformation);
             }
             return;
 
@@ -127,43 +134,21 @@ const CreateShape = (props) => {
             if (value === "polygon") {
                 setShapeInformation({
                     ...shapeInformation, 
-                    "formula": "polygon(10% 10%, 90% 10%, 90% 90%, 10% 80%)", 
-                    "vertices": 4, 
-                    "edges": 4,
-                    "verticeCoordinates" : [
-                        {
-                            "x": "10%", 
-                            "y": "10%", 
-                        }, 
-                        {
-                            "x": "90%", 
-                            "y": "10%", 
-                        }, 
-                        {
-                            "x": "90%", 
-                            "y": "90%", 
-                        }, 
-                        {
-                            "x": "10%", 
-                            "y": "80%", 
-                        }, 
-                    ]
+                    ...polygonInitialState, 
                 });
             }
 
             if (value === "circle") {
                 setShapeInformation({
                     ...shapeInformation, 
-                    "type": "circle", 
-                    "formula": "circle(50% at 50% 50%)",
+                    ...circleInitialState, 
                 });
             }
 
             if (value === "ellipse") {
                 setShapeInformation({
                     ...shapeInformation, 
-                    "type": "ellipse", 
-                    "formula": "ellipse(25% 40% at 50% 50%)",
+                    ...ellipseInitialState, 
                 });
             }
 
@@ -180,23 +165,68 @@ const CreateShape = (props) => {
         
         // If DraggableVertice is moved, adjust verticeCoordinates and formula
         if (name === "mousemove" || name === "touchmove") {
-            
-            const newVerticeCoordinates = addNewVerticeCoordinates(data.x, data.y, number);
-            const newFormula = generateNewFormula(newVerticeCoordinates);
 
-            setShapeInformation({
-                ...shapeInformation, 
-                "verticeCoordinates": newVerticeCoordinates, 
-                "formula": newFormula, 
-            });
+            if (type === "width") {
+                const newFormulaValues = calculateRadiusAndFormulaFromMovement(
+                    shapeInformation.verticeCoordinates[0].x, 
+                    shapeInformation.width, 
+                    shapeInformation.height, 
+                    data.x
+                );
+
+                let newFormula; 
+
+                if (shapeInformation.clipPathType === "circle") {
+                    newFormula = `${shapeInformation.clipPathType}(${newFormulaValues.absoluteValueRadius} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
+                } else if (shapeInformation.clipPathType === "ellipse") {
+                    newFormula = `${shapeInformation.clipPathType}(${newFormulaValues.absoluteValueRadius} ${newFormulaValues.absoluteValueAxis} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
+                }
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "width": newFormulaValues.radius, 
+                    "formula": newFormula, 
+                });
+
+            } else if (type === "height") {
+                const newFormulaValues = calculateRadiusAndFormulaFromMovement(
+                    shapeInformation.verticeCoordinates[0].y, 
+                    shapeInformation.height, 
+                    shapeInformation.width, 
+                    data.y
+                );
+
+                let newFormula; 
+
+                if (shapeInformation.clipPathType === "ellipse") {
+                    newFormula = `${shapeInformation.clipPathType}(${newFormulaValues.absoluteValueAxis} ${newFormulaValues.absoluteValueRadius} at ${shapeInformation.verticeCoordinates[0].x} ${shapeInformation.verticeCoordinates[0].y})`;
+                }
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "height": newFormulaValues.radius, 
+                    "formula": newFormula, 
+                });
+
+            } else {
+                const newVerticeCoordinates = generateNewVerticeCoordinates(data.x, data.y, number, shapeInformation);
+                const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
+
+                setShapeInformation({
+                    ...shapeInformation, 
+                    "verticeCoordinates": newVerticeCoordinates, 
+                    "formula": newFormula, 
+                });
+            }
+
             return;
         }
         
         // If preview is clicked and the clipPathType is a polygon, add a verticeCoordinate value at its location and adjust formula
         if ((event.target.id === "shapeShadow" || event.target.id === "clippedShape") && name === "click" && shapeInformation.clipPathType === "polygon") {
 
-            const newVerticeCoordinates = addNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length);
-            const newFormula = generateNewFormula(newVerticeCoordinates);
+            const newVerticeCoordinates = generateNewVerticeCoordinates(event.nativeEvent.offsetX, event.nativeEvent.offsetY, shapeInformation.verticeCoordinates.length, shapeInformation);
+            const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
 
             setShapeInformation({
                 ...shapeInformation, 
@@ -220,7 +250,7 @@ const CreateShape = (props) => {
                 }
             }
 
-            const newFormula = generateNewFormula(newVerticeCoordinates);
+            const newFormula = generateNewFormula(newVerticeCoordinates, shapeInformation);
 
             setShapeInformation({
                 ...shapeInformation, 
@@ -237,127 +267,6 @@ const CreateShape = (props) => {
             ...shapeInformation, 
             [name]: value,
         });
-    }
-
-    // Called when there is a change in the textbox for formula in the form
-    // Adjusts verticeCoordinates, vertices, and edges accordingly
-    // Ensures that the parentheses remain
-    const handleFormulaChange = (formula, edgeVerticeNumber, clipPathType) => {
-        let newVerticeCoordinates = [];
-
-        if (clipPathType === "polygon") {
-            let formulaNumbers = formula.slice(formula.indexOf("(") + 1, formula.indexOf(")"));
-            formulaNumbers = formulaNumbers.split(","); 
-            newVerticeCoordinates = formulaNumbers.map(x => {
-                let values = x.trim();
-                let xValue = "";
-                let yValue = "";
-
-                // If the formula includes both percentage and px
-                // Figure out which one comes first and use that index of find it
-                if (values.includes("%") && values.includes("px")) {
-
-                    let indexOfPX = values.indexOf("px");
-                    let indexOfPercentage = values.indexOf("%");
-
-                    if (indexOfPX < indexOfPercentage) {
-                        xValue = values.substring(0, values.indexOf("px") + 2).trim();
-                        yValue = values.substring(values.indexOf("px") + 2).trim();
-                    }
-
-                    if (indexOfPercentage < indexOfPX) {
-                        xValue = values.substring(0, values.indexOf("%") + 1).trim();
-                        yValue = values.substring(values.indexOf("%") + 1).trim();
-                    }
-
-                } else if (values.includes("%")) {
-                    xValue = values.substring(0, values.indexOf("%") + 1).trim();
-                    yValue = values.substring(values.indexOf("%") + 1).trim();
-                } else if (values.includes("px")) {
-                    xValue = values.substring(0, values.indexOf("px") + 2).trim();
-                    yValue = values.substring(values.indexOf("px") + 2).trim();
-                }
-
-                if (!(xValue.includes("px") || xValue.includes("%")) || xValue.includes(" ")) {
-                    xValue = "0%";
-                }
-
-                if (!(yValue.includes("px") || yValue.includes("%")) || yValue === "") {
-                    yValue = "0%";
-                }
-
-                return {
-                    "x": xValue, 
-                    "y": yValue,
-                }
-            });
-        }
-
-        setShapeInformation(prevState => {
-            return {
-            ...prevState, 
-            "formula": formula.includes("(") && formula.includes(")") ? formula : prevState.formula, 
-            "clipPathType": clipPathType === undefined ? prevState.clipPathType : clipPathType,
-            "vertices": edgeVerticeNumber, 
-            "edges": edgeVerticeNumber, 
-            "verticeCoordinates": newVerticeCoordinates, 
-            }
-        });
-    }
-
-    // Returns an array that has a new verticeCoordinate
-    const addNewVerticeCoordinates = (x ,y, number) => {
-
-        let xValue;
-        let yValue;
-
-        // If there is a new coordinate
-        if (shapeInformation.verticeCoordinates.length === number) {
-            xValue = Math.round((x / 280.0) * 100.0) + "%";
-            yValue = Math.round((y / 280.0) * 100.0) + "%";
-        } else {
-
-            // Determines whether previous x coordinate was in percentage or px and adjusts value to maintain same unit of measurement
-            if (shapeInformation.verticeCoordinates[number].x.includes("%")) {
-                xValue = Math.round((x / 280.0) * 100.0) + "%";
-            } else if (shapeInformation.verticeCoordinates[number].x.includes("px")) {
-                xValue = Math.round(x) + "px";
-            }
-
-            // Determines whether previous y coordinate was in percentage or px and adjusts value to maintain same unit of measurement
-            if (shapeInformation.verticeCoordinates[number].y.includes("%")) {
-                yValue = Math.round((y / 280.0) * 100.0) + "%";
-            } else if (shapeInformation.verticeCoordinates[number].y.includes("px")) {
-                yValue = Math.round(y) + "px";
-            }
-        }
-
-        let newVerticeCoordinates = shapeInformation.verticeCoordinates;
-        newVerticeCoordinates[number] = {
-            "x": xValue,
-            "y": yValue
-        }
-
-        return newVerticeCoordinates;
-    }
-
-    // Returns a generated formula string from a verticeCoordinate array
-    const generateNewFormula = (newVerticeCoordinates) => {
-
-        let newFormula = shapeInformation.clipPathType + "(";
-
-        if (newVerticeCoordinates.length === 0) {
-            return newFormula + ")";
-        }
-
-        for (let i = 0; i < newVerticeCoordinates.length; i++) {
-            let newX = newVerticeCoordinates[i].x; 
-            let newY = newVerticeCoordinates[i].y;
-
-            i === newVerticeCoordinates.length - 1 ? newFormula = newFormula + newX + " " + newY + ")" : newFormula = newFormula + newX + " " + newY + ", ";
-        }
-
-        return newFormula;
     }
 
     // Form Validation

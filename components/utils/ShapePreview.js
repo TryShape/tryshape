@@ -9,6 +9,9 @@ import Form from "react-bootstrap/Form";
 // Draggablevertice Component
 import { DraggableVertice } from "..";
 
+// shapecalculation functions
+import { calculateHeightWidthValue } from "../../utils/shapecalculation";
+
 const Playground = styled.div`
   width: 100%;
 `;
@@ -45,6 +48,10 @@ const ShapePreview = (props) => {
     // Holds an array of DraggableVertices
     const [vertices, setVertices] = useState([]);
 
+    const [heightCoordinate, setHeightCoordinate] = useState(); 
+
+    const [widthCoordinate, setWidthCoordinate] = useState();
+
     // Set to a number that determines which DraggableVertice has its tooltip showing
     // This way, only one vertice can show its close button at a time
     const [focusNumber, setFocusNumber] = useState(-1);
@@ -52,8 +59,10 @@ const ShapePreview = (props) => {
     // Creation of DraggableVertices depending on shapeInformation values
     useEffect(() => {
         const array = []; 
+        setWidthCoordinate();
+        setHeightCoordinate();
     
-        for (let i = 0; i < props.shapeInformation.vertices; i++) {
+        for (let i = 0; i < props.shapeInformation.verticeCoordinates.length; i++) {
 
             if (props.shapeInformation.verticeCoordinates[i] === undefined) {
                 return;
@@ -68,10 +77,51 @@ const ShapePreview = (props) => {
                 handleChange={props.handleChange}
                 focusNumber={focusNumber}
                 setFocusNumber={setFocusNumber}
+                clipPathType={props.shapeInformation.clipPathType}
             />
           );
         }
         setVertices(array);
+
+        if (props.shapeInformation.verticeCoordinates.length > 0) {
+            if (props.shapeInformation.clipPathType === "circle" || props.shapeInformation.clipPathType === "ellipse") {
+
+                let x = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].x, props.shapeInformation.width);
+    
+                setWidthCoordinate(
+                    <DraggableVertice 
+                        number = {1}
+                        type="width"
+                        x={x}
+                        y={props.shapeInformation.verticeCoordinates[0].y}
+                        handleChange={props.handleChange}
+                        focusNumber={focusNumber}
+                        setFocusNumber={setFocusNumber}
+                        clipPathType={props.shapeInformation.clipPathType}
+                    />
+                );
+            }
+    
+            if (props.shapeInformation.clipPathType === "ellipse") {
+    
+                let y = calculateHeightWidthValue(props.shapeInformation.verticeCoordinates[0].y, props.shapeInformation.height);
+    
+                setHeightCoordinate(
+                    <DraggableVertice 
+                        number = {2}
+                        type="height"
+                        x={props.shapeInformation.verticeCoordinates[0].x}
+                        y={y}
+                        handleChange={props.handleChange}
+                        focusNumber={focusNumber}
+                        setFocusNumber={setFocusNumber}
+                        clipPathType={props.shapeInformation.clipPathType}
+                    />
+                );
+    
+            }
+        }
+
       }, [props.shapeInformation, focusNumber]);
 
     return(
@@ -81,6 +131,8 @@ const ShapePreview = (props) => {
                     { props.shapeInformation.showShadow && <Shadow backgroundColor={props.shapeInformation.backgroundColor} id="shapeShadow" /> }
                     <Component formula={props.shapeInformation.formula} backgroundColor={props.shapeInformation.backgroundColor} id="clippedShape" />
                     {vertices}
+                    {widthCoordinate}
+                    {heightCoordinate}
                 </Box>
 
                 <Form style={{padding: '7px', textAlign: 'center'}}>
