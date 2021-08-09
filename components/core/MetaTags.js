@@ -19,7 +19,7 @@ const MetaTags = () => {
         name="keywords"
         content="tryshape, tryshape tapas, tyshape github, css, css clip path, shapes, css shapes, github shapes, clippy, clip path shapes, types of shapes, css clip path shape, shape tool, generate css shapes, tyshape easy"
       />
-      <link rel="canonical" href="https://tryshape.now.sh/" />
+      <link rel="canonical" href="https://tryshape.vercel.app/" />
       <link rel="apple-touch-icon" href="/favicon.ico" />
       <link rel="icon" href="/favicon.ico" />
 
