@@ -607,6 +607,8 @@ const ShapeList = ({
                     <ShapeCardHeader>
                       <ShapeCredits>
                         <ShapeCreditsThumb
+                          width="32"
+                          height="32"
                           src={shape.photoURL}
                           alt={shape.name1 === null ? "Unknown User" : shape.name1}
                         />
