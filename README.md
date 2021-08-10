@@ -174,11 +174,9 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 
 - ✔️ Add the ability to create shape using SVG elements to support Curvy Node adjustments.
 - ✔️ Manage your shape collection
-- ✔️ Show Trending shapes
 - ✔️ Import shapes
 - ✔️ Following a contributor.
 - ✔️ PWA(Progressive Web App)
-- ✔️ Accessibility improvements
 - ✔️ Flexible Datastore
 - ✔️ Better Performance
 - ✔️ Tagging a shape
