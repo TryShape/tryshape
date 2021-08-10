@@ -3,6 +3,16 @@ export default async function handler(req, res) {
   
     const { email, displayName, photoURL } = req.body;
 
+    let editedPhotoURL;
+
+    if (photoURL.includes("avatars.githubusercontent.com") && !photoURL.includes("&s=")) {
+      editedPhotoURL = `${photoURL}&s=32`;
+    }
+
+    if (photoURL.includes("lh3.googleusercontent.com") && photoURL.includes("=s96")) {
+      editedPhotoURL = photoURL.replace("=s96", "=s32");
+    }
+
     const request = await fetch(process.env.NEXT_PUBLIC_DB_URL, {
       method: "POST",
       headers: {
@@ -17,7 +27,7 @@ export default async function handler(req, res) {
           {
             name: displayName,
             email: email,
-            photoURL: photoURL
+            photoURL: editedPhotoURL, 
           },
         ],
       }),
