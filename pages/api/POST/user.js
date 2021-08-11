@@ -1,4 +1,4 @@
-import { resizeAvatar } from "../../../utils/photoURLFunctions";
+import { resizeAvatar } from "../../../utils/photo-url-functions";
 
 export default async function handler(req, res) {
   
