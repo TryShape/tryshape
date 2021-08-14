@@ -18,7 +18,6 @@ import ImgLogo from '../../public/images/img-logo.svg'
 import Button from "react-bootstrap/Button";
 import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
-import DropdownButton from 'react-bootstrap/DropdownButton';
 import Dropdown from 'react-bootstrap/Dropdown';
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -205,7 +204,6 @@ const LoginBarBefore = styled.div`
 `;
 
 
-
 const Header = ({ 
   setOpen, 
   user, 
@@ -218,7 +216,6 @@ const Header = ({
   setShapeAction
 }) => {
   
-  const [searchterm, setSearchterm] = useState('');
   // Controls when CreateShape Modal Shows
   const [showCreateShape, setShowCreateShape] = useState(false);
 

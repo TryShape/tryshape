@@ -19,14 +19,9 @@ import toast from "react-hot-toast";
 // Clip-Path
 const Shape = dynamic(import("react-clip-path"), { ssr: false });
 
-// Switch
-import Switch from "react-switch";
-
 // icons
 import {
   FiCopy,
-  FiDelete,
-  FiDownload,
   FiEdit2,
   FiLock,
   FiTrash2,
@@ -44,7 +39,7 @@ import { CreateShape } from "..";
 import { DeleteShape } from "..";
 
 // misc unitless
-import { getShapeFileName, getShapeId } from "../../utils/misc";
+import { getShapeId } from "../../utils/misc";
 
 // date-fns
 import { formatRelative } from "date-fns";
@@ -233,7 +228,7 @@ const ShapeList = ({
   const [isDoubleTaped, setIsDoubleTaped] = useState({});
 
   const bindShapesWithDoubleTab = (shapes) => {
-    const modifiedShapes = shapes.map((shape, index) => {
+    const modifiedShapes = shapes.map((shape) => {
       const bind = useDoubleTap((event) => {
         setIsDoubleTaped({
           ...isDoubleTaped, 
@@ -296,7 +291,7 @@ const ShapeList = ({
   }, [searchTerm, shapes, sort]);
 
   const handleSwicth = (shapeName) => {
-    let modifiedShapes = shapes.map((shape, index) => {
+    let modifiedShapes = shapes.map((shape) => {
       if (shape.name === shapeName) {
         return {
           ...shape,
@@ -359,7 +354,7 @@ const ShapeList = ({
   /**
    * Method to execute when user clicks on the likes
    */
-  const performLike = async (event, shapeId) => {
+  const performLike = async (shapeId) => {
     // Check if user logged-in
     if (user.length === 0) {
       // Show the login modal if user is not authenticated
@@ -613,11 +608,11 @@ const ShapeList = ({
                       <ShapeCredits>
                         <ShapeCreditsThumb
                           src={shape.photoURL}
-                          alt={shape.name1}
+                          alt={shape.name1 === null ? "Unknown User" : shape.name1}
                         />
                         <ShapeCreditsOwner>
                           <ShapeCreditsOwnerName>
-                            {shape.name1}
+                            {shape.name1 === null ? "Unknown User" : shape.name1}
                           </ShapeCreditsOwnerName>
                           <ShapeCreditsDate>
                             at{" "}

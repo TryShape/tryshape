@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 // icon
 import { FiSearch } from "react-icons/fi";
-import { BsFillHeartFill, BsHeart } from "react-icons/bs";
+import { BsFillHeartFill } from "react-icons/bs";
 
 // link
 import Link from "next/link";
@@ -18,7 +18,7 @@ import dynamic from "next/dynamic";
 const Shape = dynamic(import("react-clip-path"), { ssr: false });
 
 // misc unitless
-import { getShapeFileName, getShapeId } from "../../utils/misc";
+import { getShapeId } from "../../utils/misc";
 
 // date-fns
 import { formatRelative } from "date-fns";

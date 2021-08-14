@@ -16,13 +16,6 @@ import styled from "styled-components";
 // icons
 import { FiTrash2 } from 'react-icons/fi';
 
-
-const ModalHeader = styled.div`
-    display: flex;
-    align-items: center;
-    grid-gap: 0.4rem;
-`;
-
 const ModalContent = styled.div`
     display: flex;
     align-items: flex-start;
@@ -43,8 +36,6 @@ const ContentWrapper = styled.div`
         margin-left: 0;
     }
 `;
-
-
 
 const DeleteShape = ({ show, setShow, shape, shapeAction, setShapeAction }) => {
 

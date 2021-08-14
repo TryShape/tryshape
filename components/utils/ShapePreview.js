@@ -10,7 +10,7 @@ import Form from "react-bootstrap/Form";
 import { DraggableVertice } from "..";
 
 // shapecalculation functions
-import { calculateHeightWidthValue } from "../../utils/shapecalculation";
+import { calculateHeightWidthValue } from "../../utils/shape-calculations";
 
 const Playground = styled.div`
   width: 100%;

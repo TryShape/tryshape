@@ -23,10 +23,10 @@ import {
     handleFormulaChange, 
     calculateRadiusAndFormulaFromMovement, 
     separateXYValueIntoObject, 
-} from "../../utils/shapecalculation.js";
+} from "../../utils/shape-calculations.js";
 
 // shapecalculation data
-import { initialState, polygonInitialState, circleInitialState, ellipseInitialState } from "../../utils/shapeInitialData.js";
+import { initialState, polygonInitialState, circleInitialState, ellipseInitialState } from "../../utils/shape-initial-data.js";
 
 const CreateShape = (props) => {
 

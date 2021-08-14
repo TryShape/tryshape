@@ -3,9 +3,6 @@ import React, { useEffect, useState } from "react";
 // axios
 import axios from "axios";
 
-// dynamic from next
-import dynamic from "next/dynamic";
-
 // loader
 import Loader from "react-loader-spinner";
 
@@ -59,10 +56,10 @@ const App = (props) => {
 
       // If there are liked shapes, take out the shape_id
       if (likedShapes.length > 0) {
-        let likedShapeIds = likedShapes.map((liked, index) => {
+        let likedShapeIds = likedShapes.map((liked) => {
           return liked['shape_id'];
         })
-        shapes.map((shape, index) => {
+        shapes.map((shape) => {
          
             if (likedShapeIds.includes(shape['shape_id'])) {
               shape['liked'] = true;
@@ -75,7 +72,7 @@ const App = (props) => {
     }
 
     // Add the showAdvanced property
-    shapes.map((shape, index) => {
+    shapes.map((shape) => {
       shape.showAdvanced = false;
       return shape;
     });

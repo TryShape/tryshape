@@ -15,9 +15,6 @@ import Loader from "react-loader-spinner";
 // Trending Shapes
 import { TrendingShapes } from "..";
 
-// dynamic from Next.js
-import dynamic from "next/dynamic";
-
 // Images
 import BannerBg from '../../public/images/bg-banner.png';
 import DottedBg from '../../public/images/bg-dotted.png';
@@ -642,7 +639,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <a href="https://www.youtube.com/c/TapasAdhikary/featured" rel="noopener noreferrer"><FiYoutube /><span className="sr-only">Youtube</span></a>
                   <a href="mailto:tapas.adhikary@gmail.com" rel="noopener noreferrer"><FiMail /><span className="sr-only">Email</span></a>
                 </SocialLinks>
-                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
+                <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a rel="noopener noreferrer" href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
               </Container>
             </SectionContact>
         </div>

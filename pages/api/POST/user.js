@@ -1,3 +1,4 @@
+import { resizeAvatar } from "../../../utils/photo-url-functions";
 
 export default async function handler(req, res) {
   
@@ -17,7 +18,7 @@ export default async function handler(req, res) {
           {
             name: displayName,
             email: email,
-            photoURL: photoURL
+            photoURL: resizeAvatar(photoURL), 
           },
         ],
       }),
