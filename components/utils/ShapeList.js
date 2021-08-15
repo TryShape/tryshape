@@ -407,7 +407,7 @@ const ShapeList = ({
 
       if (updated.data.update_hashes.length > 0) {
         // Update the shape data in the shapes array
-        let modifiedShapes = shapes.map((shape, index) => {
+        let modifiedShapes = shapes.map((shape) => {
           if (shape["shape_id"] === shapeId) {
             return {
               ...shape,
