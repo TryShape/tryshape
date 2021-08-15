@@ -290,19 +290,6 @@ const ShapeList = ({
     setFilteredShape(filterShape(copy, searchTerm));
   }, [searchTerm, shapes, sort]);
 
-  const handleSwicth = (shapeName) => {
-    let modifiedShapes = shapes.map((shape) => {
-      if (shape.name === shapeName) {
-        return {
-          ...shape,
-          showAdvanced: !shape.showAdvanced,
-        };
-      }
-      return shape;
-    });
-    setShapes(...[modifiedShapes]);
-  };
-
   /**
    * Method to execute when use clicks on the copy source
    */
@@ -524,7 +511,6 @@ const ShapeList = ({
                       <Shape
                         width="240px"
                         height="240px"
-                        name={shape.name}
                         id={getShapeId(shape.name)}
                         formula={shape.formula}
                         backgroundColor={shape.backgroundColor || "#eb3d86"}
@@ -533,7 +519,7 @@ const ShapeList = ({
                       <ShapeActions className="shape-actions">
                         <ShapeActionsPrimary>
                           <span
-                            onClick={(event, shapeId) =>
+                            onClick={(event) =>
                               performLike(event, shape["shape_id"])
                             }
                           >
