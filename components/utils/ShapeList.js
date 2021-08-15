@@ -341,7 +341,7 @@ const ShapeList = ({
   /**
    * Method to execute when user clicks on the likes
    */
-  const performLike = async (shapeId) => {
+  const performLike = async (event, shapeId) => {
     // Check if user logged-in
     if (user.length === 0) {
       // Show the login modal if user is not authenticated
