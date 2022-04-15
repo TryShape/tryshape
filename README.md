@@ -7,10 +7,10 @@
         <img src="./public/readme/TryShape-GitHub-icon-only.png" alt="logo" width="125"/>
     </a>
     
-<p/>
+</p>
 <p align="center">
 <img src="./public/readme/tryshape-text-transparent.png" alt="name"/>
-<p/>
+</p>
 
 <h4 align="center">Create, Export, Share, and Use any Shapes of your choice.</h4>
 
