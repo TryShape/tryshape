@@ -562,8 +562,8 @@ const Landing = ({ setOpen, user, setUser }) => {
                     </div>
                     <h3 className="card-title">Share</h3>
                     <p className="card-desc">
-                      When you create something fabously great, do share it with the awesome developer
-                      community. TryShape allows you to do that when you make your ceativity public.  
+                      When you create something fabulously great, do share it with the awesome developer
+                      community. TryShape allows you to do that when you make your creativity public.  
                     </p>
                   </FeatureCardItem>
                 </FeatureCards>
