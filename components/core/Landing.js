@@ -572,7 +572,7 @@ const Landing = ({ setOpen, user, setUser }) => {
             <SectionFileTypes id="filesupport">
               <Container>
                   <SectionTitle>
-                    <h2 className="section-title text-center">Great Export type Support</h2>
+                    <h2 className="section-title text-center">Great Export Type Support</h2>
                   </SectionTitle>
                   <p className="p-lead text-center">Hassle free usage for your web design and development!</p>
                   <p className="p-desc text-center w-75 m-auto">
