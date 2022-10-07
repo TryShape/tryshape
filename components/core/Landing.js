@@ -357,7 +357,7 @@ const FeatureCardItem = styled.div`
     }
 
     .card-desc {
-      margin: 0;
+      margin: 1px;
       font-size: var(--fs-rg);
       text-align: center;
     }
