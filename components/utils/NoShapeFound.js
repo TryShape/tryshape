@@ -36,7 +36,8 @@ const PageWrapper = styled.div`
     }
 
     img {
-        max-width: 300px;
+        max-width: 100%;
+        height: auto;
     }
 
 `;
