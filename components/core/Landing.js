@@ -357,7 +357,7 @@ const FeatureCardItem = styled.div`
     }
 
     .card-desc {
-      margin: 0;
+      margin: 1px;
       font-size: var(--fs-rg);
       text-align: center;
     }
@@ -505,11 +505,11 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <Container>
                     <Row className="justify-content-md-center">
                       <Col lg="8" className="d-flex flex-column justify-content-center">
-                        <h2 className="banner-title text-center">Create, Export, Share, and Use any Shapes of your choice.</h2>
+                        <h2 className="banner-title text-center">Create, Export, Share and Use any Shapes of your choice.</h2>
                         <p className="banner-desc text-center">
                           TryShape is an opensource platform to create shapes of your choice using a simple, 
-                          easy-to-use interface. You can create banners, circles, polygonal shapes, export them as
-                          SVG, PNG, and even as CSS.
+                          easy-to-use interface. You can create banners, circles, polygonal shapes and export them as
+                          SVG, PNG and even as CSS.
                         </p>
                         <BannerBodyActions>
                           <Link href="/app" ><Button variant="primary"><FiPenTool/>Try Now</Button></Link>
