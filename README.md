@@ -1,6 +1,7 @@
-
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+
 [![All Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-)
+
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 <p align="center">
     <a href="https://tryshape.vercel.app/" target="_blank">
@@ -43,6 +44,7 @@
 </p>
 
 # 👋 Introducing `TryShape`
+
 <p align="center">
     <a href="https://tryshape.vercel.app" target="blank"/>
         <img src="./public/readme/landing.png" alt="landing" />
@@ -52,6 +54,7 @@
 `TryShape` is an opensource platform to create shapes of your choice using a simple, easy-to-use interface. You can create banners, circles, polygonal shapes, export them as SVG, PNG, and even as CSS.
 
 # 🚀 Demo
+
 Here is a quick demo of the app. We hope you enjoy it.
 
 > [The Demo Link](https://www.youtube.com/watch?v=CB9xkhzkrYE)
@@ -63,17 +66,21 @@ Liked it? Please give a ⭐️ to <b>TryShape</b> to build its triceps 💪 stro
 [![Stargazers repo roster for @TryShape/tryshape](https://reporoster.com/stars/TryShape/tryshape)](https://github.com/TryShape/tryshape/stargazers)
 
 # 💻 Use TryShape
+
 Please access TryShape using the URL:
 
 > https://tryshape.vercel.app/
 
 # 🔥 Features
+
 `TryShape` comes with a bundle of features already. You can do the followings with it,
 
 ## 🔢 Listing Shapes
- - List out shapes for you to pick and use.
+
+- List out shapes for you to pick and use.
 
 ## 🏗️ Create Shapes
+
 - Create any shapes using an intuitive editor.
 - Create Polygonal, Circular, Elliptical shapes without knowing the underlying complexities like CSS clip-path.
 - Add/Remove vertices, join them, drag-drop to position them to create a shape.
@@ -81,30 +88,38 @@ Please access TryShape using the URL:
 - Are you an expert in CSS clip-path? Great, you can add a clip-path value directly and start from there.
 
 ## 📢 Controlling the Visibility of Shapes
+
 - You can create a shape and share it with the TryShape community by making it public.
 - Do you want to keep your creativity private? No worries, that's possible too.
 
 ## 💘 Like Shapes
+
 - Liked a shape and want to add it to your shape collection? You can do that just with a click. Want to undo? That's supported as well.
 
 ## ✨ Export Shapes
+
 - Export the shapes to use in your application.
 - Export the shapes as PNG, JPEG, and SVG files.
 - Single-Click Copy of the underlying CSS and clip-path property to use directly into your web app.
 
 ## 🔍 Search Shapes
+
 - Search a shape with key-in search.
 
 ## 🎿 Sort Shapes
+
 - Sort shapes by, most liked, recent, and oldest.
 
 ## 🔑 Authentication & Authorization
+
 - Features like export, like, create, edit shapes need you to authenticate with the app. You can use your Gmail or GitHub credentials to authenticate to the app. It is secured and powered by `Google Firebase`.
 
 ## 📱 Responsive and mobile-friendly
+
 - Use `TryShape` seamlessly from any device.
 
 # 🏗️ How to Set up `TryShape` for Development?
+
 You can run TryShape locally with a few easy steps.
 
 1. Clone the repository
@@ -128,8 +143,8 @@ npm install # or, yarn install
 4. Create `.env` file in root and add your variables
 
 ```bash
-NEXT_PUBLIC_DB_URL= YOUR_HARPER_DB_DATABASE_URL
-NEXT_PUBLIC_DB_AUTHORIZATION= YOUR_HARPER_DB_AUTHORIZATION_ID
+NEXT_PUBLIC_DB_URL=YOUR_HARPER_DB_DATABASE_URL
+NEXT_PUBLIC_DB_AUTHORIZATION=YOUR_HARPER_DB_AUTHORIZATION_ID
 
 NEXT_PUBLIC_FIREBASE_AUTHORIZATION=YOUR_FIREBASE_AUTH_KEY
 NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=YOUR_FIREBASE_AUTH_DOMAIN
@@ -149,6 +164,7 @@ npm run dev # or, yarn dev
 That's All!!! Now open [localhost:3000](http://localhost:3000/) to see the app.
 
 # 🍔 Built With
+
 - [Next JS](https://nextjs.org/): The coolest React-based framework on the planet
 - [Harper DB](https://harperdb.io/): A flexible Data Store
 - [react-icons](https://react-icons.github.io/react-icons/): One shop for all the icons
@@ -167,9 +183,11 @@ That's All!!! Now open [localhost:3000](http://localhost:3000/) to see the app.
 - [Vercel](http://vercel.com/): Best for Hosting a Next.js app
 
 # 🛡️ License
+
 This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) file for details.
 
 # 🦄 Upcoming Features
+
 `TryShape` has all the potentials to grow further. Here are some of the upcoming features planned(not in any order),
 
 - ✔️ Add the ability to create shape using SVG elements to support Curvy Node adjustments.
@@ -195,8 +213,8 @@ If you find something is missing, `TryShape` is listening. Please create a featu
 <img src="https://www.netlify.com/img/deploy/button.svg" height="37.5px" />
 </a>
 
-
 # 🤝 Contributing to `TryShape`
+
 Any kind of positive contribution is welcome! Please help us to grow by contributing to the project.
 
 If you wish to contribute, you can work on any features [listed here](https://github.com/TryShape/tryshape#-upcoming-features) or create one on your own. After adding your code, please send us a Pull Request.
@@ -218,7 +236,6 @@ If you found the app helpful, consider supporting us with a coffee.
 <h3 align="center">
 A ⭐️ to <b>TryShape</b> is to build its triceps 💪 stronger.
 </h3>
-
 
 ## Contributors ✨
 
