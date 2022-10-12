@@ -12,7 +12,7 @@
 <img src="./public/readme/tryshape-text-transparent.png" alt="name"/>
 </p>
 
-<h4 align="center">Create, Export, Share, and Use any Shapes of your choice.</h4>
+<h4 align="center">Create, Export, Share, and Use any Shapes of your choice! 🌠</h4>
 
 <p align="center">
 <a href="https://github.com/TryShape/tryshape/blob/master/LICENSE" target="blank">
@@ -119,7 +119,7 @@ git clone https://github.com/TryShape/tryshape.git
 cd tryshape
 ```
 
-3. Install dependencies
+3. Install dependencies 
 
 ```bash
 npm install # or, yarn install
@@ -182,7 +182,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 - ✔️ Tagging a shape
 - ✔️ Cloning a shape
 - ✔️ Provide comment on a shape.
-- ✔️ More authetication mechanisms like twitter, facebook, etc.
+- ✔️ More authentication mechanisms like twitter, facebook, etc.
 
 If you find something is missing, `TryShape` is listening. Please create a feature request [from here](https://github.com/TryShape/tryshape/issues/new/choose).
 
@@ -203,8 +203,7 @@ If you wish to contribute, you can work on any features [listed here](https://gi
 
 > Please read [`CONTRIBUTING`](CONTRIBUTING.md) for details on our [`CODE OF CONDUCT`](CODE_OF_CONDUCT.md), and the process for submitting pull requests to us.
 
-# 🙏 Support
-
+#  Support ❤️
 We all need support and motivation. `TryShape` is not an exception. Please give this project a ⭐️ to encourage and show that you liked it. Don't forget to leave a star ⭐️ before you move away.
 
 If you found the app helpful, consider supporting us with a coffee.
@@ -216,7 +215,7 @@ If you found the app helpful, consider supporting us with a coffee.
 ---
 
 <h3 align="center">
-A ⭐️ to <b>TryShape</b> is to build its triceps 💪 stronger.
+A ⭐️ to <b>TryShape</b> is to build its triceps 💪 stronger!
 </h3>
 
 
