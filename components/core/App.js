@@ -20,7 +20,7 @@ const App = (props) => {
     'action': '',
     'payload': {}
   });
-  
+
   const { user } = props;
 
   useEffect(async () => {
@@ -28,7 +28,7 @@ const App = (props) => {
     setLoading(true);
     let shapes = [];
 
-    if(user.length === 0) {
+    if (user.length === 0) {
       // User is not logged In. Fetch all the public shapes 
       const response = await axios.get("/api/GET/shapes", {
         params: {
@@ -60,56 +60,56 @@ const App = (props) => {
           return liked['shape_id'];
         })
         shapes.map((shape) => {
-         
-            if (likedShapeIds.includes(shape['shape_id'])) {
-              shape['liked'] = true;
-            } else {
-              shape['liked'] = false;
-            }
-            return shape;
+
+          if (likedShapeIds.includes(shape['shape_id'])) {
+            shape['liked'] = true;
+          } else {
+            shape['liked'] = false;
+          }
+          return shape;
         });
       }
     }
 
     // Add the showAdvanced property
-    shapes.map((shape) => {
-      shape.showAdvanced = false;
-      return shape;
-    });
-
-    console.log(shapes);
-    console.log({shapeAction});
-    await setData(shapes);
-    console.log(shapes);
+    if (shapes && shapes.length > 0) {
+      shapes.map((shape) => {
+        shape.showAdvanced = false;
+        return shape;
+      });
+      setData(shapes);
+    } else {
+      setData([]);
+    }
     setLoading(false);
   }, [user, shapeAction]);
 
   return (
     <>
-      <Header {...props} 
+      <Header {...props}
         searchTerm={searchTerm}
         setSearchTerm={setSearchTerm}
         sort={sort}
         setSort={setSort}
-        shapeAction={shapeAction} 
+        shapeAction={shapeAction}
         setShapeAction={setShapeAction} />
       {loading ? (
         <Loader
-          style={{position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)'}}
+          style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
           type="Circles"
           color="rgba(var(--color-brand-rgb), 0.6)"
           height={200}
           width={200}
         />
       ) : (
-        <ShapeList 
-          {...props} 
-          data={ data } 
-          setSearchTerm = { setSearchTerm }
-          searchTerm={searchTerm} 
-          sort={sort} 
-          shapeAction={shapeAction} 
-          setShapeAction={setShapeAction} 
+        <ShapeList
+          {...props}
+          data={data}
+          setSearchTerm={setSearchTerm}
+          searchTerm={searchTerm}
+          sort={sort}
+          shapeAction={shapeAction}
+          setShapeAction={setShapeAction}
         />
       )}
     </>
