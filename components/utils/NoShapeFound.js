@@ -38,23 +38,24 @@ const PageWrapper = styled.div`
     img {
         max-width: 100%;
         height: auto;
+        margin-top: 3rem;
     }
 
 `;
 
-const NoShapeFound = ({ 
-    setOpen, 
-    user,  
+const NoShapeFound = ({
+    setOpen,
+    user,
     setSearchTerm,
-    shapeAction, 
+    shapeAction,
     setShapeAction
-  }) => {
+}) => {
 
     // Controls when CreateShape Modal Shows
     const [showCreateShape, setShowCreateShape] = useState(false);
 
     const performCreate = () => {
-        
+
         if (user.length === 0) {
             setOpen(true);
         } else {
@@ -66,10 +67,10 @@ const NoShapeFound = ({
         setShowCreateShape(false);
     }
 
-    return(
+    return (
         <>
             <PageWrapper>
-                <img src={ImgFeelingSad} width="360"/>
+                <img src={ImgFeelingSad} width="200" />
                 <h2 className="title">Whooops!</h2>
                 <p className="desc">Sorry, we couldn't find the shape you are looking for. Why don't you start creating a shape of your own choice? or try to refine your search. </p>
                 <Button variant='secondary' onClick={() => performCreate()}>
@@ -78,11 +79,11 @@ const NoShapeFound = ({
                 </Button>
             </PageWrapper>
             <CreateShape
-                show={showCreateShape} 
-                handleClose={closeModal} 
+                show={showCreateShape}
+                handleClose={closeModal}
                 edit={false}
                 user={user}
-                shapeAction={shapeAction} 
+                shapeAction={shapeAction}
                 setShapeAction={setShapeAction}
                 setSearchTerm={setSearchTerm}
             />
