@@ -636,7 +636,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <a href="https://github.com/TryShape" target="_blank" rel="noopener noreferrer"><FiGithub /><span className="sr-only">GitHub</span></a>
                   <a href="https://twitter.com/tapasadhikary" target="_blank" rel="noopener noreferrer"><FiTwitter /><span className="sr-only">Twitter</span></a>
                   <a href="https://www.linkedin.com/in/tapasadhikary/" target="_blank" rel="noopener noreferrer"><FiLinkedin /><span className="sr-only">Linkedin</span></a>
-                  <a href="https://youtube.com/tapasadhikary" rel="noopener noreferrer"><FiYoutube /><span className="sr-only">Youtube</span></a>
+                  <a href="https://youtube.com/tapasadhikary" rel="noopener noreferrer"><FiYoutube /><span className="sr-only">YouTube</span></a>
                   <a href="mailto:tapas.adhikary@gmail.com" rel="noopener noreferrer"><FiMail /><span className="sr-only">Email</span></a>
                 </SocialLinks>
                 <SectionContactCredits className="text-center"><small>TryShape is an opensource project developed by <a rel="noopener noreferrer" href="https://tapasadhikary.com/" target="_blank">Tapas Adhikary</a> and friends.</small></SectionContactCredits>
