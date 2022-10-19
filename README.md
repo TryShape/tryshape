@@ -182,7 +182,7 @@ This project is licensed under the MIT License - see the [`LICENSE`](LICENSE) fi
 - ✔️ Tagging a shape
 - ✔️ Cloning a shape
 - ✔️ Provide comment on a shape.
-- ✔️ More authetication mechanisms like twitter, facebook, etc.
+- ✔️ More authentication mechanisms like twitter, facebook, etc.
 
 If you find something is missing, `TryShape` is listening. Please create a feature request [from here](https://github.com/TryShape/tryshape/issues/new/choose).
 
