@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
@@ -20,9 +21,6 @@ import BannerBg from '../../public/images/bg-banner.png';
 import DottedBg from '../../public/images/bg-dotted.png';
 import AbstractBg1 from '../../public/images/bg-abstract-1.png';
 import ImgLogo from '../../public/images/img-logo.svg';
-import IconPngJpg from '../../public/images/icon-png-jpg.svg';
-import IconSvg from '../../public/images/icon-svg.svg';
-import IconCss from '../../public/images/icon-css.svg';
 
 // icon
 import { 
@@ -582,7 +580,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                   <FileSupportCards>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconSvg} alt="Icon for SVG File Type" />
+                        <Image src="/icon-svg.svg" width="16" height="16" alt="Icon for SVG File Type" />
                       </div>
                       <h3 className="card-title">SVG</h3>
                       <p className="card-desc">
@@ -592,7 +590,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                     </FileSupportCardItem>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconPngJpg} alt="Icon for PNG and JPG File Types"/>
+                        <Image src="/icon-png-jpg.svg" width="16" height="16" alt="Icon for PNG and JPG File Types"/>
                       </div>
                       <h3 className="card-title">PNG and JPEG</h3>
                       <p className="card-desc">
@@ -602,7 +600,7 @@ const Landing = ({ setOpen, user, setUser }) => {
                     </FileSupportCardItem>
                     <FileSupportCardItem>
                       <div className="card-icon">
-                        <img src={IconCss} alt="Icon for CSS Snippets"/>
+                        <Image src="/icon-css.svg" width="16" height="16" alt="Icon for CSS Snippets"/>
                       </div>
                       <h3 className="card-title">CSS Snippet</h3>
                       <p className="card-desc">
